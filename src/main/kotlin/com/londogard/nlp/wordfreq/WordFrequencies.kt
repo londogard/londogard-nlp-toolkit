@@ -14,7 +14,19 @@ import kotlin.math.min
  *  WordFrequencies.wordFrequency("hej", sv)
  */
 object WordFrequencies {
-    private var cache: Pair<Path, Map<Float, Set<String>>>? = null
+    private var cache: Pair<Path, Map<String, Float>>? = null
+
+    fun getAllWordFrequenciesOrNull(language: LanguageSupport, size: WordFrequencySize): Map<String, Float>? =
+        if (language.hasWordFrequencySupport()) {
+            val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
+            unpackFile(wordFrequencyPath)
+        } else null
+
+    fun getAllZipfFrequenciesOrNull(language: LanguageSupport, size: WordFrequencySize): Map<String, Float>? =
+        if (language.hasWordFrequencySupport()) {
+            val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
+            unpackFile(wordFrequencyPath).mapValues { (_, frequency) -> frequencyToZipf(frequency) }
+        } else null
 
     fun wordFrequency(
         word: String,
@@ -34,8 +46,7 @@ object WordFrequencies {
         if (language.hasWordFrequencySupport()) {
             val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
             val wordFrequencies = unpackFile(wordFrequencyPath)
-            val wordEntry =
-                wordFrequencies.asIterable().find { (_, tokens) -> tokens.contains(word.toLowerCase()) }?.key ?: minimum
+            val wordEntry = wordFrequencies[word.toLowerCase()] ?: minimum
 
             min(wordEntry, minimum)
         } else null
@@ -49,11 +60,7 @@ object WordFrequencies {
         if (language.hasWordFrequencySupport()) {
             val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
             val wordFrequencies = unpackFile(wordFrequencyPath)
-            val wordEntry =
-                wordFrequencies.asIterable()
-                    .find { (_, tokens) -> tokens.contains(word.toLowerCase()) }
-                    ?.key
-                    ?.let(this::frequencyToZipf) ?: minimum
+            val wordEntry = wordFrequencies[word.toLowerCase()]?.let(this::frequencyToZipf) ?: minimum
 
             min(wordEntry, minimum)
         } else null
@@ -67,7 +74,7 @@ object WordFrequencies {
 
     private fun frequencyToZipf(frequency: Float): Float = log10(frequency) + 9
 
-    private fun unpackFile(path: Path): Map<Float, Set<String>> {
+    private fun unpackFile(path: Path): Map<String, Float> {
         val unpackedFile by lazy {
             path.toFile()
                 .inputStream()
@@ -79,6 +86,7 @@ object WordFrequencies {
                             10f.pow(-index.toFloat() / 100) to line.split(' ').filterNot(String::isEmpty).toHashSet()
                         }
                         .filter { (_, tokens) -> tokens.isNotEmpty() }
+                        .flatMap { (prob, tokens) -> tokens.map { it to prob } }
                         .toMap()
                 }
         }
