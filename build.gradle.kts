@@ -23,7 +23,7 @@ dependencies {
     implementation("org.nd4j:nd4j-api:1.0.0-beta7")
 
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.4.21")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.4.21-2")
     testImplementation(kotlin("test-junit"))
 }
 
