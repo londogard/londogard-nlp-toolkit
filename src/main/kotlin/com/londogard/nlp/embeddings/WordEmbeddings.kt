@@ -9,10 +9,10 @@ import org.nd4j.linalg.api.ops.impl.reduce3.CosineDistance
 import org.nd4j.linalg.api.ops.impl.reduce3.CosineSimilarity
 import org.nd4j.linalg.factory.Nd4j
 import org.nd4j.linalg.ops.transforms.Transforms
-import smile.sequence.CRF
-import org.deeplearning4j.models.word2vec.Word2Vec
+//import smile.sequence.CRF
+//import org.deeplearning4j.models.word2vec.Word2Vec
 import org.nd4j.linalg.api.ops.impl.transforms.custom.Svd
-import smile.math.matrix.FloatMatrix
+//import smile.math.matrix.FloatMatrix
 
 abstract class WordEmbeddings(
 //    override val dimensions: Int = DownloadHelper.dimension,

@@ -23,9 +23,9 @@ dependencies {
     // ND4J
     implementation("org.nd4j:nd4j-api:1.0.0-beta7")
     implementation("org.nd4j:nd4j-native-platform:1.0.0-beta7")
-    implementation("org.deeplearning4j:deeplearning4j-nlp:1.0.0-beta7")
-    implementation("com.github.haifengl:smile-core:2.6.0")
-    implementation("com.github.haifengl:smile-kotlin:2.6.0")
+//    implementation("org.deeplearning4j:deeplearning4j-nlp:1.0.0-beta7")
+    //implementation("com.github.haifengl:smile-core:2.6.0")
+    //implementation("com.github.haifengl:smile-kotlin:2.6.0")
 
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.4.21")
