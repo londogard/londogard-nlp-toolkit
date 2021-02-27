@@ -5,6 +5,7 @@ import com.londogard.nlp.utils.LanguageSupport
 import java.nio.file.Path
 import java.util.zip.GZIPInputStream
 import kotlin.math.log10
+import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.min
 
@@ -48,7 +49,7 @@ object WordFrequencies {
             val wordFrequencies = unpackFile(wordFrequencyPath)
             val wordEntry = wordFrequencies[word.toLowerCase()] ?: minimum
 
-            min(wordEntry, minimum)
+            max(wordEntry, minimum)
         } else null
 
     fun zipfFrequencyOrNull(
@@ -62,7 +63,7 @@ object WordFrequencies {
             val wordFrequencies = unpackFile(wordFrequencyPath)
             val wordEntry = wordFrequencies[word.toLowerCase()]?.let(this::frequencyToZipf) ?: minimum
 
-            min(wordEntry, minimum)
+            max(wordEntry, minimum)
         } else null
 
     fun zipfFrequency(
@@ -70,7 +71,8 @@ object WordFrequencies {
         language: LanguageSupport,
         minimum: Float = 0f,
         size: WordFrequencySize = WordFrequencySize.Smallest
-    ): Float = zipfFrequencyOrNull(word, language, minimum, size) ?: throw IllegalArgumentException("There exists not word frequency for language ${language.name} with size ${size.name}. Please try again with one of the supported language/size combinations.")
+    ): Float = zipfFrequencyOrNull(word, language, minimum, size)
+        ?: throw IllegalArgumentException("There exists not word frequency for language ${language.name} with size ${size.name}. Please try again with one of the supported language/size combinations.")
 
     private fun frequencyToZipf(frequency: Float): Float = log10(frequency) + 9
 

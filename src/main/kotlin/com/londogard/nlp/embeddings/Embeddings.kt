@@ -1,8 +1,7 @@
 package com.londogard.nlp.embeddings
 
-import org.nd4j.linalg.api.ndarray.INDArray
-import org.nd4j.linalg.factory.Nd4j
-import org.nd4j.linalg.ops.transforms.Transforms
+import com.londogard.nlp.utils.*
+import org.ejml.data.FMatrixRMaj
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.streams.asSequence
@@ -14,7 +13,7 @@ abstract class Embeddings {
     abstract val filename: String
 
     internal abstract val embeddings: Map<String, Int>
-    internal abstract val ndArray: INDArray
+    internal abstract val ndArray: FMatrixRMaj
 
     /** Vocabulary of the embeddings */
     val vocabulary by lazy { embeddings.keys }
@@ -29,30 +28,32 @@ abstract class Embeddings {
      * @param word Word to retrieve vector for.
      * @return The vector representation of the word.
      */
-    fun vector(word: String): INDArray? = ndArray.getRow(embeddings[word]?.toLong()!!)
+    fun vector(word: String): FMatrixRMaj? = embeddings[word]?.let(ndArray::getRow)
 
-    fun vectors(words: List<String>) : INDArray = ndArray.getRows(*words.mapNotNull(embeddings::get).toIntArray())
+    fun vectors(words: List<String>) : FMatrixRMaj = ndArray.getRows(words.mapNotNull(embeddings::get).toIntArray())
 
-    fun traverseVectors(words: List<String>): INDArray? = vectors(words).takeIf { it.rows() == 2 }
+    fun traverseVectors(words: List<String>): FMatrixRMaj = vectors(words)
 
     /** Compute the Euclidean distance between the vector representations of the words.
      * @param w1 The first word.
      * @param w2 The other word.
      * @return The Euclidean distance between the vector representations of the words.
      */
-    fun euclidean(w1: String, w2: String): Double? = traverseVectors(listOf(w1, w2))
-        ?.let { vectors -> Transforms.euclideanDistance(vectors.getRow(0), vectors.getRow(1)) }
+    fun euclidean(w1: String, w2: String): Float? = traverseVectors(listOf(w1, w2))
+        .takeIf { it.numRows == 2 }
+        ?.let { vectors -> vectors.getRow(0).euclideanDistance(vectors.getRow(1)) }
 
     /** Compute the cosine similarity score between the vector representations of the words.
      * @param w1 The first word.
      * @param w2 The other word.
      * @return The cosine similarity score between the vector representations of the words.
      */
-    fun cosineDistance(w1: String, w2: String): Double? = traverseVectors(listOf(w1, w2))
-        ?.let { vectors -> Transforms.cosineDistance(vectors.getRow(0), vectors.getRow(1)) }
+    fun cosineDistance(w1: String, w2: String): Float? = traverseVectors(listOf(w1, w2))
+        .takeIf { it.numRows == 2 }
+        ?.let { vectors -> vectors.getRow(0).cosineDistance(vectors.getRow(1)) }
 
     internal fun loadEmbeddingsFromFile(inFilter: Set<String> = emptySet(),
-                                        maxWordCount: Int = Int.MAX_VALUE): Pair<Map<String, Int>, INDArray> =
+                                        maxWordCount: Int = Int.MAX_VALUE): Pair<Map<String, Int>, FMatrixRMaj> =
         Files
         .newBufferedReader(Paths.get(filename))
         .use { reader ->
@@ -73,6 +74,6 @@ abstract class Embeddings {
                 }
                 .take(maxWordCount)
                 .unzip()
-                .let { (words, data) -> words.mapIndexed { i, word -> word to i }.toMap() to Nd4j.create(data.toTypedArray()) }
+                .let { (words, data) -> words.mapIndexed { i, word -> word to i }.toMap() to FMatrixRMaj(data.toTypedArray()) }
         }
 }

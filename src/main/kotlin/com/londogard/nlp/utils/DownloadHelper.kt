@@ -8,9 +8,10 @@ import java.nio.file.Paths
 
 internal object DownloadHelper {
     private val rootPath: Path = Paths.get(System.getProperty("user.home")).resolve(".londogard")
-    private val dataUrl: String = "https://raw.githubusercontent.com/londogard/londogard-nlp-toolkit/main/data"
+    private const val dataUrl: String = "https://raw.githubusercontent.com/londogard/londogard-nlp-toolkit/main/data"
     private val stopwordPath: Path = rootPath.resolve("stopwords")
     private val wordFrequencyPath: Path = rootPath.resolve("wordfreq")
+    private val embeddingPath: Path = rootPath.resolve("embeddings")
 
     fun getStopWords(language: LanguageSupport): Path {
         val path = stopwordPath.resolve(language.name)
