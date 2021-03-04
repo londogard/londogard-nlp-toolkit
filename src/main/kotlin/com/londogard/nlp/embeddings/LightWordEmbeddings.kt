@@ -1,9 +1,6 @@
 package com.londogard.nlp.embeddings
 
-import com.londogard.nlp.utils.getRows
-import org.ejml.data.MatrixType
 import org.ejml.simple.SimpleMatrix
-import java.nio.file.Path
 
 abstract class LightWordEmbeddings(
     override val dimensions: Int = DefaultEmbeddingDimension,
@@ -38,11 +35,5 @@ abstract class LightWordEmbeddings(
 
     private fun loadEmbeddings(inFilter: Set<String>) {
         embeddings.putAll(loadEmbeddingsFromFile(inFilter, maxWordCount))
-    }
-
-    companion object {
-        fun fromFilePath(path: Path): WordEmbeddings {
-            TODO("")
-        }
     }
 }

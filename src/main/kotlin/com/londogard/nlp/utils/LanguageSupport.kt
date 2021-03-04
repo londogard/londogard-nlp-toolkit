@@ -18,7 +18,7 @@ enum class LanguageSupport {
         else -> false
     }
 
-    fun hasStopwordSupport(): Boolean = when (this) {
+    fun hasStopWordSupport(): Boolean = when (this) {
         ar, az, da, de, el, en, es, fi, fr, hu, id, it,
         kk, ne, nl, no, pt, ro, ru, sl, sv, tg, tr -> true
         else -> false

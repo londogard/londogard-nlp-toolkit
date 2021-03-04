@@ -76,6 +76,7 @@ object WordFrequencies {
 
     private fun frequencyToZipf(frequency: Float): Float = log10(frequency) + 9
 
+    // TODO exchange for cache pattern in stopwords/stemmer
     private fun unpackFile(path: Path): Map<String, Float> {
         val unpackedFile by lazy {
             path.toFile()

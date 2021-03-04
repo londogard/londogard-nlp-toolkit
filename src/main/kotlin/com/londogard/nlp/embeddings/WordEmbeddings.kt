@@ -50,7 +50,8 @@ abstract class WordEmbeddings(
      */
     fun distance(input: List<String>, N: Int = 40): List<Pair<String, Double>> {
         val vectors = traverseVectors(input).reduce { acc, simpleMatrix -> acc + simpleMatrix }
-        vectors.iDiv(vectors.fdrm.fastNormF()) // in-place
+        vectors /= (vectors.fastNormF())
+        vectors.normF()
 
         return nearestNeighbours(vectors, outSet = input.toSet(), N = N)
     }
@@ -70,13 +71,12 @@ abstract class WordEmbeddings(
      * @return The N closest terms in the vocab to the analogy and their associated cosine similarity scores.
      */
     fun analogy(w1: String, w2: String, w3: String, N: Int = 40): List<Pair<String, Double>>? =
-        traverseVectors(listOf(w1, w2, w3))
-            .takeIf { vectors -> vectors.size == 3 }
+        traverseVectorsOrNull(listOf(w1, w2, w3))
             ?.let { vec ->
                 val vector = vec[1]
-                vector.fdrm.minusAssign(vec[0].fdrm)
-                vector.fdrm.plusAssign(vec[2].fdrm)
-                vector.iDiv(vector.fdrm.fastNormF())
+                vector -= vec[0]
+                vector += vec[2]
+                vector /= (vector.fastNormF())
 
                 nearestNeighbours(vector, outSet = setOf(w1, w2, w3), N = N)
             }
@@ -97,11 +97,5 @@ abstract class WordEmbeddings(
     fun pprint(words: List<Pair<String, Double>>) {
         println("\n%50s${" ".repeat(7)}Cosine distance\n${"-".repeat(72)}".format("Word"))
         println(words.joinToString("\n") { (word, dist) -> "%50s${" ".repeat(7)}%15f".format(word, dist) })
-    }
-
-    companion object {
-        fun fromFilePath(path: Path): WordEmbeddings {
-            TODO("")
-        }
     }
 }
