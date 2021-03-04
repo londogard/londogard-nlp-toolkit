@@ -17,7 +17,7 @@ import kotlin.math.min
 object WordFrequencies {
     private var cache: Pair<Path, Map<String, Float>>? = null
 
-    fun getAllWordFrequenciesOrNull(language: LanguageSupport, size: WordFrequencySize): Map<String, Float>? =
+    fun getAllWordFrequenciesOrNull(language: LanguageSupport, size: WordFrequencySize = WordFrequencySize.Largest): Map<String, Float>? =
         if (language.hasWordFrequencySupport()) {
             val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
             unpackFile(wordFrequencyPath)

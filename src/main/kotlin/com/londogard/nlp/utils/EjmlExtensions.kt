@@ -4,14 +4,24 @@ import org.ejml.data.FMatrixRMaj
 import org.ejml.dense.row.CommonOps_FDRM
 import org.ejml.dense.row.NormOps_FDRM
 import org.ejml.kotlin.*
+import org.ejml.simple.SimpleMatrix
+
 
 /** Basic Retrieval */
+fun SimpleMatrix.getRow(index: Int): SimpleMatrix = extractVector(true, index)
 fun FMatrixRMaj.getRow(row: Int, out: FMatrixRMaj? = null): FMatrixRMaj = CommonOps_FDRM.extractRow(this, row, out)
+
+fun SimpleMatrix.getRows(rows: IntArray): SimpleMatrix =
+    SimpleMatrix(CommonOps_FDRM.extract(fdrm, rows, numCols(), null))
 fun FMatrixRMaj.getRows(rows: IntArray, out: FMatrixRMaj? = null): FMatrixRMaj =
     CommonOps_FDRM.extract(this, rows, this.getNumCols(), out)
+
 fun FMatrixRMaj.sumCols(out: FMatrixRMaj? = null): FMatrixRMaj = CommonOps_FDRM.sumCols(this, out)
+fun SimpleMatrix.sumCols(): SimpleMatrix = SimpleMatrix(CommonOps_FDRM.sumCols(fdrm, null))
 
 /** Distance Algorithms */
+fun SimpleMatrix.euclideanDistance(other: SimpleMatrix): Double = (this - other).normF()
+fun SimpleMatrix.cosineDistance(other: SimpleMatrix): Double = this.dot(other) / (this.normF() * other.normF())
 fun FMatrixRMaj.euclideanDistance(other: FMatrixRMaj): Float = (this - other).normF()
 fun FMatrixRMaj.cosineDistance(other: FMatrixRMaj): Float = this.dot(other) / (this.normF() * other.normF())
 
@@ -24,8 +34,13 @@ fun FMatrixRMaj.scale(alpha: Float): FMatrixRMaj {
     return this
 }
 
-fun FMatrixRMaj.div(alpha: Float): FMatrixRMaj {
+fun FMatrixRMaj.iDiv(alpha: Float): FMatrixRMaj {
     CommonOps_FDRM.divide(this, alpha)
+    return this
+}
+
+fun SimpleMatrix.iDiv(alpha: Float): SimpleMatrix {
+    fdrm.iDiv(alpha)
     return this
 }
 

@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `maven-publish`
+    id("idea")
     kotlin("jvm") version "1.4.30"
     kotlin("plugin.serialization") version "1.4.30"
     id("org.jetbrains.dokka") version "1.4.20"
@@ -26,6 +27,8 @@ dependencies {
     implementation("org.ejml:ejml-fsparse:0.40")
     implementation("org.ejml:ejml-simple:0.40")
     implementation("org.ejml:ejml-kotlin:0.40")
+
+    implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
 
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.4.30")

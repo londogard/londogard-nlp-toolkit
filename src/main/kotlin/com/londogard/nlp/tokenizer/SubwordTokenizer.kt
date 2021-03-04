@@ -1,6 +1,7 @@
 package com.londogard.nlp.tokenizer
 
 import com.londogard.nlp.utils.LanguageSupport
+import com.londogard.nlp.utils.MapExtensions.toVocab
 import com.londogard.nlp.wordfreq.WordFrequencies
 import com.londogard.nlp.wordfreq.WordFrequencySize
 import kotlin.math.roundToInt
@@ -68,9 +69,7 @@ class SubwordTokenizer(val maxVocabSize: Short, vocab: Map<String, Int>) : Token
         fun fromLanguage(maxVocabSize: Short, language: LanguageSupport): SubwordTokenizer {
             val wordFreq = WordFrequencies.getAllWordFrequenciesOrNull(language, WordFrequencySize.Largest)
             println(wordFreq?.size)
-            val min = wordFreq?.values?.minOrNull() ?: throw IllegalArgumentException("Lang $language not supported")
-            val scale = (1 / min).roundToInt()
-            val vocab = wordFreq.mapValues { (_, value) -> (value * scale).roundToInt() }
+            val vocab = wordFreq?.toVocab() ?: throw IllegalArgumentException("Lang $language not supported")
 
             return SubwordTokenizer(maxVocabSize, vocab)
         }
