@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
     id("idea")
     kotlin("jvm") version "1.4.30"
-    kotlin("plugin.serialization") version "1.4.30"
+    kotlin("plugin.serialization") version "1.4.31"
     id("org.jetbrains.dokka") version "1.4.20"
 }
 
