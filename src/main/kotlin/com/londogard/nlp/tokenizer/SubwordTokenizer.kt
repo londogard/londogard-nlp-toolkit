@@ -57,12 +57,6 @@ class SubwordTokenizer(val maxVocabSize: Short, vocab: Map<String, Int>) : Token
 
     // Should be supplied serialized
     companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            val wordFreq = WordFrequencies.getAllWordFrequenciesOrNull(LanguageSupport.en, WordFrequencySize.Largest)
-            println(wordFreq?.size)
-        }
-
         // TODO
         //      - Vocab Size
         //      - Vocab % reduction

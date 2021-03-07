@@ -9,26 +9,26 @@ import com.londogard.nlp.utils.readLines
  * E.g. to retrieve Swedish stopwords use
  *  Stopwords.stopwords(sv)
  */
-object StopWords {
+object Stopwords {
     var cache: Pair<LanguageSupport, Set<String>>? = null
 
-    fun isStopWord(word: String, language: LanguageSupport): Boolean =
+    fun isStopword(word: String, language: LanguageSupport): Boolean =
         stopwordsOrNull(language)?.contains(word) == true
 
-    fun stopWords(language: LanguageSupport): Set<String> =
+    fun stopwords(language: LanguageSupport): Set<String> =
         stopwordsOrNull(language)
             ?: throw IllegalArgumentException("There exists not stopwords for language ${language.name}. Please try again with one of the supported languages.")
 
     fun stopwordsOrNull(language: LanguageSupport): Set<String>? {
-        val cacheStopWords = cache
+        val cacheStopwords = cache
 
         return when {
-            cacheStopWords?.first == language -> cacheStopWords.second
+            cacheStopwords?.first == language -> cacheStopwords.second
             language.hasStopWordSupport() -> {
-                val stopWords = DownloadHelper.getStopWords(language).readLines().toSet()
-                cache = language to stopWords
+                val stopwords = DownloadHelper.getStopWords(language).readLines().toSet()
+                cache = language to stopwords
 
-                stopWords
+                stopwords
             }
             else -> null
         }

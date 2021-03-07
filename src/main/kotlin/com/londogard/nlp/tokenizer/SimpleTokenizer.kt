@@ -1,6 +1,5 @@
 package com.londogard.nlp.tokenizer
 
-
 import java.util.*
 import java.util.regex.Pattern
 
@@ -10,7 +9,7 @@ import java.util.regex.Pattern
 class SimpleTokenizer(
     private val splitContraction: Boolean = false,
     private val whitespaceRegex: String = WHITESPACE
-): Tokenizer {
+) : Tokenizer {
     override fun split(text: String): List<String> {
         val whitespacePattern = Pattern.compile(whitespaceRegex)
         var updatedText = text

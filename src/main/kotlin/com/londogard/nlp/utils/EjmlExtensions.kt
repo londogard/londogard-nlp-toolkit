@@ -49,13 +49,3 @@ fun FMatrixRMaj.cosineDistanceOneToMany(other: FMatrixRMaj): FMatrixRMaj {
     CommonOps_FDRM.divide(other, other.normP2())
     return times(other)
 }
-
-
-
-fun main() {
-    val a = SimpleMatrix(1,3, true, floatArrayOf(1f,1f,1f))
-    val b = SimpleMatrix(1,3, true, floatArrayOf(1f,1f,1f))
-    println(a)
-    a /= 3f
-    println(a)
-}

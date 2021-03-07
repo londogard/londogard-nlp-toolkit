@@ -5,9 +5,7 @@ import com.londogard.nlp.utils.LanguageSupport
 import java.nio.file.Path
 import java.util.zip.GZIPInputStream
 import kotlin.math.log10
-import kotlin.math.max
 import kotlin.math.pow
-import kotlin.math.min
 
 /**
  * Returns word frequencies for a country (LanguageSupport).
@@ -17,7 +15,10 @@ import kotlin.math.min
 object WordFrequencies {
     private var cache: Pair<Path, Map<String, Float>>? = null
 
-    fun getAllWordFrequenciesOrNull(language: LanguageSupport, size: WordFrequencySize = WordFrequencySize.Largest): Map<String, Float>? =
+    fun getAllWordFrequenciesOrNull(
+        language: LanguageSupport,
+        size: WordFrequencySize = WordFrequencySize.Largest
+    ): Map<String, Float>? =
         if (language.hasWordFrequencySupport()) {
             val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
             unpackFile(wordFrequencyPath)
@@ -35,35 +36,31 @@ object WordFrequencies {
         minimum: Float = 0f,
         size: WordFrequencySize = WordFrequencySize.Smallest
     ): Float =
-        wordFrequencyOrNull(word, language, minimum, size)
-            ?: throw IllegalArgumentException("There exists not word frequency for language ${language.name} with size ${size.name}. Please try again with one of the supported language/size combinations.")
+        if (language.hasWordFrequencySupport()) {
+            wordFrequencyOrNull(word, language, size) ?: minimum
+        } else throw IllegalArgumentException("There exists not word frequency for language ${language.name} with size ${size.name}. Please try again with one of the supported language/size combinations.")
 
     fun wordFrequencyOrNull(
         word: String,
         language: LanguageSupport,
-        minimum: Float = 0f,
         size: WordFrequencySize = WordFrequencySize.Smallest
     ): Float? =
         if (language.hasWordFrequencySupport()) {
             val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
             val wordFrequencies = unpackFile(wordFrequencyPath)
-            val wordEntry = wordFrequencies[word.toLowerCase()] ?: minimum
 
-            max(wordEntry, minimum)
+            wordFrequencies[word.toLowerCase()]
         } else null
 
     fun zipfFrequencyOrNull(
         word: String,
         language: LanguageSupport,
-        minimum: Float = 0f,
         size: WordFrequencySize = WordFrequencySize.Smallest
     ): Float? =
         if (language.hasWordFrequencySupport()) {
             val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
             val wordFrequencies = unpackFile(wordFrequencyPath)
-            val wordEntry = wordFrequencies[word.toLowerCase()]?.let(this::frequencyToZipf) ?: minimum
-
-            max(wordEntry, minimum)
+            wordFrequencies[word.toLowerCase()]?.let(this::frequencyToZipf)
         } else null
 
     fun zipfFrequency(
@@ -71,8 +68,10 @@ object WordFrequencies {
         language: LanguageSupport,
         minimum: Float = 0f,
         size: WordFrequencySize = WordFrequencySize.Smallest
-    ): Float = zipfFrequencyOrNull(word, language, minimum, size)
-        ?: throw IllegalArgumentException("There exists not word frequency for language ${language.name} with size ${size.name}. Please try again with one of the supported language/size combinations.")
+    ): Float =
+        if (language.hasWordFrequencySupport()) {
+            zipfFrequencyOrNull(word, language, size) ?: minimum
+        } else throw IllegalArgumentException("There exists not word frequency for language ${language.name} with size ${size.name}. Please try again with one of the supported language/size combinations.")
 
     private fun frequencyToZipf(frequency: Float): Float = log10(frequency) + 9
 

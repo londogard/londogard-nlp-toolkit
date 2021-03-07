@@ -1,10 +1,7 @@
 package com.londogard.nlp.stemmer
 
-import com.londogard.nlp.stopwords.StopWords
-import com.londogard.nlp.utils.DownloadHelper
 import com.londogard.nlp.utils.LanguageSupport
 import com.londogard.nlp.utils.LanguageSupport.*
-import com.londogard.nlp.utils.readLines
 import org.tartarus.snowball.SnowballStemmer
 import org.tartarus.snowball.ext.*
 
