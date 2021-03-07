@@ -31,7 +31,7 @@ dependencies {
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
 
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.4.30")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.4.31")
     testImplementation(kotlin("test-junit"))
 }
 
