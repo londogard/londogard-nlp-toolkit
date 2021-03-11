@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/com.londogard/embeddings-kt.svg)](https://jitpack.io/#com.londogard/embeddings-kt)
+[![](https://jitpack.io/v/com.londogard/londogard-nlp-toolkit.svg)](https://jitpack.io/#com.londogard/londogard-nlp-toolkit)
 
 # londogard-nlp-toolkit
 Londogard Natural Language Processing Toolkit written in Kotlin for the JVM.
