@@ -1,7 +1,17 @@
 # londogard-nlp-toolkit
-Londogard Natural Language Processing Toolkit written in Kotlin
+Londogard Natural Language Processing Toolkit written in Kotlin for the JVM.
 
 :warning: Still Work In Progress :warning:  
+
+A lot of the modules are still in a good place 🥳
+✔️WordEmbeddings (`WordEmbeddings` & `LightWordEmbeddings`)
+✔️Stopwords
+✔️WordFrequencies
+✔️Tokenizer (`CharTokenizer` & `SimpleTokenizer`)
+✔️Stemmer
+✔️Basic Trie
+✔️Sentence Embeddings (`AvgSentenceEmbeddings` & `USifEmbeddings`)
+
 But there's a lot of usable stuffs such as Stopwords, WordFrequencies, Stemmer, Tokenizer & WordEmbeddings!
 
 ## Language Support
