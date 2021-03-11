@@ -1,5 +1,6 @@
 package com.londogard.nlp.embeddings
 
+<<<<<<< Updated upstream
 import com.londogard.nlp.utils.LanguageSupport
 import com.londogard.nlp.utils.useLines
 import org.ejml.simple.SimpleMatrix
@@ -34,4 +35,7 @@ object EmbeddingLoader {
                 }
 
     internal fun byLanguage(languageSupport: LanguageSupport): Map<String, SimpleMatrix> = TODO("") // https://fasttext.cc/docs/en/crawl-vectors.html
+=======
+object EmbeddingLoader {
+>>>>>>> Stashed changes
 }

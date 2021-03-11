@@ -1,5 +1,6 @@
 package com.londogard.nlp.embeddings.sentence
 
+<<<<<<< Updated upstream
 import com.londogard.nlp.embeddings.Embeddings
 import com.londogard.nlp.utils.*
 import org.ejml.simple.SimpleMatrix
@@ -64,4 +65,7 @@ class USifSentenceEmbeddings(
                 .apply { this /= processedTokens.size.toFloat() }
         }
     }
+=======
+class USifEmbeddings {
+>>>>>>> Stashed changes
 }

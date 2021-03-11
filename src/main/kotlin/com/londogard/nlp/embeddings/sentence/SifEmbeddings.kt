@@ -1,5 +1,6 @@
 package com.londogard.nlp.embeddings.sentence
 
+<<<<<<< Updated upstream
 import com.londogard.nlp.embeddings.Embeddings
 import org.ejml.simple.SimpleMatrix
 /** TODO
@@ -56,3 +57,7 @@ class SifEmbeddings(override val tokenEmbeddings: Embeddings): SentenceEmbedding
     }
 }
 */
+=======
+class SifEmbeddings {
+}
+>>>>>>> Stashed changes

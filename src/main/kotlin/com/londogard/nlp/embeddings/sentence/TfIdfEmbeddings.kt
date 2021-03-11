@@ -1,5 +1,6 @@
 package com.londogard.nlp.embeddings.sentence
 
+<<<<<<< Updated upstream
 import com.londogard.nlp.embeddings.Embeddings
 
 /** TODO
@@ -33,3 +34,7 @@ class TfIdfSentenceEmbeddings(override val tokenEmbeddings: Embeddings) : Senten
     }
 }
 */
+=======
+class TfIdfEmbeddings {
+}
+>>>>>>> Stashed changes
