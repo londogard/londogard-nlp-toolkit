@@ -15,7 +15,6 @@ repositories {
     mavenCentral()
     jcenter()
     maven("https://jitpack.io")
-    maven("https://dl.bintray.com/mipt-npm/scientifik")
 }
 
 val kluentVersion: String by project

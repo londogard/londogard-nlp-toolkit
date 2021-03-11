@@ -40,8 +40,23 @@ internal object DownloadHelper {
         return path
     }
 
+    fun getWordEmbeddings(language: LanguageSupport): Path {
+        val filename = "cc.${language.name}.300.vec"
+        val path = embeddingPath.resolve(filename)
+        if (!Files.exists(path)) {
+            println("Language ${language.name} does not have word embeddings locally. Will download (could be GBs)...")
+            val url = "https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/$filename.gz"
+            // TODO extract file too
+            url.saveTo(path)
+
+            println("Download done! ${language.name} word embeddings located at ${path.toAbsolutePath()}")
+        }
+        return path
+    }
+
     private fun String.saveTo(path: Path) {
         Files.createDirectories(path.parent)
+
         URL(this).openStream().use { input ->
             path.toFile().outputStream().use { output ->
                 input.copyTo(output)

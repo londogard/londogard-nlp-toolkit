@@ -1,22 +1,18 @@
 package com.londogard.nlp.embeddings
 
+import com.londogard.nlp.embeddings.EmbeddingLoader.DefaultEmbeddingDimension
 import org.ejml.simple.SimpleMatrix
+import java.nio.file.Path
 
 abstract class LightWordEmbeddings(
+    override val filePath: Path,
     override val dimensions: Int = DefaultEmbeddingDimension,
-    //override val filename: String = DownloadHelper.embeddingPath,
     override val delimiter: Char = ' ',
-    override val normalized: Boolean = true,
     private val maxWordCount: Int = 1000
 ) : Embeddings() {
-    // TODO fix ugly hack!
     override val embeddings: MutableMap<String, SimpleMatrix> = mutableMapOf()
 
-    init {
-    //    if (filename == DownloadHelper.embeddingPath && !DownloadHelper.embeddingsExist())
-    //        DownloadHelper.downloadGloveEmbeddings()
-        loadEmbeddings(inFilter = emptySet())
-    }
+    init { loadEmbeddings(inFilter = emptySet()) }
 
     fun addWords(words: Set<String>) {
         val embeddingKeys = embeddings.keys
@@ -34,6 +30,6 @@ abstract class LightWordEmbeddings(
     }
 
     private fun loadEmbeddings(inFilter: Set<String>) {
-        embeddings.putAll(loadEmbeddingsFromFile(inFilter, maxWordCount))
+        embeddings.putAll(EmbeddingLoader.fromFile(filePath, delimiter, dimensions, inFilter, maxWordCount))
     }
 }

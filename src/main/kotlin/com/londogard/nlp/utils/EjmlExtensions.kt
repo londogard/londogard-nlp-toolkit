@@ -21,10 +21,28 @@ fun SimpleMatrix.cosineDistance(other: SimpleMatrix): Double = this.dot(other) /
 /** Fast Normalizers: OBS prone to overflows/underflows */
 fun SimpleMatrix.fastNormF(): Float = NormOps_FDRM.fastNormF(fdrm)
 
+fun SimpleMatrix.colSum(): SimpleMatrix {
+    val colSum = DoubleArray(numCols()) { j ->
+        (0 until numRows()).fold(0.0) { acc , i -> acc + get(i, j) }
+    }
+
+    return SimpleMatrix(1, numCols(), true, colSum)
+}
+fun SimpleMatrix.normalize(): SimpleMatrix = divide(normF())
+
 /** Basic Operations */
 fun FMatrixRMaj.scale(alpha: Float): FMatrixRMaj {
     CommonOps_FDRM.scale(alpha, this)
     return this
+}
+
+fun SimpleMatrix.iScale(alpha: Float): SimpleMatrix {
+    CommonOps_FDRM.scale(alpha, fdrm)
+    return this
+}
+
+operator fun SimpleMatrix.timesAssign(alpha: Float) {
+    CommonOps_FDRM.scale(alpha, fdrm)
 }
 
 operator fun SimpleMatrix.divAssign(alpha: Float) {
@@ -36,6 +54,8 @@ operator fun SimpleMatrix.minusAssign(other: SimpleMatrix) {
 operator fun SimpleMatrix.plusAssign(other: SimpleMatrix) {
     fdrm += other.fdrm
 }
+
+
 
 // def similarities_vectorized2(vector_data):
 //    norms = np.linalg.norm(vector_data, axis=1)

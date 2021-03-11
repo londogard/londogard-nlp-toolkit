@@ -1,19 +1,18 @@
 package com.londogard.nlp.embeddings
 
+import com.londogard.nlp.embeddings.EmbeddingLoader.DefaultEmbeddingDimension
 import com.londogard.nlp.utils.*
-import org.ejml.kotlin.*
 import org.ejml.simple.SimpleMatrix
 import java.nio.file.Path
 
 // TODO fix languageSupport etc
 abstract class WordEmbeddings(
     override val dimensions: Int = DefaultEmbeddingDimension,
-    //override val filename: String = DownloadHelper.embeddingPath,
     override val delimiter: Char = ' ',
-    override val normalized: Boolean = true
+    override val filePath: Path
 ) : Embeddings() {
     /** Vocabulary, word to embedded space */
-    override val embeddings: Map<String, SimpleMatrix> by lazy { loadEmbeddingsFromFile() }
+    override val embeddings: Map<String, SimpleMatrix> by lazy { EmbeddingLoader.fromFile(filePath, delimiter, dimensions) }
 
     init {
 //        if (filename == DownloadHelper.embeddingPath && !DownloadHelper.embeddingsExist())

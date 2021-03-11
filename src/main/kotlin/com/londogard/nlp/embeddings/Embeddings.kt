@@ -4,13 +4,12 @@ import com.londogard.nlp.utils.cosineDistance
 import com.londogard.nlp.utils.euclideanDistance
 import com.londogard.nlp.utils.useLines
 import org.ejml.simple.SimpleMatrix
-import java.nio.file.Paths
+import java.nio.file.Path
 
 abstract class Embeddings {
     abstract val dimensions: Int
     abstract val delimiter: Char
-    abstract val normalized: Boolean
-    abstract val filename: String
+    abstract val filePath: Path
 
     internal abstract val embeddings: Map<String, SimpleMatrix>
 
@@ -45,29 +44,4 @@ abstract class Embeddings {
      */
     fun cosineDistance(w1: String, w2: String): Double? = traverseVectorsOrNull(listOf(w1, w2))
         ?.let { vectors -> vectors.first().cosineDistance(vectors.last()) }
-
-    internal fun loadEmbeddingsFromFile(
-        inFilter: Set<String> = emptySet(),
-        maxWordCount: Int = Int.MAX_VALUE
-    ): Map<String, SimpleMatrix> =
-        Paths
-            .get(filename)
-            .useLines { lines ->
-                lines
-                    .filter { line -> inFilter.isEmpty() || inFilter.contains(line.takeWhile { it != delimiter }) }
-                    .mapNotNull { line ->
-                        line
-                            .split(delimiter)
-                            .filterNot { it.isEmpty() || it.isBlank() }
-                            .takeIf { it.size > dimensions }
-                            ?.let { elems ->
-                                val key = elems.first()
-                                val value = FloatArray(dimensions) { i -> elems[i + 1].toFloat() }
-                                key to value
-                            }
-                    }
-                    .take(maxWordCount)
-                    .map { (key, value) -> key to SimpleMatrix(1, dimensions, true, value) }
-                    .toMap()
-            }
 }
