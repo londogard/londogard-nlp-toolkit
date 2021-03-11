@@ -14,8 +14,6 @@ A lot of the modules are still in a good place 🥳
 ✔️Basic Trie  
 ✔️Sentence Embeddings (`AvgSentenceEmbeddings` & `USifEmbeddings`)
 
-But there's a lot of usable stuffs such as Stopwords, WordFrequencies, Stemmer, Tokenizer & WordEmbeddings!
-
 ## Installation
 **Jitpack (the easiest)**
 
