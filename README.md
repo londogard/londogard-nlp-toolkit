@@ -16,6 +16,21 @@ A lot of the modules are still in a good place 🥳
 
 But there's a lot of usable stuffs such as Stopwords, WordFrequencies, Stemmer, Tokenizer & WordEmbeddings!
 
+## Installation
+**Jitpack (the easiest)**
+
+Add the following to your build.gradle. `$version` should be equal to the version supplied by tag above.
+```bash
+repositories {
+  maven { url "https://jitpack.io" }
+}
+dependencies {
+  implementation 'com.londogard:londogard-nlp-toolkit:$version'
+}
+```
+
+**GitHub Packages** is also available, look into their docs on how to use this or see other libraries by _londogard_.
+
 ## Language Support
 `LanguageSupport` is a core Enum which involves everything that's supported.  
 Most of the supported things such as `Stopwords` and `WordFrequencies` are 
