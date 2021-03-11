@@ -1,5 +1,6 @@
 package com.londogard.nlp.embeddings.sentence
 
+<<<<<<< Updated upstream
 import com.londogard.nlp.embeddings.Embeddings
 import com.londogard.nlp.utils.normalize
 import org.ejml.simple.SimpleMatrix
@@ -14,4 +15,7 @@ class AverageSentenceEmbeddings(override val tokenEmbeddings: Embeddings): Sente
             .reduce { acc, simpleMatrix -> acc + simpleMatrix }
             .normalize()
     }
+=======
+class AverageSentenceEmbeddings {
+>>>>>>> Stashed changes
 }
