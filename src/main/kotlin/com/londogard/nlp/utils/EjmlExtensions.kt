@@ -6,7 +6,6 @@ import org.ejml.dense.row.NormOps_FDRM
 import org.ejml.kotlin.*
 import org.ejml.simple.SimpleMatrix
 
-
 /** Basic Retrieval */
 fun SimpleMatrix.getRow(index: Int): SimpleMatrix = extractVector(true, index)
 fun SimpleMatrix.getRows(rows: IntArray): SimpleMatrix =
@@ -23,11 +22,27 @@ fun SimpleMatrix.fastNormF(): Float = NormOps_FDRM.fastNormF(fdrm)
 
 fun SimpleMatrix.colSum(): SimpleMatrix {
     val colSum = DoubleArray(numCols()) { j ->
-        (0 until numRows()).fold(0.0) { acc , i -> acc + get(i, j) }
+        (0 until numRows()).fold(0.0) { acc, i -> acc + get(i, j) }
     }
 
     return SimpleMatrix(1, numCols(), true, colSum)
 }
+
+fun List<SimpleMatrix>.avgNorm(): SimpleMatrix {
+
+    val first = this.first()
+    val result = fold(SimpleMatrix(0, first.numCols())) {
+        acc, simpleMatrix ->
+        acc += simpleMatrix
+        acc
+    }
+    result /= result.normF().toFloat()
+
+    return result
+}
+
+fun SimpleMatrix.colNormalize(): SimpleMatrix = colSum().normalize()
+
 fun SimpleMatrix.normalize(): SimpleMatrix = divide(normF())
 
 /** Basic Operations */
@@ -48,13 +63,14 @@ operator fun SimpleMatrix.timesAssign(alpha: Float) {
 operator fun SimpleMatrix.divAssign(alpha: Float) {
     CommonOps_FDRM.divide(fdrm, alpha)
 }
+
 operator fun SimpleMatrix.minusAssign(other: SimpleMatrix) {
     fdrm -= other.fdrm
 }
+
 operator fun SimpleMatrix.plusAssign(other: SimpleMatrix) {
     fdrm += other.fdrm
 }
-
 
 
 // def similarities_vectorized2(vector_data):

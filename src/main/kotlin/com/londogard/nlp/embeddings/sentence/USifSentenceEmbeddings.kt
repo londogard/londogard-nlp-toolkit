@@ -5,7 +5,10 @@ import com.londogard.nlp.utils.*
 import org.ejml.simple.SimpleMatrix
 import kotlin.math.pow
 
-// Implementation based on: https://github.com/kawine/usif/blob/master/usif.py
+/**
+ * This implementation is based on the paper: _Unsupervised Random Walk Sentence Embeddings: A Strong but Simple Baseline_
+ * (https://www.aclweb.org/anthology/W18-3012/)
+ */
 class USifSentenceEmbeddings(
     override val tokenEmbeddings: Embeddings,
     private val wordProb: Map<String, Float>,
@@ -17,7 +20,13 @@ class USifSentenceEmbeddings(
     private val alpha = wordProb.count { (_, prob) -> prob > threshold } / vocabSize
     private val Z = vocabSize / 2
     private val a = (1 - alpha) / (alpha * Z)
-    private val defaultVector by lazy { SimpleMatrix(1, tokenEmbeddings.dimensions, true, FloatArray(tokenEmbeddings.dimensions) { a }) }
+    private val defaultVector by lazy {
+        SimpleMatrix(
+            1,
+            tokenEmbeddings.dimensions,
+            true,
+            FloatArray(tokenEmbeddings.dimensions) { a })
+    }
 
     init {
         if (randomWalkLength < 0) throw IllegalArgumentException("randomWalkLength must be greater than 0 (was: $randomWalkLength)")
@@ -27,10 +36,11 @@ class USifSentenceEmbeddings(
 
     override fun getSentenceEmbeddings(listOfSentences: List<List<String>>): List<SimpleMatrix> {
         val vectors = listOfSentences.map(this::getSentenceEmbedding)
+
         return if (numCommonDiscourseVector == 0) vectors
         else {
             val svd = vectors.first()
-                .concatRows(*Array(vectors.size -1) { i -> vectors[i+1] })
+                .concatRows(*Array(vectors.size - 1) { i -> vectors[i + 1] })
                 .svd(true)
 
             val singularValueSum = svd.singularValues.sumOf { it * it }

@@ -1,23 +1,18 @@
 package com.londogard.nlp.embeddings
 
-import com.londogard.nlp.embeddings.EmbeddingLoader.DefaultEmbeddingDimension
+import com.londogard.nlp.embeddings.EmbeddingLoader.FastTextDefaultEmbeddingDimension
 import com.londogard.nlp.utils.*
 import org.ejml.simple.SimpleMatrix
 import java.nio.file.Path
 
-// TODO fix languageSupport etc
-abstract class WordEmbeddings(
-    override val dimensions: Int = DefaultEmbeddingDimension,
-    override val delimiter: Char = ' ',
-    override val filePath: Path
-) : Embeddings() {
+class WordEmbeddings(
+    override val filePath: Path,
+    override val dimensions: Int = FastTextDefaultEmbeddingDimension,
+    override val delimiter: Char = ' '
+) : Embeddings {
     /** Vocabulary, word to embedded space */
-    override val embeddings: Map<String, SimpleMatrix> by lazy { EmbeddingLoader.fromFile(filePath, delimiter, dimensions) }
-
-    init {
-//        if (filename == DownloadHelper.embeddingPath && !DownloadHelper.embeddingsExist())
-//            DownloadHelper.downloadGloveEmbeddings()
-    }
+    override val embeddings: Map<String, SimpleMatrix> by lazy { EmbeddingLoader.fromFile(filePath, delimiter) }
+    override val vocabulary: Set<String> by lazy { embeddings.keys }
 
     /** Find N closest terms in the vocab to the given vector, using only words from the in-set (if defined)
      * and excluding all words from the out-set (if non-empty).  Although you can, it doesn't make much
@@ -90,11 +85,13 @@ abstract class WordEmbeddings(
             ?.let { vec -> nearestNeighbours(vec, inSet = set, N = set.size) }
             ?: emptyList()
 
-    /** Pretty print the list of words and their associated scores.
-     * @param words List of (word, score) pairs to be printed.
-     */
-    fun pprint(words: List<Pair<String, Double>>) {
-        println("\n%50s${" ".repeat(7)}Cosine distance\n${"-".repeat(72)}".format("Word"))
-        println(words.joinToString("\n") { (word, dist) -> "%50s${" ".repeat(7)}%15f".format(word, dist) })
+    companion object {
+        /** Pretty print the list of words and their associated scores.
+         * @param words List of (word, score) pairs to be printed.
+         */
+        fun pprint(words: List<Pair<String, Double>>) {
+            println("\n%50s${" ".repeat(7)}Cosine distance\n${"-".repeat(72)}".format("Word"))
+            println(words.joinToString("\n") { (word, dist) -> "%50s${" ".repeat(7)}%15f".format(word, dist) })
+        }
     }
 }

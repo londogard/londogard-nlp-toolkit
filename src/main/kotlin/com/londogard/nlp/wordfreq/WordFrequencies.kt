@@ -1,7 +1,9 @@
 package com.londogard.nlp.wordfreq
 
+import com.londogard.nlp.utils.CompressionUtil
 import com.londogard.nlp.utils.DownloadHelper
 import com.londogard.nlp.utils.LanguageSupport
+import java.io.InputStream
 import java.nio.file.Path
 import java.util.zip.GZIPInputStream
 import kotlin.math.log10
@@ -78,10 +80,9 @@ object WordFrequencies {
     // TODO exchange for cache pattern in stopwords/stemmer
     private fun unpackFile(path: Path): Map<String, Float> {
         val unpackedFile by lazy {
-            path.toFile()
-                .inputStream()
-                .let(::GZIPInputStream)
-                .let(GZIPInputStream::bufferedReader)
+            CompressionUtil
+                .gunzip(path)
+                .let(InputStream::bufferedReader)
                 .useLines { lines ->
                     lines
                         .mapIndexed { index, line ->
