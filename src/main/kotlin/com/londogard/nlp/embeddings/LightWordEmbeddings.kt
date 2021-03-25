@@ -19,7 +19,6 @@ class LightWordEmbeddings(
         val embeddingKeys = embeddings.keys
         val leftToAdd = words - embeddingKeys
 
-        // TODO can be optimized by doing in-place updates to matrix
         if (leftToAdd.isNotEmpty() && leftToAdd.size + embeddings.size > maxWordCount) {
             val toRemove = (embeddings.keys - words).take(leftToAdd.size + embeddings.size - maxWordCount)
 
@@ -31,6 +30,6 @@ class LightWordEmbeddings(
     }
 
     private fun loadEmbeddings(inFilter: Set<String>) {
-        embeddings.putAll(EmbeddingLoader.fromFile(filePath, delimiter, dimensions, inFilter, maxWordCount))
+        embeddings.putAll(EmbeddingLoader.fromFile(filePath, delimiter, inFilter, maxWordCount))
     }
 }
