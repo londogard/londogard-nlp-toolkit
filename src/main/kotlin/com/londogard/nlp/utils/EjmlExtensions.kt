@@ -1,6 +1,7 @@
 package com.londogard.nlp.utils
 
 import org.ejml.data.FMatrixRMaj
+import org.ejml.data.MatrixType
 import org.ejml.dense.row.CommonOps_FDRM
 import org.ejml.dense.row.NormOps_FDRM
 import org.ejml.kotlin.*
@@ -28,14 +29,9 @@ fun SimpleMatrix.colSum(): SimpleMatrix {
     return SimpleMatrix(1, numCols(), true, colSum)
 }
 
+// TODO optimize to be in-place
 fun List<SimpleMatrix>.avgNorm(): SimpleMatrix {
-
-    val first = this.first()
-    val result = fold(SimpleMatrix(0, first.numCols())) {
-        acc, simpleMatrix ->
-        acc += simpleMatrix
-        acc
-    }
+    val result = reduce { acc, simpleMatrix -> acc + simpleMatrix }
     result /= result.normF().toFloat()
 
     return result
@@ -69,7 +65,8 @@ operator fun SimpleMatrix.minusAssign(other: SimpleMatrix) {
 }
 
 operator fun SimpleMatrix.plusAssign(other: SimpleMatrix) {
-    fdrm += other.fdrm
+    if (this.type == MatrixType.FDRM) fdrm += other.fdrm
+    else ddrm += other.ddrm
 }
 
 

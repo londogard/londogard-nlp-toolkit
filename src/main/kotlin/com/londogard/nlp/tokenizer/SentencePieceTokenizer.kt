@@ -5,7 +5,6 @@ import com.londogard.nlp.utils.DownloadHelper
 import com.londogard.nlp.utils.LanguageSupport
 import com.londogard.nlp.utils.readLines
 import java.nio.file.Path
-import javax.swing.plaf.basic.BasicScrollPaneUI
 
 class SentencePieceTokenizer(modelPath: Path, vocabPath: Path? = null): Tokenizer {
     private val sentencePieceTokenizer = SpTokenizer(modelPath)
@@ -23,7 +22,9 @@ class SentencePieceTokenizer(modelPath: Path, vocabPath: Path? = null): Tokenize
 
         fun fromLanguageSupportAndSizeOrNull(languageSupport: LanguageSupport, vocabSize: VocabSize) =
             if (languageSupport.hasSentencePiece()) {
-                val (vocab, model) = DownloadHelper.getBpeModelVocab(languageSupport, vocabSize.size)
+                val (vocab, model) = DownloadHelper.getBpeVocabModel(languageSupport, vocabSize.size)
+                println(vocab)
+                println(model)
                 SentencePieceTokenizer(model, vocab)
             } else null
     }

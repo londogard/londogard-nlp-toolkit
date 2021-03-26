@@ -5,6 +5,7 @@ import com.londogard.nlp.utils.LanguageSupport
 import com.londogard.nlp.utils.useLines
 import org.ejml.simple.SimpleMatrix
 import java.nio.file.Path
+import kotlin.io.path.bufferedReader
 import kotlin.math.min
 
 object EmbeddingLoader {
@@ -31,16 +32,24 @@ object EmbeddingLoader {
                           maxWordCount: Int = Int.MAX_VALUE): Map<String, SimpleMatrix> =
         path
             .useLines { lines ->
-                val (numLines, dimensions) = lines.first().split(delimiter).take(2).map(String::toInt)
-                lines
+                val iterator = lines.iterator()
+                val (numLines, dimensions) = iterator.next().split(delimiter).take(2).map(String::toInt)
+                val numLinesToUse = min(maxWordCount, numLines)
+
+                iterator
+                    .asSequence()
                     .map { line -> line.split(delimiter) }
                     .filter { split -> inFilter.isEmpty() || inFilter.contains(split.first()) }
-                    .take(min(maxWordCount, numLines))
-                    .toList()   // Optimizing toMap()
+                    .take(numLinesToUse)
                     .map { points ->
                         val floatArray = FloatArray(dimensions) { i -> points[i + 1].toFloat() }
                         points.first() to SimpleMatrix(1, dimensions, true, floatArray)
                     }
-                    .toMap()
+                    .toMap(LinkedHashMap(numLinesToUse)) // optimization by creating the full map directly
             }
+}
+
+fun main() {
+    EmbeddingLoader.fromLanguageOrNull<BpeEmbeddings>(LanguageSupport.sv)?.vector("hej")
+
 }

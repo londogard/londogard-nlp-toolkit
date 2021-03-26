@@ -1,6 +1,7 @@
 package com.londogard.nlp.utils
 
 import com.londogard.nlp.embeddings.EmbeddingLoader.BpeDefaultEmbeddingDimension
+import com.londogard.nlp.tokenizer.toVocabSize
 import com.londogard.nlp.wordfreq.WordFrequencySize
 import java.net.URL
 import java.nio.file.Files
@@ -68,7 +69,7 @@ internal object DownloadHelper {
         "$bpeUrl/$language/$language.wiki.bpe.vs$numMerges"
 
     // TODO improve by `data class`
-    fun getBpeModelVocab(language: LanguageSupport, vocabSize: Int = 10_000): Pair<Path, Path> {
+    fun getBpeVocabModel(language: LanguageSupport, vocabSize: Int = 10_000): Pair<Path, Path> {
         val baseUrl = getBpeBaseUrl(language, vocabSize)
         val vocab = getBpeFile("$baseUrl.vocab")
         val model = getBpeFile("$baseUrl.model")
