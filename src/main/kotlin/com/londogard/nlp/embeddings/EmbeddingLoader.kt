@@ -50,6 +50,6 @@ object EmbeddingLoader {
 }
 
 fun main() {
-    EmbeddingLoader.fromLanguageOrNull<BpeEmbeddings>(LanguageSupport.sv)?.vector("hej")
-
+    val embeddings = EmbeddingLoader.fromLanguageOrNull<LightWordEmbeddings>(LanguageSupport.sv)
+    println(embeddings?.vector("Hej"))
 }

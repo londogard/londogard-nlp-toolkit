@@ -53,7 +53,7 @@ enum class LanguageSupport {
         ar, cs, de, en, es, fi, fr, it, ja, nl, pl, uk,
         pt, ru, zh, bg, bn, ca, da, el, fa, he, hi, ba, hr, rs, me,
         hu, id, ko, lv, mk, ms, nb, no, ro, sh, sv, tr -> true
-        else -> true
+        else -> false
     }
 
     fun largestWordFrequency(): String? = when (this) {

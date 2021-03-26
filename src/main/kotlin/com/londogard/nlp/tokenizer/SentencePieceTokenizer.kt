@@ -23,13 +23,10 @@ class SentencePieceTokenizer(modelPath: Path, vocabPath: Path? = null): Tokenize
         fun fromLanguageSupportAndSizeOrNull(languageSupport: LanguageSupport, vocabSize: VocabSize) =
             if (languageSupport.hasSentencePiece()) {
                 val (vocab, model) = DownloadHelper.getBpeVocabModel(languageSupport, vocabSize.size)
-                println(vocab)
-                println(model)
                 SentencePieceTokenizer(model, vocab)
             } else null
     }
 }
-
 
 fun Int.toVocabSize(): VocabSize? =
     VocabSize.values().find { size -> size.size == this }
