@@ -1,5 +1,7 @@
 [![](https://jitpack.io/v/com.londogard/londogard-nlp-toolkit.svg)](https://jitpack.io/#com.londogard/londogard-nlp-toolkit)
 
+OBS: Latest release is `1.0-beta` - jitpack believes SNAPSHOT to be later than beta. I don't. 😜
+
 # londogard-nlp-toolkit
 Londogard Natural Language Processing Toolkit written in Kotlin for the JVM.  
 This toolkit will be used throughout Londogard libraries/products such as our Summarizer, Text-Generation & more.
