@@ -4,9 +4,6 @@
 Londogard Natural Language Processing Toolkit written in Kotlin for the JVM.  
 This toolkit will be used throughout Londogard libraries/products such as our Summarizer, Text-Generation & more.
 
-⚠️ Still Work In Progress ⚠️  
-
-A lot of the components are in a good place already 🥳  
 First of, `LanguageSupport.<ISO_COUNTRY_CODE>`helps figuring out what is and isn't supported for certain languages. Utilities that makes sense to provide your own data, like Word Embeddings & Tokenizers, are available for any language if you provide your own models.
 
 - ✔️Word Embeddings including basic Word Embeddings, 'Light Word Embeddings' & BytePairEmbeddings
