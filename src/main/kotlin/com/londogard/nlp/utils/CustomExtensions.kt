@@ -5,6 +5,8 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.attribute.FileAttribute
 
+/** Custom extensions for Path taken from Kotlin EXPERIMENTAL. */
+
 // Taken from Kotlin stdlib (EXPERIMENTAL)
 internal inline fun Path.readLines(charset: Charset = Charsets.UTF_8): List<String> =
     Files.readAllLines(this, charset)

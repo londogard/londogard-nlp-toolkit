@@ -3,7 +3,9 @@ package com.londogard.nlp.utils
 /**
  * All languages and their support.
  * For conversion from ISO-code, see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
- * 'nb' = Norwegian Bokmål. But you can call 'no' too.
+ *
+ * 'nb' = Norwegian Bokmål. Calling 'no' is the recommended way as that supports
+ * most and automatically cast to 'nb' if required.
  */
 enum class LanguageSupport {
     ab, ace, ady, af, ak, als, am, an, ang, ar, arc, arz, `as`, ast, atj, av, ay, az, azb,
@@ -20,14 +22,14 @@ enum class LanguageSupport {
     ta, tcy, te, tet, tg, th, ti, tk, tl, tn, to, tpi, tr, ts, tt, tum, tw, ty, tyv, udm, ug, uk, ur, uz,
     ve, vec, vep, vi, vls, vo, wa, war, wo, wuu, xal, xh, xmf, yi, yo, za, zea, zh, zu;
 
-    // Supported through SnowballStemmer (http://snowball.tartarus.org/)
+    /** Validates if Stemmer is supported for LanguageSupport. Support via [SnowballStemmer](http://snowball.tartarus.org/) */
     fun hasStemmer(): Boolean = when (this) {
         sv, nl, en, fi, fr, de, hu, it, no, pt, ro, ru, es, tr -> true
         else -> false
     }
 
-    // Supported through FastText vectors (https://fasttext.cc/docs/en/crawl-vectors.html)
-    fun hasWordEmbeddings(): Boolean = when (this) { // TODO add fastText vector extraction
+    /** Validates if WordEmbedding (fastText) is downloadable for LanguageSupport. Support via [fastText](https://fasttext.cc/docs/en/crawl-vectors.html) */
+    fun hasWordEmbeddings(): Boolean = when (this) {
         en, ky, xmf, mwl, tt, vec, ml, pfl, ro, war, tk, mhr, sc, am, cv, `as`,
         nn, vo, az, ia, th, ka, gl, sco, co, mt, rm, bar, zh, pt, kk, fy, pms,
         mzn, ba, cy, li, et, fa, bg, sl, ast, `is`, ja, de, hif, nds, bcl, so, ceb,
@@ -41,14 +43,14 @@ enum class LanguageSupport {
         else -> false
     }
 
-    // Supported through NLTKs stopword lists (https://www.nltk.org/)
+    /** Validates if StopWord is supported for LanguageSupport. Support via NLTKs lists, [NLTK](https://www.nltk.org/) */
     fun hasStopWordSupport(): Boolean = when (this) {
         ar, az, da, de, el, en, es, fi, fr, hu, id, it,
         kk, ne, nl, no, pt, ro, ru, sl, sv, tg, tr -> true
         else -> false
     }
 
-    // Supported through wordfreq.py datasets (https://pypi.org/project/wordfreq/)
+    /** Validates if WordFrequencies is supported for  LanguageSupport. Support via [wordfreq.py](https://pypi.org/project/wordfreq/) amazing files. */
     fun hasWordFrequencySupport(): Boolean = when (this) {
         ar, cs, de, en, es, fi, fr, it, ja, nl, pl, uk,
         pt, ru, zh, bg, bn, ca, da, el, fa, he, hi, ba, hr, rs, me,
@@ -56,13 +58,14 @@ enum class LanguageSupport {
         else -> false
     }
 
+    /** Returns largestWordFrequency or null for LanguageSupport */
     fun largestWordFrequency(): String? = when (this) {
         ar, cs, de, en, es, fi, fr, it, ja, nl, pl, pt, ru, zh -> "large"
         bg, bn, ca, da, el, fa, he, hi, hu, id, ko, lv, mk, ms, nb, no, ro, sh, sv, tr, uk,ba, hr, rs, me -> "small"
         else -> null
     }
 
-    // Download custom model/vocab from here: https://nlp.h-its.org/bpemb/ or create your own.
+    /** Validates if SentencePiece exists pretrained for LanguageSupport. Support via [BPEmb](https://nlp.h-its.org/bpemb/) which are trained on Wikipedia.org. */
     fun hasSentencePiece(): Boolean = when (this) {
         nb, nah, bh, eml -> false
         else -> true

@@ -17,12 +17,12 @@ class SentencePieceTokenizer(modelPath: Path, vocabPath: Path? = null): Tokenize
     override fun split(text: String): List<String> = sentencePieceTokenizer.tokenize(text)
 
     companion object {
-        fun fromLanguageSupportOrNull(languageSupport: LanguageSupport): SentencePieceTokenizer? =
+        const val beginningOfWord: Char = '▁'
+        @JvmStatic fun fromLanguageSupportOrNull(languageSupport: LanguageSupport): SentencePieceTokenizer? =
             fromLanguageSupportAndSizeOrNull(languageSupport, VocabSize.v10_000)
-
-        fun fromLanguageSupportAndSizeOrNull(languageSupport: LanguageSupport, vocabSize: VocabSize) =
+        @JvmStatic fun fromLanguageSupportAndSizeOrNull(languageSupport: LanguageSupport, vocabSize: VocabSize) =
             if (languageSupport.hasSentencePiece()) {
-                val (vocab, model) = DownloadHelper.getBpeVocabModel(languageSupport, vocabSize.size)
+                val (vocab, model) = DownloadHelper.getSentencePieceVocabModel(languageSupport, vocabSize.size)
                 SentencePieceTokenizer(model, vocab)
             } else null
     }

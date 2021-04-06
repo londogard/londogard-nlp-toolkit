@@ -37,7 +37,7 @@ class Stemmer(language: LanguageSupport) {
         var cache: Pair<LanguageSupport, Stemmer>? = null
 
         // Default to PorterStemmer if not supported!
-        fun stem(word: String, language: LanguageSupport): String {
+        @JvmStatic fun stem(word: String, language: LanguageSupport): String {
             val cachedStemmer = cache
 
             return when (cachedStemmer?.first) {

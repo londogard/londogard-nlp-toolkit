@@ -5,7 +5,6 @@ import com.londogard.nlp.utils.LanguageSupport
 import com.londogard.nlp.utils.useLines
 import org.ejml.simple.SimpleMatrix
 import java.nio.file.Path
-import kotlin.io.path.bufferedReader
 import kotlin.math.min
 
 object EmbeddingLoader {
@@ -24,7 +23,13 @@ object EmbeddingLoader {
         }
     }
 
-    // TODO inline fun <reified T: Embeddings> fromUrl(url: String): Map<String, SimpleMatrix> = TODO("")
+    inline fun <reified T: Embeddings> fromFile(path: Path): T {
+        return when {
+            T::class == LightWordEmbeddings::class -> LightWordEmbeddings(path) as T
+            T::class == BpeEmbeddings::class -> BpeEmbeddings(path) as T
+            else -> WordEmbeddings(path) as T
+        }
+    }
 
     internal fun fromFile(path: Path,
                           delimiter: Char,
@@ -47,9 +52,4 @@ object EmbeddingLoader {
                     }
                     .toMap(LinkedHashMap(numLinesToUse)) // optimization by creating the full map directly
             }
-}
-
-fun main() {
-    val embeddings = EmbeddingLoader.fromLanguageOrNull<LightWordEmbeddings>(LanguageSupport.sv)
-    println(embeddings?.vector("Hej"))
 }

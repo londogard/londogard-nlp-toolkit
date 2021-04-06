@@ -5,7 +5,6 @@ import com.londogard.nlp.utils.DownloadHelper
 import com.londogard.nlp.utils.LanguageSupport
 import java.io.InputStream
 import java.nio.file.Path
-import java.util.zip.GZIPInputStream
 import kotlin.math.log10
 import kotlin.math.pow
 

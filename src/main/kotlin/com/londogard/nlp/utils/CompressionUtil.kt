@@ -6,12 +6,12 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream
 import java.io.BufferedInputStream
 import java.io.IOException
 import java.io.InputStream
-import java.io.OutputStream
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 import java.util.zip.GZIPInputStream
 
+/** Simplified usage of apache compress through Object functions. */
 object CompressionUtil {
     fun gunzip(path: Path): InputStream =
         path.toFile()

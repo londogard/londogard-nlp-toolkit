@@ -12,7 +12,7 @@ import kotlin.math.pow
 class USifSentenceEmbeddings(
     override val tokenEmbeddings: Embeddings,
     private val wordProb: Map<String, Float>,
-    randomWalkLength: Int, // = n, ~11
+    randomWalkLength: Int = 11, // = n, ~11
     private val numCommonDiscourseVector: Int = 5 // = m, 0 should work. In practise max 5.
 ) : SentenceEmbeddings {
     private val vocabSize = wordProb.size.toFloat()

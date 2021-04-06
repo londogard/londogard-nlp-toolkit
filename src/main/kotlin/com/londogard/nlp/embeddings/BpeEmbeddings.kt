@@ -23,10 +23,14 @@ class BpeEmbeddings(
             ?.avgNorm()
     }
 
+    override fun contains(word: String): Boolean {
+        return tokenizer.split(word).all(embeddings::contains)
+    }
+
     fun subwordVector(subword: String): SimpleMatrix? = embeddings[subword]
 
     companion object {
-        fun toTokenizer(filePath: Path): Tokenizer {
+        @JvmStatic fun toTokenizer(filePath: Path): Tokenizer {
             val rawNameTokens = filePath.fileName.toString().split('.')
 
             val languageSupport = LanguageSupport.valueOf(rawNameTokens.first())

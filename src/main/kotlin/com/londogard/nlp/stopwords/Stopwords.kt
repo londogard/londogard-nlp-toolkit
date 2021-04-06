@@ -15,6 +15,7 @@ object Stopwords {
     fun isStopword(word: String, language: LanguageSupport): Boolean =
         stopwordsOrNull(language)?.contains(word) == true
 
+    @Throws(IllegalArgumentException::class)
     fun stopwords(language: LanguageSupport): Set<String> =
         stopwordsOrNull(language)
             ?: throw IllegalArgumentException("There exists not stopwords for language ${language.name}. Please try again with one of the supported languages.")

@@ -7,6 +7,10 @@ import org.ejml.dense.row.NormOps_FDRM
 import org.ejml.kotlin.*
 import org.ejml.simple.SimpleMatrix
 
+/**
+ * Custom extensions for EJML simplification in Kotlin. Some optimized for speed.
+ */
+
 /** Basic Retrieval */
 fun SimpleMatrix.getRow(index: Int): SimpleMatrix = extractVector(true, index)
 fun SimpleMatrix.getRows(rows: IntArray): SimpleMatrix =

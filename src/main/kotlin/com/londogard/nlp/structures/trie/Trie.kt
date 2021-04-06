@@ -65,19 +65,3 @@ fun findFirstMerger(trie: TrieNode, string: String): String? {
         }
     }
 }
-
-fun main() {
-    val vocab = WordFrequencies.getAllWordFrequenciesOrNull(LanguageSupport.sv)?.toVocab() ?: emptyMap()
-    println(vocab.entries.sortedBy { it.value }.reversed().take(5))
-    val trie = Trie(vocab)
-    println(findFirstMerger(trie.rootNode.childNodes.entries.first().value, ""))
-
-    // could use foldRight (goes from other end..!)
-    // val reverseTrie = Trie(vocab.mapKeys { (key,_) -> key.reversed() })
-    // println(reverseTrie.rootNode.childNodes.map { it.key to it.value.count })
-
-    println(trie.rootNode.childNodes.getValue('ä').childNodes.map { it.key to it.value.count })
-    println(trie.rootNode.childNodes.map { it.key to it.value.count })
-    println(trie.rootNode.char)
-    println(trie.rootNode.count)
-}

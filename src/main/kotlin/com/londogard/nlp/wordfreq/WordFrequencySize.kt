@@ -7,7 +7,7 @@ enum class WordFrequencySize {
     Largest, Smallest;
 
     private fun stringify(languageSupport: LanguageSupport): String = when(languageSupport) {
-        nb -> no.toString()
+        no -> nb.toString()
         ba, hr, rs, cs, me -> sh.toString()
         else -> languageSupport.toString()
     }
