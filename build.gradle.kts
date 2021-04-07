@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.londogard"
-version = "1.0"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -20,9 +20,6 @@ val kluentVersion: String by project
 
 dependencies {
     // ND4J
-    implementation("org.ejml:ejml-core:0.40")
-    implementation("org.ejml:ejml-fdense:0.40")
-    implementation("org.ejml:ejml-fsparse:0.40")
     implementation("org.ejml:ejml-simple:0.40")
     implementation("org.ejml:ejml-kotlin:0.40")
 
