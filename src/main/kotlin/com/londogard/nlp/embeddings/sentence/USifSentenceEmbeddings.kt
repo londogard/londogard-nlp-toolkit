@@ -20,13 +20,7 @@ class USifSentenceEmbeddings(
     private val alpha = wordProb.count { (_, prob) -> prob > threshold } / vocabSize
     private val Z = vocabSize / 2
     private val a = (1 - alpha) / (alpha * Z)
-    private val defaultVector by lazy {
-        SimpleMatrix(
-            1,
-            tokenEmbeddings.dimensions,
-            true,
-            FloatArray(tokenEmbeddings.dimensions) { a })
-    }
+    private val defaultVector by lazy { SimpleMatrix(arrayOf(FloatArray(tokenEmbeddings.dimensions) { a })) }
 
     init {
         if (randomWalkLength < 0) throw IllegalArgumentException("randomWalkLength must be greater than 0 (was: $randomWalkLength)")
@@ -50,9 +44,9 @@ class USifSentenceEmbeddings(
                     val lambdaI = (svd.singularValues[i].pow(2) / singularValueSum).toFloat()
                     val pc = svd.v.getRow(i)
                     val pcTransposed = pc.transpose()
-                    val projections = acc.map { vector -> pc.scale(vector.dot(pcTransposed)) }
-
-                    acc.zip(projections) { vector, projection -> vector - projection.iScale(lambdaI) }
+                    acc
+                        .map { vector -> vector to pc.scale(vector.dot(pcTransposed)) }
+                        .map { (vector, projection) -> vector - projection.iScale(lambdaI) }
                 }
         }
     }

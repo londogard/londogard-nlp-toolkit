@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `maven-publish`
+    signing
     kotlin("jvm") version "1.4.32"
     kotlin("plugin.serialization") version "1.4.32"
     id("org.jetbrains.dokka") version "1.4.30"
@@ -19,12 +20,12 @@ repositories {
 val kluentVersion: String by project
 
 dependencies {
-    // ND4J
     implementation("org.ejml:ejml-simple:0.40")
     implementation("org.ejml:ejml-kotlin:0.40")
 
     implementation("ai.djl.sentencepiece:sentencepiece:0.10.0")
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
+
     implementation("org.apache.commons:commons-compress:1.20")
 
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
@@ -37,14 +38,38 @@ tasks.test {
     useJUnit()
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        useIR = true
-    }
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    useIR = true
+    jvmTarget = "1.8"
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+signing {
+    val key = System.getenv("SIGNING_KEY")
+    val password = System.getenv("SIGNING_PASSWORD")
+    val publishing: PublishingExtension by project
+
+    useInMemoryPgpKeys(key, password)
+    sign(publishing.publications)
 }
 
 publishing {
     repositories {
+        maven {
+            name = "OSSRH"
+            val releasesRepoUrl = layout.buildDirectory.dir("repos/releases")
+            val snapshotsRepoUrl = layout.buildDirectory.dir("repos/snapshots")
+            url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
+            credentials {
+                username = System.getenv("OSSRH_USER")
+                password = System.getenv("OSSRH_PASSWORD")
+            }
+        }
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/londogard/londogard-nlp-toolkit")
@@ -54,14 +79,34 @@ publishing {
             }
         }
     }
+
     publications {
         register<MavenPublication>("gpr") {
             from(components["java"])
+
+            pom {
+                name.set("londogard-nlp-toolkit")
+                description.set("londogard-nlp-toolkit is a library that provides utilities when working with natural language processing such as word/subword/sentence embeddings, word-frequencies, stopwords, stemming, and much more.")
+                url.set("https://github.com/londogard/londogard-nlp-toolkit/")
+                licenses {
+                    license {
+                        name.set("GPL-3.0 License")
+                        url.set("https://github.com/londogard/londogard-nlp-toolkit/blob/main/LICENSE")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("londogard")
+                        name.set("Hampus Londögård")
+                        email.set("hampus.londogard@gmail.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git@github.com:londogard/londogard-nlp-toolkit.git")
+                    developerConnection.set("scm:git:git@github.com:londogard/londogard-nlp-toolkit.git")
+                    url.set("https://github.com/londogard/londogard-nlp-toolkit/")
+                }
+            }
         }
     }
-}
-
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
 }
