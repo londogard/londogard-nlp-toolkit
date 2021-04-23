@@ -62,8 +62,8 @@ publishing {
     repositories {
         maven {
             name = "OSSRH"
-            val releasesRepoUrl = layout.buildDirectory.dir("repos/releases")
-            val snapshotsRepoUrl = layout.buildDirectory.dir("repos/snapshots")
+            val releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            val snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
             url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
             credentials {
                 username = System.getenv("OSSRH_USER")
@@ -81,6 +81,33 @@ publishing {
     }
 
     publications {
+        val main by creating(MavenPublication::class) {
+            from(components["java"])
+
+            pom {
+                name.set("londogard-nlp-toolkit")
+                description.set("londogard-nlp-toolkit is a library that provides utilities when working with natural language processing such as word/subword/sentence embeddings, word-frequencies, stopwords, stemming, and much more.")
+                url.set("https://github.com/londogard/londogard-nlp-toolkit/")
+                licenses {
+                    license {
+                        name.set("GPL-3.0 License")
+                        url.set("https://github.com/londogard/londogard-nlp-toolkit/blob/main/LICENSE")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("londogard")
+                        name.set("Hampus Londögård")
+                        email.set("hampus.londogard@gmail.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git@github.com:londogard/londogard-nlp-toolkit.git")
+                    developerConnection.set("scm:git:git@github.com:londogard/londogard-nlp-toolkit.git")
+                    url.set("https://github.com/londogard/londogard-nlp-toolkit/")
+                }
+            }
+        }
         register<MavenPublication>("gpr") {
             from(components["java"])
 
