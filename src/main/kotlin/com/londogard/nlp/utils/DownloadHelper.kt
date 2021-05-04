@@ -5,6 +5,7 @@ import com.londogard.nlp.wordfreq.WordFrequencySize
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.file.StandardCopyOption
 
 @PublishedApi
 internal object DownloadHelper {
@@ -63,10 +64,20 @@ internal object DownloadHelper {
 
         if (!Files.exists(fileInfo.path)) {
             val tmpPath = fileInfo.path.parent.resolve("${fileInfo.filename}.tar.gz")
+
             downloadFileIfMissing(fileInfo.copy(path = tmpPath))
-            CompressionUtil.uncompressTarGz(tmpPath)
+            val uncompressPath = CompressionUtil
+                .uncompressTarGz(tmpPath)
+                .toFile()
+                .walkBottomUp()
+                .first { it.name == fileInfo.filename }
+                .toPath()
+
+            Files.move(uncompressPath, fileInfo.path, StandardCopyOption.REPLACE_EXISTING)
             Files.deleteIfExists(tmpPath)
+            fileInfo.path.parent.resolve("data").toFile().deleteRecursively()
         }
+
         return fileInfo.path
     }
 
