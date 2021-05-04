@@ -22,7 +22,8 @@ class CompressionUtilTests {
     @Test
     fun testUncompressTarGz() {
         val lines = CompressionUtil.uncompressTarGz(
-            Paths.get(javaClass.getResource("/hej.tar.gz")?.path ?: "")
+            Paths.get(javaClass.getResource("/hej.tar.gz")?.path ?: ""),
+            Files.createTempDirectory("")
         )
             .toFile()
             .readLines()
