@@ -18,6 +18,7 @@ object CompressionUtil {
             .inputStream()
             .let(::GZIPInputStream)
 
+    @Throws(IOException::class)
     fun uncompressTarGz(input: Path, dest: Path = input.parent): Path {
         return Files
             .newInputStream(input)
