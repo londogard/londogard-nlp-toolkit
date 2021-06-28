@@ -29,7 +29,7 @@ dependencies {
     implementation("org.apache.commons:commons-compress:1.20")
 
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.20")
     testImplementation(kotlin("test-junit"))
     implementation(kotlin("stdlib-jdk8"))
 }
