@@ -3,6 +3,7 @@ package com.londogard.nlp.meachinelearning.transformers
 import org.ejml.data.DMatrixSparse
 import org.ejml.data.FMatrixSparse
 import org.ejml.data.FMatrixSparseCSC
+import org.ojalgo.matrix.store.SparseStore
 import space.kscience.kmath.ejml.EjmlDoubleMatrix
 import space.kscience.kmath.ejml.EjmlFloatMatrix
 import space.kscience.kmath.ejml.EjmlLinearSpaceFSCC
