@@ -26,7 +26,7 @@ dependencies {
     implementation("ai.djl.sentencepiece:sentencepiece:0.12.0")
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
 
-    implementation("org.apache.commons:commons-compress:1.20")
+    implementation("org.apache.commons:commons-compress:1.21")
 
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.21")
