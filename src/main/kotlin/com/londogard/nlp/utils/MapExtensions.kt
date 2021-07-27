@@ -11,4 +11,20 @@ object MapExtensions {
         val scale = (1 / min).roundToInt()
         return this.mapValues { (_, value) -> (value * scale).roundToInt() }
     }
+
+    fun <K, V> Map<K, V>.mergeReduce(others: List<Map<K, V>>, reduce: (V, V) -> V): Map<K, V> =
+        toMutableMap().apply {
+            others.forEach { other ->
+                other.forEach { (key, value) ->
+                    merge(
+                        key,
+                        value!!,
+                        reduce
+                    )
+                }
+            }
+        }
+
+    fun <K, V> MutableMap<K, V>.mergeReduceInPlace(others: List<Map<K, V>>, reduce: (V, V) -> V) =
+        others.forEach { other -> other.forEach { (key, value) -> merge(key, value!!, reduce) } }
 }

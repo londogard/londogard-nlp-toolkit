@@ -48,3 +48,23 @@ dependencies {
 
 Please see the Kotlin Notebook [README.ipynb](https://github.com/londogard/londogard-nlp-toolkit/blob/main/README.ipynb) (rendered in browser via GitHub if you don't wanna play with it locally).
 
+----
+
+# Machine Learning with Londogard NLP Toolkit
+API like scikit-learn / spark-ml.
+
+**Preprocessors**
+See the rest of Londogard NLP Toolkit (tokenizer etc)
+
+**Vectorization**
+Estimator = Fit, FitTransform, Transform
+Transformer = Transform
+
+**Models**
+Regression = Fit, FitTransform, Transform
+Classifier = Fit, FitTransform, Transform
+
+**Distances**
+Cosine / Euclidean / ...
+
+All implement `BaseTool`
