@@ -21,7 +21,7 @@ val kluentVersion: String by project
 
 dependencies {
     implementation("org.ejml:ejml-simple:0.41")
-    implementation("org.ejml:ejml-kotlin:0.40")
+    implementation("org.ejml:ejml-kotlin:0.41")
 
     implementation("ai.djl.sentencepiece:sentencepiece:0.12.0")
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
