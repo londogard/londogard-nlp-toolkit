@@ -20,16 +20,16 @@ repositories {
 val kluentVersion: String by project
 
 dependencies {
-    implementation("org.ejml:ejml-simple:0.40")
+    implementation("org.ejml:ejml-simple:0.41")
     implementation("org.ejml:ejml-kotlin:0.40")
 
-    implementation("ai.djl.sentencepiece:sentencepiece:0.10.0")
+    implementation("ai.djl.sentencepiece:sentencepiece:0.12.0")
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
 
     implementation("org.apache.commons:commons-compress:1.20")
 
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.21")
     testImplementation(kotlin("test-junit"))
     implementation(kotlin("stdlib-jdk8"))
 }
