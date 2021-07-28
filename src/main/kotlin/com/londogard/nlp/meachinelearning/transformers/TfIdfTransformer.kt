@@ -31,6 +31,19 @@ fun efficientSparseBuildMatrix(
             }
         }
     })
+fun efficientSparseBuildMatrix(
+    rows: Int,
+    columns: Int,
+    size: Int,
+    initializer: List<Pair<Int, Float>>,
+): EjmlFloatMatrix<FMatrixSparseCSC> =
+    EjmlFloatMatrix(FMatrixSparseCSC(rows, columns, size).also {
+        initializer.forEach { (index, count) ->
+            val row = index / rows
+            val column = index % columns
+            it[row, column] = count
+        }
+    })
 
 fun Structure2D<Float>.efficientSparse(): Structure2D<Float> = when {
     this is EjmlFloatMatrix<*> && origin is FMatrixSparse -> this
