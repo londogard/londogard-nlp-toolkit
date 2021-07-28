@@ -1,23 +1,41 @@
 package com.londogard.nlp.meachinelearning.vectorizer
 
-import com.londogard.nlp.meachinelearning.NotFitException
 import com.londogard.nlp.meachinelearning.inputs.Count
-import com.londogard.nlp.meachinelearning.inputs.Percent
 import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
-import org.jetbrains.kotlinx.multik.api.d2array
-import org.jetbrains.kotlinx.multik.api.mk
-import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
-import org.jetbrains.kotlinx.multik.ndarray.data.get
-import org.jetbrains.kotlinx.multik.ndarray.operations.distinct
-import org.jetbrains.kotlinx.multik.ndarray.operations.groupingNDArrayBy
-import org.jetbrains.kotlinx.multik.ndarray.operations.times
-import org.jetbrains.kotlinx.multik.ndarray.operations.toMutableSet
-import kotlin.math.ln
-import kotlin.math.log
+import com.londogard.nlp.meachinelearning.transformers.TfIdfTransformer
+import space.kscience.kmath.linear.Matrix
+import space.kscience.kmath.linear.Point
+
+// TODO allow Double or Float :)
+class TfIdfVectorizer<T: Number>(
+    val minCount: PercentOrCount = Count(0),
+    val maxCount: PercentOrCount = Count(Int.MAX_VALUE)
+): BaseVectorizer<T, Float> {
+    private val countVectorizer = CountVectorizer<T>(minCount, maxCount)
+    private val tfIdfTransformer = TfIdfTransformer()
+
+    override fun fit(input: List<Point<T>>) {
+        val vectorized = countVectorizer.fitTransform(input)
+        tfIdfTransformer.fit(vectorized)
+    }
+
+    override fun transform(input: List<Point<T>>): Matrix<Float> {
+        val vectorized = countVectorizer.transform(input)
+        return tfIdfTransformer.transform(vectorized)
+    }
+
+
+    override fun fitTransform(input: List<Point<T>>): Matrix<Float> {
+        val vectorized = countVectorizer.fitTransform(input)
+        return tfIdfTransformer.fitTransform(vectorized)
+    }
+}
 
 // TODO create TfIdfTransformer which builds TfIdfVectorizer when combined with CountVectorizer
 // TODO sklearn simply use matrix multiplication and enforce same feature count (not allowing OOV)
 /**
+ *
+ *
 class TfIdfVectorizer<T : Number>(
     val minCount: PercentOrCount = Count(0),
     val maxCount: PercentOrCount = Count(Int.MAX_VALUE),

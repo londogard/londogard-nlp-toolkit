@@ -3,59 +3,36 @@ package com.londogard.nlp.machinelearning
 import ai.djl.ndarray.NDManager
 import ai.djl.ndarray.types.Shape
 import com.londogard.nlp.meachinelearning.inputs.Count
+import com.londogard.nlp.meachinelearning.transformers.numElements
 import com.londogard.nlp.meachinelearning.vectorizer.CountVectorizer
+import org.amshove.kluent.shouldBe
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldNotBe
 import org.jetbrains.kotlinx.multik.api.d2array
 import org.jetbrains.kotlinx.multik.api.mk
 import space.kscience.kmath.ejml.EjmlLinearSpaceFDRM.buildMatrix
+import space.kscience.kmath.linear.Matrix
+import space.kscience.kmath.nd.Structure2D
+import space.kscience.kmath.nd.StructureND
 import space.kscience.kmath.nd.as2D
 import kotlin.system.measureNanoTime
 import kotlin.test.Test
 
 
 class CountVectorizerTest {
-    val numRepeat = 100
-    val cols = 50000
-    val rows = 500
+    val cols = 10
+    val rows = 5
 
     @Test
     fun testSimpleVec() {
-        measureNanoTime {
-            repeat(numRepeat) {
-                val mat = buildMatrix(rows, cols) { i, j -> if ((i + j) % 100 == 0) 1f else 0f }
-                CountVectorizer<Float>(maxCount = Count(rows * cols / 50)).fitTransform(mat.as2D())
-            }
-        }.also { println(it / 10e3 / 1000) }
+        val mat = buildMatrix(rows, cols) { i, j -> if (i+j==0) 100f else (i.toFloat() + j) % 4 }
+        val countMatrix = CountVectorizer<Float>().fitTransform(mat.rows)
+        countMatrix[0,0] shouldBeEqualTo 1f
+        countMatrix[0,1] shouldBeEqualTo 3f
+        countMatrix[2,0] shouldBeEqualTo 0f          // validate that sparse matrix still return 0:s
+        countMatrix.numElements() shouldBeEqualTo 21 // validate it's sparse
+        countMatrix.shape.fold(1, Int::times) shouldBeEqualTo 25 // validate that shape is correct
     }
 
-    @Test
-    fun testMultikVec() {
-        measureNanoTime {
-            repeat(numRepeat) {
-                val vect = CountVectorizer<Float>(maxCount = Count(rows * cols / 50))
-                val mat = mk.d2array(rows, cols) { i -> if (i % 100 == 0) 1f else 0f }
-                vect.fit(mat)
-                vect.transform(mat)
-            }
-        }.also { println(it / 10e3 / 1000) }
-    }
 
-    @Test
-    fun testNDArrayVec() {
-        measureNanoTime {
-            repeat(numRepeat) {
-                NDManager.newBaseManager()
-                    .use { manager ->
-                        val vectorizer = CountVectorizer<Float>(maxCount = Count(rows * cols / 50))
-                        val mat = manager.create(IntArray(cols * rows) { i -> if (i % 100 == 0) 1 else 0 }, Shape(rows.toLong(), cols.toLong()))
-                        vectorizer.fit(mat)
-                        vectorizer.transform(mat, manager)
-                    }
-            }
-        }.also { println(it / 10e3 / 1000) }
-    }
 }
-/**
- * 12864    303     611     4371
- * 12452    378     834     4958
- * 8446     466     893     4632
- */

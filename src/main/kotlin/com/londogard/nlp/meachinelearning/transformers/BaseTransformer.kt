@@ -1,7 +1,12 @@
 package com.londogard.nlp.meachinelearning.transformers
 
-import space.kscience.kmath.nd.Structure2D
+import space.kscience.kmath.linear.Matrix
 
 interface BaseTransformer<INPUT: Number, OUTPUT: Number> {
-    fun transform(input: Structure2D<INPUT>): Structure2D<OUTPUT>
+    fun fit(input: Matrix<INPUT>): Unit
+    fun transform(input: Matrix<INPUT>): Matrix<OUTPUT>
+    fun fitTransform(input: Matrix<INPUT>): Matrix<OUTPUT> {
+        fit(input)
+        return transform(input)
+    }
 }

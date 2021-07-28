@@ -1,85 +1,38 @@
 package com.londogard.nlp.meachinelearning.transformers
 
-import org.ejml.data.DMatrixSparse
-import org.ejml.data.FMatrixSparse
-import org.ejml.data.FMatrixSparseCSC
-import org.ojalgo.matrix.store.SparseStore
-import space.kscience.kmath.ejml.EjmlDoubleMatrix
-import space.kscience.kmath.ejml.EjmlFloatMatrix
-import space.kscience.kmath.ejml.EjmlLinearSpaceFSCC
+import com.londogard.nlp.meachinelearning.KmathUtils.toSparse
+import com.londogard.nlp.meachinelearning.KmathUtils.efficientSparseBuildMatrix
+import com.londogard.nlp.meachinelearning.KmathUtils.numElements
+import com.londogard.nlp.meachinelearning.NotFitException
 import space.kscience.kmath.linear.Matrix
 import space.kscience.kmath.linear.Point
-import space.kscience.kmath.nd.Structure2D
-import space.kscience.kmath.operations.FloatField
 import space.kscience.kmath.structures.asBuffer
 import space.kscience.kmath.structures.asIterable
 import kotlin.math.ln
 
-fun efficientSparseBuildMatrix(
-    rows: Int,
-    columns: Int,
-    size: Int,
-    initializer: FloatField.(i: Int, j: Int) -> Float,
-): EjmlFloatMatrix<FMatrixSparseCSC> =
-    EjmlFloatMatrix(FMatrixSparseCSC(rows, columns, size).also {
-        (0 until rows).forEach { row ->
-            (0 until columns).forEach { col ->
-                val value = EjmlLinearSpaceFSCC.elementAlgebra.initializer(row, col)
-                if (value != 0f) {
-                    it[row, col] = value
-                }
-            }
-        }
-    })
-fun efficientSparseBuildMatrix(
-    rows: Int,
-    columns: Int,
-    size: Int,
-    initializer: List<Pair<Int, Float>>,
-): EjmlFloatMatrix<FMatrixSparseCSC> =
-    EjmlFloatMatrix(FMatrixSparseCSC(rows, columns, size).also {
-        initializer.forEach { (index, count) ->
-            val row = index / rows
-            val column = index % columns
-            it[row, column] = count
-        }
-    })
-
-fun Structure2D<Float>.efficientSparse(): Structure2D<Float> = when {
-    this is EjmlFloatMatrix<*> && origin is FMatrixSparse -> this
-    else -> {
-        val numNzElems = rows.sumOf { row -> row.asIterable().count { it > 0 } }
-        efficientSparseBuildMatrix(rowNum, colNum, numNzElems) { x, y -> get(x, y) }
-    }
-}
-
-fun <T> Matrix<T>.numElements(): Int = when {
-    this is EjmlFloatMatrix<*> && origin is FMatrixSparse -> origin.numElements
-    this is EjmlDoubleMatrix<*> && origin is DMatrixSparse -> origin.numElements
-    else -> colNum * rowNum
-}
-
-
 class TfIdfTransformer() : BaseTransformer<Float, Float> {
-    fun transformWithInternal(input: Structure2D<Float>): Pair<Matrix<Float>, Point<Float>> {
-        val inputSparse = input.efficientSparse()
+    lateinit var idf: Point<Float>
+
+    /** Input is a count matrix */
+    override fun transform(input: Matrix<Float>): Matrix<Float> {
+        if (!::idf.isInitialized) {
+            throw NotFitException("TfIdfVectorizer must be 'fit' before calling 'transform'!")
+        }
+        val inputSparse = input.toSparse()
+
+        return efficientSparseBuildMatrix(input.rowNum, input.colNum, inputSparse.numElements()) {
+                i, j -> inputSparse[i,j] * idf[j]
+        }
+    }
+
+    override fun fit(input: Matrix<Float>) {
+        val inputSparse = input.toSparse()
         val numDocs = input.rowNum
 
-        val idf = inputSparse
+        idf = inputSparse
             .columns
             .map { col -> col.asIterable().count { it > 0 } }
             .map { inNumDocs -> ln(numDocs.toFloat() / (inNumDocs + 1)) + 1 }
             .toFloatArray().asBuffer()
-
-        val tfidf = efficientSparseBuildMatrix(input.rowNum, input.colNum, inputSparse.numElements()) {
-            i, j -> inputSparse[i,j] * idf[j]
-        }
-
-        return tfidf to idf
-    }
-
-    /** Input is a count matrix */
-    override fun transform(input: Structure2D<Float>): Structure2D<Float> {
-        return transformWithInternal(input).first
     }
 }
