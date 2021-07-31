@@ -20,5 +20,11 @@ object SimpleMatrixUtils {
     fun sparseOf(numRows: Int, numCols: Int, elements: List<Coordinate<Float>>): SimpleMatrix =
         SimpleMatrix.wrap(FMatrixSparseCSC(numRows, numCols, elements.size).apply {
             elements.forEach { elem -> set(elem.row, elem.col, elem.count) }
-        })
+        }).also {
+            println(it.numElements)
+            println(it.fscc.nz_length)
+            println(it.fscc.numElements)
+            println(it.fscc.nz_length)
+            println(it.fscc.nz_values.size)
+        }
 }

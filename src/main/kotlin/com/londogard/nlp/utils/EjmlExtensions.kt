@@ -171,9 +171,9 @@ fun FMatrixRMaj.cosineDistanceOneToMany(other: FMatrixRMaj): FMatrixRMaj {
     return times(other)
 }
 
-fun SimpleMatrix.numElems(): Int = when (this.type) {
+fun SimpleMatrix.numElems(): Int = when (type) {
     FDRM, DDRM -> numElements
-    FSCC -> fscc.numElements
-    DSCC -> dscc.numElements
+    FSCC -> fscc.nonZeroLength
+    DSCC -> dscc.nonZeroLength
     else -> throw Exception("Not supported yet")
 }
