@@ -5,7 +5,14 @@ import org.ejml.data.FMatrixSparseCSC
 import org.ejml.data.MatrixType.*
 import org.ejml.simple.SimpleMatrix
 
-// TODO
+object SimpleMatrixUtils {
+    fun sparseOf(numRows: Int, numCols: Int, elements: List<Coordinate<Float>>): SimpleMatrix =
+        SimpleMatrix.wrap(FMatrixSparseCSC(numRows, numCols, elements.size).apply {
+            elements.forEach { elem -> set(elem.row, elem.col, elem.count) }
+        })
+}
+
+/** TODO
 class EjmlMatrix<T: Number>(matrix: SimpleMatrix): SimpleMatrix() {
     companion object {
         fun <T: Number> wrap(matrix: SimpleMatrix): EjmlMatrix<T>? = when (matrix.type) {
@@ -15,16 +22,4 @@ class EjmlMatrix<T: Number>(matrix: SimpleMatrix): SimpleMatrix() {
         }
     }
 }
-
-object SimpleMatrixUtils {
-    fun sparseOf(numRows: Int, numCols: Int, elements: List<Coordinate<Float>>): SimpleMatrix =
-        SimpleMatrix.wrap(FMatrixSparseCSC(numRows, numCols, elements.size).apply {
-            elements.forEach { elem -> set(elem.row, elem.col, elem.count) }
-        }).also {
-            println(it.numElements)
-            println(it.fscc.nz_length)
-            println(it.fscc.numElements)
-            println(it.fscc.nz_length)
-            println(it.fscc.nz_values.size)
-        }
-}
+*/

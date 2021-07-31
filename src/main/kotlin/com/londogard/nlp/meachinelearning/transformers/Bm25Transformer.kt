@@ -36,6 +36,4 @@ class Bm25Transformer(val k: Int, val b: Double) : BaseTransformer<Float, Float>
             tf * idf[col]
         }
     }
-
-
 }
