@@ -40,7 +40,6 @@ tasks.test {
 
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
-    useIR = true
     jvmTarget = "1.8"
 }
 

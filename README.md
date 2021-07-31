@@ -22,7 +22,9 @@ First of, `LanguageSupport.<ISO_COUNTRY_CODE>`helps figuring out what is and isn
 - ✔️Stemmer based on [Snowball Stemmer](https://snowballstem.org/)
     - Supporting: sv, nl, en, fi, fr, de, hu, it, no, pt, ro, ru, es & tr
 - ✔️Trie - Just a basic utility that is to be used for a custom SubwordTokenizer in the future.
-- 🚧Vectorizers - TfIdf and others
+- 🚧✔️Vectorizer/Transformer
+    - ✔️CountVectorizer (Bag of Words), TF-IDF & BM-25
+    - Documentation will be added soon.
 - 🚧Keyword Extraction
 - [Future] Classifiers
 - [Future] Neural Networks (99% it'll only be for inference via PyTorch / ONNX)
@@ -48,3 +50,23 @@ dependencies {
 
 Please see the Kotlin Notebook [README.ipynb](https://github.com/londogard/londogard-nlp-toolkit/blob/main/README.ipynb) (rendered in browser via GitHub if you don't wanna play with it locally).
 
+----
+
+# Machine Learning with Londogard NLP Toolkit
+API like scikit-learn / spark-ml.
+
+**Preprocessors**
+See the rest of Londogard NLP Toolkit (tokenizer etc)
+
+**Vectorization**
+Vectorizer = Fit, FitTransform, Transform
+Transformer = Fit, FitTransform, Transform
+
+**Models**
+Regression = Fit, FitTransform, Transform
+Classifier = Fit, FitTransform, Transform
+
+**Distances**
+Cosine / Euclidean / ...
+
+All implement `BaseTool`

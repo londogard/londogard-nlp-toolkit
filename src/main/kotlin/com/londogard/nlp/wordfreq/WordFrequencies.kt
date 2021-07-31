@@ -50,7 +50,7 @@ object WordFrequencies {
             val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
             val wordFrequencies = unpackFile(wordFrequencyPath)
 
-            wordFrequencies[word.toLowerCase()]
+            wordFrequencies[word.lowercase()]
         } else null
 
     fun zipfFrequencyOrNull(
@@ -61,7 +61,7 @@ object WordFrequencies {
         if (language.hasWordFrequencySupport()) {
             val wordFrequencyPath = DownloadHelper.getWordFrequencies(language, size)
             val wordFrequencies = unpackFile(wordFrequencyPath)
-            wordFrequencies[word.toLowerCase()]?.let(this::frequencyToZipf)
+            wordFrequencies[word.lowercase()]?.let(this::frequencyToZipf)
         } else null
 
     fun zipfFrequency(
