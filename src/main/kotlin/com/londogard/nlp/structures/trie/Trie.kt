@@ -1,9 +1,6 @@
 package com.londogard.nlp.structures.trie
 
 import com.londogard.nlp.tokenizer.TokenizerSpecialTokens.BOW
-import com.londogard.nlp.utils.LanguageSupport
-import com.londogard.nlp.utils.MapExtensions.toVocab
-import com.londogard.nlp.wordfreq.WordFrequencies
 
 class Trie(vocabulary: Map<String, Int>) {
     val rootNode: TrieNode

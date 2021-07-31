@@ -1,38 +1,34 @@
 package com.londogard.nlp.meachinelearning.transformers
 
-import com.londogard.nlp.meachinelearning.KmathUtils.toSparse
-import com.londogard.nlp.meachinelearning.KmathUtils.efficientSparseBuildMatrix
-import com.londogard.nlp.meachinelearning.KmathUtils.numElements
 import com.londogard.nlp.meachinelearning.NotFitException
-import space.kscience.kmath.linear.Matrix
-import space.kscience.kmath.linear.Point
-import space.kscience.kmath.structures.asBuffer
-import space.kscience.kmath.structures.asIterable
+import com.londogard.nlp.utils.iMap
+import com.londogard.nlp.utils.iMapWithCol
+import com.londogard.nlp.utils.map
+import com.londogard.nlp.utils.sumCols
+import org.ejml.simple.SimpleMatrix
 import kotlin.math.ln
 
-class TfIdfTransformer() : BaseTransformer<Float, Float> {
-    lateinit var idf: Point<Float>
+// Based on SkLearns TfIdf variant. Missing norm option
+class TfIdfTransformer : BaseTransformer<Float, Float> {
+    lateinit var idf: SimpleMatrix
+
+    override fun fit(input: SimpleMatrix) {
+        input.convertToSparse()
+        val numDocs = input.numRows()
+
+        idf = input
+            .map { n -> if (n.toInt() <= 0) 0 else 1 }
+            .sumCols()
+            .iMap { inNumDocs -> ln(numDocs / (inNumDocs.toFloat() + 1)) + 1 }
+    }
 
     /** Input is a count matrix */
-    override fun transform(input: Matrix<Float>): Matrix<Float> {
+    override fun transform(input: SimpleMatrix): SimpleMatrix {
         if (!::idf.isInitialized) {
             throw NotFitException("TfIdfVectorizer must be 'fit' before calling 'transform'!")
         }
-        val inputSparse = input.toSparse()
+        input.convertToSparse()
 
-        return efficientSparseBuildMatrix(input.rowNum, input.colNum, inputSparse.numElements()) {
-                i, j -> inputSparse[i,j] * idf[j]
-        }
-    }
-
-    override fun fit(input: Matrix<Float>) {
-        val inputSparse = input.toSparse()
-        val numDocs = input.rowNum
-
-        idf = inputSparse
-            .columns
-            .map { col -> col.asIterable().count { it > 0 } }
-            .map { inNumDocs -> ln(numDocs.toFloat() / (inNumDocs + 1)) + 1 }
-            .toFloatArray().asBuffer()
+        return input.iMapWithCol { number, i -> number.toFloat() * idf[i] }
     }
 }

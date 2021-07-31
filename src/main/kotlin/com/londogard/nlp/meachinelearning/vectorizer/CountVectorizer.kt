@@ -1,129 +1,117 @@
 package com.londogard.nlp.meachinelearning.vectorizer
 
-import com.londogard.nlp.meachinelearning.KmathUtils.efficientSparseBuildMatrix
 import com.londogard.nlp.meachinelearning.NotFitException
+import com.londogard.nlp.meachinelearning.SimpleMatrixUtils
 import com.londogard.nlp.meachinelearning.inputs.Coordinate
 import com.londogard.nlp.meachinelearning.inputs.Count
+import com.londogard.nlp.meachinelearning.inputs.Percent
 import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
-import com.londogard.nlp.utils.MapExtensions.mergeReduce
-import space.kscience.kmath.linear.Matrix
-import space.kscience.kmath.linear.Point
-import space.kscience.kmath.structures.asIterable
-
+import com.londogard.nlp.utils.IterableExtensions.getNgramCountsPerDoc
+import com.londogard.nlp.utils.IterableExtensions.mergeReduce
+import org.ejml.simple.SimpleMatrix
+import java.util.*
 
 // Pipeline Object
 // Document Object
 // HashingBagOfWords (collisions)
 
+// TODO add actual T support
 class CountVectorizer<T : Number>(
     val minCount: PercentOrCount = Count(0),
     val maxCount: PercentOrCount = Count(Int.MAX_VALUE),
+    val minDf: PercentOrCount = Percent(0.0),
+    val maxDf: PercentOrCount = Percent(1.0),
+    val ngramRange: IntRange = 1..1
 ) : BaseVectorizer<T, Float> {
-    private lateinit var vectorization: Map<T, Int>
+    private lateinit var vectorization: Map<String, Int>
 
-    // TODO perhaps List<Vector> as input?
-    override fun fit(input: List<Point<T>>) {
-        val countMap = input
-            .map { row -> row.asIterable().groupingBy { it }.eachCount() }
+    init {
+        if (ngramRange.first <= 0) throw IllegalArgumentException("ngramRange must be larger than 0")
+    }
+
+    override fun fit(input: List<Array<String>>) {
+        val countMapDoc = input.getNgramCountsPerDoc(ngramRange)
+        val countMap = countMapDoc.mergeReduce { a, b -> a + b }
 
         val totalCount = input.sumOf { it.size }
-        vectorization = mutableMapOf<T, Int>()
-            .mergeReduce(countMap) { a, b -> a + b }
+
+        // TODO update into array / bitset
+        val df by lazy {
+            countMap
+                .mapValues { 0 }
+                .mergeReduce(countMapDoc) { a, _ -> a + 1}
+                .filter { (_, count) ->
+                    minDf.isLesserThan(count, totalCount) && maxCount.isGreatherThan(count, totalCount)
+                }
+                .keys
+        }
+
+        vectorization = countMap
             .filter { (_, count) ->
                 minCount.isLesserThan(count, totalCount) && maxCount.isGreatherThan(count, totalCount)
             }
             .keys
-            .mapIndexed { index, t -> t to index }
-            .toMap()
+            .let { keys ->
+                if (minDf.isEq(0) && maxDf.isEq(1)) keys
+                else keys.filter(df::contains)
+            }
+            .withIndex()
+            .associateBy({ it.value }, { it.index })
     }
 
 
-    override fun transform(input: List<Point<T>>): Matrix<Float> {
+    override fun transform(input: List<Array<String>>): SimpleMatrix {
         if (!::vectorization.isInitialized) {
             throw NotFitException("CountVectorizer must be 'fit' before calling 'transform'!")
         }
 
-        val countMap = input
-            .flatMapIndexed { row, buffer ->
-                buffer.asIterable()
-                    .groupingBy { it }
-                    .eachCount()
-                    .mapNotNull { (key, count) -> vectorization[key]?.let { col -> Coordinate(row, col, count.toFloat()) } }
+        val nonZeroElements = input
+            .getNgramCountsPerDoc(ngramRange)
+            .flatMapIndexed { row, docCount ->
+                docCount
+                    .mapNotNull { (key, count) ->
+                        vectorization[key]?.let { col -> Coordinate(row, col, count.toFloat()) }
+                    }
             }
-        val totalElems = countMap.size
 
-        return efficientSparseBuildMatrix(input.size, vectorization.size, totalElems, countMap)
-    }
-}
-
-/**
- * MultiK && NDArray (DJL) approaches
-fun fit(input: NDArray) {
-    val totalCount = input.size().toInt()
-
-    vectorization = input
-        .toIntArray().asIterable()
-        .groupingBy { it }
-        .eachCount()
-        .filter { (_, count) ->
-            minCount.isLesserThan(count, totalCount) && maxCount.isGreatherThan(count, totalCount)
-        }
-        .asIterable()
-        .mapIndexed { index, (number, _) -> number as T to index }
-        .toMap()
-}
-
-fun transform(input: NDArray, manager: NDManager): NDArray {
-    if (!::vectorization.isInitialized) {
-        throw NotFitException("BagOfWordsVectorizer must be 'fit' before calling 'transform'!")
-    }
-    val countMap = input.toIntArray()
-        .asIterable()
-        .windowed(input.shape[1].toInt(), input.shape[1].toInt()) { window ->
-            window.groupingBy { it }.eachCount()
-                .let { filteredRowCount -> filteredRowCount
-                    .mapNotNull { (key, count) -> vectorization[key as T]
-                        ?.let { index -> index to count } }
-                }.sortedBy { it.first } // https://en.wikipedia.org/wiki/Sparse_matrix#Coordinate_list_(COO)
-        }
-    val values = countMap.flatMap { it.map { it.second } }
-    val indices = countMap
-        .flatMapIndexed { index: Int, list: List<Pair<Int, Int>> -> list.map { (col, _) -> index.toLong() to col.toLong() } }
-        .unzip()
-
-    return manager.createCoo(
-        IntBuffer.wrap(values.toIntArray()),
-        arrayOf(indices.first.toLongArray(), indices.second.toLongArray()),
-        Shape(input.shape[0], vectorization.size.toLong() + 1)
-    )
-}
-
-fun fit(input: D2Array<T>) {
-    val totalCount = input.size
-    vectorization = input
-        .groupingNDArrayBy { it }
-        .eachCount()
-        .filter { (_, count) ->
-            minCount.isLesserThan(count, totalCount) && maxCount.isGreatherThan(count, totalCount)
-        }
-        .keys
-        .mapIndexed { index, t -> t to index }
-        .toMap()
-}
-
-fun transform(input: D2Array<T>): MultikD2Wrapper<Int> {
-    if (!::vectorization.isInitialized) {
-        throw NotFitException("BagOfWordsVectorizer must be 'fit' before calling 'transform'!")
+        return SimpleMatrixUtils.sparseOf(input.size, vectorization.size, nonZeroElements)
     }
 
-    val (indices, counts) = (0 until input.shape[0]).flatMap { row ->
-        input[row]
-            .groupingNDArrayBy { it }
-            .eachCount()
-            .mapNotNull { (key, value) -> vectorization[key]?.let { it to value } }
-            .map { (index, count) -> index.toLong() * (row + 1) to count }
-    }.unzip()
+    override fun fitTransform(input: List<Array<String>>): SimpleMatrix {
+        val countMapDoc = input.getNgramCountsPerDoc(ngramRange)
+        val countMap = countMapDoc.mergeReduce { a, b -> a + b }
+        val totalCount = input.sumOf { it.size }
 
-    return mk.d2arraySparse(input.shape[0], vectorization.size, indices.toLongArray()) { i -> counts[i] }
+        val df by lazy {
+            countMap
+                .mapValues { 0 }
+                .mergeReduce(countMapDoc) { a, _ -> a + 1}
+                .filter { (_, count) ->
+                    minDf.isLesserThan(count, totalCount) && maxCount.isGreatherThan(count, totalCount)
+                }
+                .keys
+        }
+
+        vectorization = countMap
+            .filter { (_, count) ->
+                minCount.isLesserThan(count, totalCount) && maxCount.isGreatherThan(count, totalCount)
+            }
+            .keys
+            .let { keys ->
+                if (minDf.isEq(0) && maxDf.isEq(1)) keys
+                else keys.filter(df::contains)
+            }
+            .withIndex()
+            .associateBy({ it.value }, { it.index })
+
+        val countMapFiltered = countMapDoc
+            .flatMapIndexed { row, docCount ->
+                docCount
+                    .mapNotNull { (key, count) ->
+                        vectorization[key]?.let { col -> Coordinate(row, col, count.toFloat()) }
+                    }
+            }
+
+        return SimpleMatrixUtils.sparseOf(input.size, vectorization.size, countMapFiltered)
+    }
 }
-*/
