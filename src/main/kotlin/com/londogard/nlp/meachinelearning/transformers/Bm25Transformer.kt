@@ -14,10 +14,10 @@ class Bm25Transformer(val k: Int, val b: Double) : BaseTransformer<Float, Float>
         val numDocs = input.numRows()
 
         idf = input
-            .map { n -> if (n.toInt() <= 0) 0 else 1 }
+            .map { n -> if (n <= 0) 0f else 1f }
             .sumCols()
             // IDF = log (1 + (N - DF + .5)/(DF + .5)), based on Lucene
-            .iMap { inNumDocs -> ln(1 + (numDocs - inNumDocs.toFloat() - 0.5f) / (inNumDocs.toFloat() + 0.5f)) }
+            .iMap { inNumDocs -> ln(1 + (numDocs - inNumDocs - 0.5f) / (inNumDocs + 0.5f)) }
     }
 
     /** Input is a count matrix */

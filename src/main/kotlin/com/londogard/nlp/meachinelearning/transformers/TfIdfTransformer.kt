@@ -17,7 +17,7 @@ class TfIdfTransformer : BaseTransformer<Float, Float> {
         val numDocs = input.numRows()
 
         idf = input
-            .map { n -> if (n.toInt() <= 0) 0 else 1 }
+            .map { n -> if (n <= 0) 0f else 1f }
             .sumCols()
             .iMap { inNumDocs -> ln(numDocs / (inNumDocs.toFloat() + 1)) + 1 }
     }

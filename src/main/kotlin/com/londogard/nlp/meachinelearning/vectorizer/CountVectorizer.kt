@@ -9,6 +9,8 @@ import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
 import com.londogard.nlp.utils.IterableExtensions.getNgramCountsPerDoc
 import com.londogard.nlp.utils.IterableExtensions.mergeReduce
 import org.ejml.simple.SimpleMatrix
+import org.jetbrains.kotlinx.multik.api.d2array
+import org.jetbrains.kotlinx.multik.api.mk
 import java.util.*
 
 // Pipeline Object

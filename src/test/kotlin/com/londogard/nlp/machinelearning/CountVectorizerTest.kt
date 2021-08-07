@@ -5,7 +5,6 @@ import com.londogard.nlp.utils.numElems
 import org.amshove.kluent.shouldBeEqualTo
 import kotlin.test.Test
 
-
 class CountVectorizerTest {
     @Test
     fun testSimpleVec() {

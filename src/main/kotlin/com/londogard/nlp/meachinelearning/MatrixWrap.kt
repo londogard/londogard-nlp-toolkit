@@ -11,15 +11,3 @@ object SimpleMatrixUtils {
             elements.forEach { elem -> set(elem.row, elem.col, elem.count) }
         })
 }
-
-/** TODO
-class EjmlMatrix<T: Number>(matrix: SimpleMatrix): SimpleMatrix() {
-    companion object {
-        fun <T: Number> wrap(matrix: SimpleMatrix): EjmlMatrix<T>? = when (matrix.type) {
-            FSCC, FDRM -> wrap(matrix.cdrm) as EjmlMatrix<T>
-            DSCC, DDRM -> wrap(matrix.cdrm) as EjmlMatrix<T>
-            else -> null
-        }
-    }
-}
-*/

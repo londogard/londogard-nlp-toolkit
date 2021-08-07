@@ -18,13 +18,34 @@ repositories {
 }
 
 val kluentVersion: String by project
+val koin_version = "3.1.2"
 
 dependencies {
     implementation("org.ejml:ejml-simple:0.41")
     implementation("org.ejml:ejml-kotlin:0.41")
 
     implementation("ai.djl.sentencepiece:sentencepiece:0.12.0")
+
+    implementation("org.jetbrains.kotlinx:multik-api:0.0.1")
+    implementation("org.jetbrains.kotlinx:multik-default:0.0.1")
+    implementation("org.jetbrains.kotlinx:multik-jvm:0.0.1")
+
+    implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-299-0.10.0.183")
+
+    // implementation("ai.djl:api:0.12.0")
+    // implementation("ai.djl.pytorch:pytorch-engine:0.12.0")
+    // implementation("ai.djl.pytorch:pytorch-native-auto:1.8.1")
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
+
+    // Koin for Kotlin apps
+    implementation("io.insert-koin:koin-core:$koin_version")
+    // Testing
+    testImplementation("io.insert-koin:koin-test:$koin_version")
+
+    // https://github.com/MicroUtils/kotlin-logging
+
+//    implementation("org.tribuo:tribuo-all:4.1.0")
+//    implementation("org.jetbrains.kotlin:dataframe:0.7.3")
 
     implementation("org.apache.commons:commons-compress:1.21")
 
@@ -41,6 +62,10 @@ tasks.test {
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
     jvmTarget = "1.8"
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs = listOf("-Xmx2g")
 }
 
 java {

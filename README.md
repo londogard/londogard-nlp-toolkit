@@ -70,3 +70,9 @@ Classifier = Fit, FitTransform, Transform
 Cosine / Euclidean / ...
 
 All implement `BaseTool`
+
+----
+
+TODO
+- https://github.com/Kotlin/dataframe vs https://github.com/holgerbrandl/krangl
+- EJML vs DJL vs ND4j vs Native
