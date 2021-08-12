@@ -1,21 +1,16 @@
 package com.londogard.nlp.machinelearning
 
 import com.londogard.nlp.meachinelearning.classifiers.LogisticRegression
-import com.londogard.nlp.meachinelearning.inputs.Count
 import com.londogard.nlp.meachinelearning.inputs.Percent
 import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
-import com.londogard.nlp.meachinelearning.transformers.TfIdfTransformer
-import com.londogard.nlp.meachinelearning.vectorizer.CountVectorizer
 import com.londogard.nlp.meachinelearning.vectorizer.TfIdfVectorizer
 import com.londogard.nlp.tokenizer.SimpleTokenizer
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.dataframe.*
+import org.jetbrains.dataframe.DataFrame
 import org.jetbrains.dataframe.annotations.DataSchema
-import org.jetbrains.dataframe.io.readCSV
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.junit.Test
-import kotlin.system.measureNanoTime
 
 class LogisticRegressionTest {
     @Test
@@ -46,12 +41,14 @@ class LogisticRegressionTest {
         return df[0 until numTrain] to df[numTrain..nrow()]
     }
 
+    /**
     @Test
     fun testLarger() {
         val tok = SimpleTokenizer() // SentencePieceTokenizer.fromLanguageSupportOrNull(LanguageSupport.en)!!
         val df = DataFrame
             .readCSV(javaClass.getResource("/imdb.csv")!!)
             .add("label") { if (it["sentiment"] == "positive") 1 else 0 }
+            .head(100)
             .typed<Imdb>()
             .update { it.col(Imdb::review) }
             .with { tok.split(it) }
@@ -62,5 +59,5 @@ class LogisticRegressionTest {
             val a = vec.fitTransform(df["review"].toList() as List<List<String>>)
             tfidf.fitTransform(a)
         }.also { println(it / 1e9) }
-    }
+    }*/
 }
