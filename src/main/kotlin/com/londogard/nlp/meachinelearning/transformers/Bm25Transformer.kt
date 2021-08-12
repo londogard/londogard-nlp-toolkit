@@ -1,39 +1,41 @@
 package com.londogard.nlp.meachinelearning.transformers
 
-import com.londogard.nlp.meachinelearning.NotFitException
-import com.londogard.nlp.utils.*
-import org.ejml.simple.SimpleMatrix
+import com.londogard.nlp.meachinelearning.*
+import org.jetbrains.kotlinx.multik.ndarray.data.*
+import org.jetbrains.kotlinx.multik.ndarray.operations.sum
 import kotlin.math.ln
 
 // Implementation based on https://kmwllc.com/index.php/2020/03/20/understanding-tf-idf-and-bm-25/
-class Bm25Transformer(val k: Int, val b: Double) : BaseTransformer<Float, Float> {
-    lateinit var idf: SimpleMatrix
+class Bm25Transformer(val k: Int, val b: Float) : Transformer<Float, Float> {
+    lateinit var idf: D1Array<Float>
 
-    override fun fit(input: SimpleMatrix) {
-        input.convertToSparse()
-        val numDocs = input.numRows()
+    override fun fit(input: MultiArray<Float, D2>) {
+        val numDocs = input.shape[1]
+        val sparseInput = input.toSparse()
+        val df = sparseInput.mapNonZero { 1f }
 
-        idf = input
-            .map { n -> if (n <= 0) 0f else 1f }
-            .sumCols()
+        idf = (df as D2SparseArray)
+            .sum(byRow = false)
             // IDF = log (1 + (N - DF + .5)/(DF + .5)), based on Lucene
-            .iMap { inNumDocs -> ln(1 + (numDocs - inNumDocs - 0.5f) / (inNumDocs + 0.5f)) }
+            .inplaceOp { totalDf -> ln(1 + (numDocs - totalDf - 0.5f) / (totalDf + 0.5f)) }
+            .asDNArray().asD1Array()
     }
 
     /** Input is a count matrix */
-    override fun transform(input: SimpleMatrix): SimpleMatrix {
+    override fun transform(input: MultiArray<Float, D2>): D2SparseArray {
         if (!::idf.isInitialized) {
             throw NotFitException("TfIdfVectorizer must be 'fit' before calling 'transform'!")
         }
+        val sparseInput = input.toSparse()
 
-        input.convertToSparse()
-        val docLengths = input.sumRows()
-        val avgDocLength = docLengths.elementSum() / input.numElements
+        val docLengths = sparseInput.sum(byRow = true)
+        val avgDocLength = docLengths.sum() / input.shape[0]
 
         // TF: freq / (freq + k1 * (1 — b + b * dl / avgdl))
-        return input.mapWithXY { row, col, d ->
-            val tf = (d / (d + (k * (1 - b + (b * docLengths[row] / avgDocLength)))))
-            tf * idf[col]
-        }
+        return sparseInput
+            .mapIndexedNonZero { value, row, col ->
+                val tf = (value / (value + (k * (1 - b + (b * docLengths[row] / avgDocLength)))))
+                tf * idf[col]
+            }
     }
 }

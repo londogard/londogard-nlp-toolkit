@@ -3,7 +3,6 @@ package com.londogard.nlp.utils
 import kotlin.math.roundToInt
 
 object IterableExtensions {
-    fun <K> Array<K>.identityCount(): Map<K, Int> = asIterable().groupingBy { it }.eachCount()
     fun <K> List<K>.identityCount(): Map<K, Int> = groupingBy { it }.eachCount()
 
     fun Array<String>.ngrams(n: Int): List<String> = when (n) {
@@ -16,7 +15,7 @@ object IterableExtensions {
         else -> windowed(n) { it.joinToString(" ") }
     }
 
-    fun List<Array<String>>.getNgramCountsPerDoc(ngramRange: IntRange): List<Map<String, Int>> =
+    fun List<List<String>>.getNgramCountsPerDoc(ngramRange: IntRange): List<Map<String, Int>> =
         (ngramRange).fold(emptyList()) { acc, n ->
             val ngrams = if (n == 1) map { it.identityCount() } else map { it.ngrams(n).identityCount() }
 

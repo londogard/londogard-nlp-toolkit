@@ -1,7 +1,9 @@
 package com.londogard.nlp.meachinelearning.optimizer
 
 import com.londogard.nlp.meachinelearning.loss.LogisticLoss
+import org.jetbrains.kotlinx.multik.ndarray.data.D2
 import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
+import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import kotlin.math.abs
@@ -14,7 +16,7 @@ class GradientDescent(
     fun optimize(
         loss: LogisticLoss,
         initWeights: D2Array<Float>,
-        X: D2Array<Float>,
+        X: MultiArray<Float, D2>,
         y: D2Array<Float>
     ): Pair<D2Array<Float>, List<Float>> {
         // TODO optimizer can figure out the yPredicted to save one iteration of predicts!

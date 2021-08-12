@@ -32,9 +32,9 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-299-0.10.0.183")
 
-    // implementation("ai.djl:api:0.12.0")
-    // implementation("ai.djl.pytorch:pytorch-engine:0.12.0")
-    // implementation("ai.djl.pytorch:pytorch-native-auto:1.8.1")
+    implementation("ai.djl:api:0.12.0")
+    implementation("ai.djl.pytorch:pytorch-engine:0.12.0")
+    implementation("ai.djl.pytorch:pytorch-native-auto:1.8.1")
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
 
     // Koin for Kotlin apps

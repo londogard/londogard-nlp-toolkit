@@ -1,7 +1,7 @@
 package com.londogard.nlp.embeddings
 
 import com.londogard.nlp.embeddings.EmbeddingLoader.FastTextDefaultEmbeddingDimension
-import org.ejml.simple.SimpleMatrix
+import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 import java.nio.file.Path
 
 class LightWordEmbeddings(
@@ -10,7 +10,7 @@ class LightWordEmbeddings(
     override val delimiter: Char = ' ',
     private val maxWordCount: Int = 1000
 ) : Embeddings {
-    override val embeddings: MutableMap<String, SimpleMatrix> = mutableMapOf()
+    override val embeddings: MutableMap<String, D1Array<Float>> = mutableMapOf()
     override val vocabulary: Set<String> by lazy { embeddings.keys }
 
     init { loadEmbeddings(inFilter = emptySet()) }

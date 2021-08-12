@@ -1,55 +1,182 @@
 package com.londogard.nlp.meachinelearning
 
-import org.ejml.UtilEjml
-import org.ejml.sparse.csc.mult.ImplMultiplication_FSCC
-import org.jetbrains.kotlinx.multik.ndarray.data.D2
-import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
-import org.jetbrains.kotlinx.multik.ndarray.data.MutableMultiArray
+import com.londogard.nlp.meachinelearning.inputs.Coordinate
+import org.jetbrains.kotlinx.multik.api.d2array
+import org.jetbrains.kotlinx.multik.api.mk
+import org.jetbrains.kotlinx.multik.api.ndarray
+import org.jetbrains.kotlinx.multik.ndarray.data.*
+import org.jetbrains.kotlinx.multik.ndarray.operations.asSequence
+import org.jetbrains.kotlinx.multik.ndarray.operations.count
 
-abstract class D2MultikWrapper(val matrix: D2Array<Float>) : MutableMultiArray<Float, D2> by matrix {
-    fun asSparse(): D2SparseArray {
-        // return D2SparseArray(matrix, 0..shape[0], 0..shape[1])
-        TODO("")
+typealias D2FloatArray = MultiArray<Float, D2>
+
+fun MultiArray<Float, D2>.toSparse(): D2SparseArray {
+    return if (this is D2SparseArray) this
+    else {
+        val coords = ArrayList<Coordinate<Float>>(count { it != 0f })
+
+        for (col in 0 until shape[1])
+            for (row in 0 until shape[0])
+                if (get(row, col) != 0f) coords.add(Coordinate(row, col, get(row, col)))
+
+        return D2SparseArray.simpleInit(coords, shape)
+    }
+}
+
+fun MultiArray<Float, D2>.toDense(): D2Array<Float> {
+    return if (this is D2SparseArray) {
+        val data = this.asSequence().toList()
+        mk.d2array(shape[0], shape[1]) { data[it] } // TODO IMPROVE
+    } else this as D2Array<Float>
+}
+
+fun MultiArray<Float, D2>.mapNonZero(op: (Float) -> Float): MultiArray<Float, D2> {
+    return clone().apply {
+        val array = data.getFloatArray()
+        for (i in indices) {
+            array[i] = op(array[i])
+        }
+    }
+}
+
+fun D2SparseArray.mapIndexedNonZero(op: (Float, Int, Int) -> Float): D2SparseArray {
+    return clone().apply {
+        (0 until colIndices.size - 1).forEach { col ->
+            (colIndices[col] until colIndices[col + 1]).forEach { i ->
+                data[i] = op(data[i], rowIndices[i], col)
+            }
+        }
     }
 }
 
 /** Compressed Column (CC) Sparse Matrix File Format */
-class D2SparseArray(matrix: D2Array<Float>, indices: List<Pair<Int, Int>>) : D2MultikWrapper(matrix) {
-    val xIndices: IntArray = indices.unzip().first.toIntArray()
+class D2SparseArray(
+    val rowIndices: IntArray,
+    val colIndices: IntArray,
+    override val data: MemoryView<Float>,
+    override val shape: IntArray
+) : MultiArray<Float, D2> {
+    override val consistent: Boolean = false
+    override val dim: D2 = D2
+    override val dtype: DataType = DataType.FloatDataType
+    override val size: Int = shape.fold(1, Int::times)
+    override val offset: Int = 0
 
-//    loat[] x = UtilEjml.adjust(gx, A.numRows)
-//    var w = UtilEjml.adjust(gw, A.numRows, A.numRows)
-//
-//    C.growMaxLength(A.nz_length + B.nz_length, false)
-//    C.indicesSorted = false
-//    C.nz_length = 0
-//
-//    // C(i,j) = sum_k A(i,k) * B(k,j)
-//
-//    // C(i,j) = sum_k A(i,k) * B(k,j)
-//    var idx0: Int = B.col_idx.get(0)
-//    for (bj in 1 .. B.numCols)
-//    {
-//        val colB: Int = bj - 1
-//        val idx1: Int = B.col_idx.get(bj)
-//        C.col_idx.get(bj) = C.nz_length
-//        if (idx0 == idx1) {
-//            continue
-//        }
-//
-//        // C(:,j) = sum_k A(:,k)*B(k,j)
-//        for (bi in idx0 until idx1) {
-//            val rowB: Int = B.nz_rows.get(bi)
-//            val valB: Float = B.nz_values.get(bi) // B(k,j)  k=rowB j=colB
-//            ImplMultiplication_FSCC.multAddColA(A, rowB, valB, C, colB + 1, x, w)
-//        }
-//
-//        // take the values in the dense vector 'x' and put them into 'C'
-//        val idxC0: Int = C.col_idx.get(colB)
-//        val idxC1: Int = C.col_idx.get(colB + 1)
-//        for (i in idxC0 until idxC1) {
-//            C.nz_values.get(i) = x.get(C.nz_rows.get(i))
-//        }
-//        idx0 = idx1
-//    }
+    override val indices: IntRange
+        get() = 0 until data.size
+    override val multiIndices: MultiIndexProgression
+        get() = throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+    override val strides: IntArray
+        get() = throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun isEmpty(): Boolean = size == 0
+    override fun isNotEmpty(): Boolean = !isEmpty()
+    override fun isScalar(): Boolean = shape.isEmpty() || (shape.size == 1 && shape.first() == 1)
+
+    override fun iterator(): Iterator<Float> = iterator {
+        for (row in 0 until shape[0])
+            for (col in 0 until shape[1]) {
+                val index = indexMap[row to col]
+                if (index != null) yield(data[index])
+                else yield(0f)
+            }
+    }
+
+    // [row, col]: index
+    val indexMap: Map<Pair<Int, Int>, Int> by lazy {
+        val mutableMap = HashMap<Pair<Int, Int>, Int>(data.size)
+
+        for (col in 0 until colIndices.size - 1) {
+            for (i in colIndices[col] until colIndices[col + 1]) {
+                mutableMap[rowIndices[i] to col] = i
+            }
+        }
+
+        mutableMap
+    }
+
+    operator fun get(row: Int, col: Int): Float {
+        for (i in colIndices[col] until colIndices[col + 1])
+            if (rowIndices[i] == row) return data[i]
+
+        return 0f
+    }
+
+    override fun clone(): D2SparseArray =
+        D2SparseArray(
+            rowIndices.clone(),
+            colIndices.clone(),
+            MemoryViewFloatArray(data.getFloatArray().clone()),
+            shape.clone()
+        )
+
+    // 1,2 becomes 2,1 ... etc
+    // e.g. rows becomes cols
+    override fun transpose(vararg axes: Int): D2SparseArray {
+        if (axes.isNotEmpty()) throw UnsupportedOperationException("Selecting Axes Not Supported")
+
+        // TODO improve
+        return D2SparseArray
+            .simpleInit(indexMap.map { entry -> Coordinate(entry.key.second, entry.key.first, data[entry.value]) }.sortedBy { it.col }, shape.reversedArray())
+    }
+
+    override fun cat(other: MultiArray<Float, D2>, axis: Int): MutableMultiArray<Float, DN> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun deepCopy(): MutableMultiArray<Float, D2> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun flatten(): MultiArray<Float, D1> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun reshape(dim1: Int): MutableMultiArray<Float, D1> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun reshape(dim1: Int, dim2: Int): MutableMultiArray<Float, D2> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun reshape(dim1: Int, dim2: Int, dim3: Int): MutableMultiArray<Float, D3> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun reshape(dim1: Int, dim2: Int, dim3: Int, dim4: Int): MutableMultiArray<Float, D4> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun reshape(dim1: Int, dim2: Int, dim3: Int, dim4: Int, vararg dims: Int): MutableMultiArray<Float, DN> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun squeeze(vararg axes: Int): MutableMultiArray<Float, DN> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun unsqueeze(vararg axes: Int): MutableMultiArray<Float, DN> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    companion object {
+        /** Requires initData to be sorted by column */
+        fun simpleInit(sortedInitData: List<Coordinate<Float>>, shape: IntArray): D2SparseArray {
+            val rowIndices = IntArray(sortedInitData.size) { i -> sortedInitData[i].row }
+            val colIndices = IntArray(shape[1] + 1)
+            val cols = sortedInitData.map(Coordinate<Float>::col)
+            for (col in 1 until colIndices.size - 1) {
+                colIndices[col] = (colIndices[col - 1] until cols.size).first { i -> cols[i] == col }
+            }
+            colIndices[colIndices.size - 1] = sortedInitData.size
+
+            val data = MemoryViewFloatArray(FloatArray(sortedInitData.size) { i -> sortedInitData[i].count })
+            return D2SparseArray(rowIndices, colIndices, data, shape)
+        }
+    }
 }
+fun MultiArray<Float, D2>.sum(byRow: Boolean): D1Array<Float> {
+    return when {
+        this is D2SparseArray && byRow -> rowIndices.foldIndexed(FloatArray(shape[0])) { dataIndex, acc, row ->
+            acc[row] += data[dataIndex]
+            acc
+        }.let(mk::ndarray)
+        this is D2SparseArray -> (0 until colIndices.size - 1).foldIndexed(FloatArray(shape[1])) { index, acc, col ->
+            acc[index] = (colIndices[col] until colIndices[col + 1]).fold(0f) { sum, i -> sum + data[i] }
+            acc
+        }.let(mk::ndarray)
+        else -> mk.math.sum(this, if (byRow) 0 else 1)
+    }
+}
+

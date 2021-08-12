@@ -5,7 +5,7 @@ import org.ejml.simple.SimpleMatrix
 import kotlin.math.abs
 
 class L1(override val lambda: Float): BaseRegularizer {
-    override fun reguralize(weights: SimpleMatrix, size: Int): Float {
+    override fun regularize(weights: SimpleMatrix, size: Int): Float {
         return (weights.map { abs(it) }.elementSum() * lambda / size).toFloat()
     }
 }

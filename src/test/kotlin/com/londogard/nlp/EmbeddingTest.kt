@@ -31,7 +31,7 @@ class EmbeddingTest {
         embeddings.embeddings.size shouldBe 1
         embeddings.contains("då") shouldBe true
         embeddings.contains("hej") shouldBe false
-        embeddings.vector("då")?.numCols() shouldBe 3
+        embeddings.vector("då")?.shape?.get(0) shouldBe 3
     }
 
     @Test
@@ -41,6 +41,6 @@ class EmbeddingTest {
         embeddings.contains("hej") shouldBe true
         embeddings.contains("då") shouldBe true
         embeddings.contains("Då") shouldBe false
-        embeddings.vector("då")?.numCols() shouldBe 3
+        embeddings.vector("då")?.shape?.get(0) shouldBe 3
     }
 }

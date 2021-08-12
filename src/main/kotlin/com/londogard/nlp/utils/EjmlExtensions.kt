@@ -1,7 +1,7 @@
 package com.londogard.nlp.utils
 
+import com.londogard.nlp.meachinelearning.dot
 import org.ejml.data.FMatrixRMaj
-import org.ejml.data.MatrixType
 import org.ejml.data.MatrixType.*
 import org.ejml.dense.row.CommonOps_DDRM
 import org.ejml.dense.row.CommonOps_FDRM
@@ -10,6 +10,14 @@ import org.ejml.kotlin.*
 import org.ejml.simple.SimpleMatrix
 import org.ejml.sparse.csc.CommonOps_DSCC
 import org.ejml.sparse.csc.CommonOps_FSCC
+import org.jetbrains.kotlinx.multik.api.mk
+import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
+import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
+import org.jetbrains.kotlinx.multik.ndarray.operations.divAssign
+import org.jetbrains.kotlinx.multik.ndarray.operations.minus
+import org.jetbrains.kotlinx.multik.ndarray.operations.plusAssign
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  * Custom extensions for EJML simplification in Kotlin. Some optimized for speed.
@@ -41,6 +49,47 @@ fun SimpleMatrix.sumRows(): SimpleMatrix = when (this.type) {
 fun SimpleMatrix.euclideanDistance(other: SimpleMatrix): Double = (this - other).normF()
 fun SimpleMatrix.cosineDistance(other: SimpleMatrix): Double = this.dot(other) / (this.fastNormF() * other.fastNormF())
 
+fun D2Array<Float>.cosineDistance(other: D2Array<Float>): D2Array<Float> {
+    val dotProduct: D2Array<Float> = (this dot other) as D2Array<Float>
+    dotProduct /= (mk.linalg.norm(this) * mk.linalg.norm(other)).toFloat()
+
+    return dotProduct
+}
+
+fun D1Array<Float>.normP(p: Int): Float {
+    var sum: Float = 0f
+    for (x in data.indices) {
+        sum += data[x].pow(p)
+    }
+    return sum.pow(1f / p)
+}
+fun D1Array<Float>.norm2(): Float {
+    var sum: Float = 0f
+    for (x in data.indices) {
+        sum += data[x].pow(2)
+    }
+    return sqrt(sum)
+}
+
+fun D1Array<Float>.cosineDistance(other: D1Array<Float>): Float {
+    return mk.linalg.dot(this, other) / (this.norm2() * other.norm2())
+}
+
+fun D2Array<Float>.euclideanDistance(other: D2Array<Float>) = mk.linalg.norm(this - other)
+fun D1Array<Float>.euclideanDistance(other: D1Array<Float>) = (this - other)
+    .norm2()
+
+// var total = 0f
+//
+// var size: Int = a.getNumElements()
+//
+// for (i in 0 until size) {
+//     val `val`: Float = a.get(i)
+//     total += `val` * `val`
+// }
+//
+// return java.lang.Math.sqrt(total.toDouble()) as kotlin.Float
+
 /** Fast Normalizers: OBS prone to overflows/underflows */
 fun SimpleMatrix.fastNormF(): Float = NormOps_FDRM.fastNormF(fdrm)
 
@@ -50,6 +99,18 @@ fun List<SimpleMatrix>.avgNorm(): SimpleMatrix {
     result /= result.normF().toFloat()
 
     return result
+}
+
+fun List<D1Array<Float>>.avgNorm(): D1Array<Float> {
+    val avgNormalized = this[0].clone()
+
+    for (row in 1 until this.size) {
+        avgNormalized.plusAssign(this[row])
+    }
+
+    avgNormalized /= avgNormalized.norm2()
+
+    return avgNormalized
 }
 
 fun SimpleMatrix.colNormalize(): SimpleMatrix = sumCols().normalize()
