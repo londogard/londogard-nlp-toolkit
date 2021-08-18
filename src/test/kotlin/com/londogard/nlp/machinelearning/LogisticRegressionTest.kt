@@ -1,6 +1,6 @@
 package com.londogard.nlp.machinelearning
 
-import com.londogard.nlp.meachinelearning.classifiers.LogisticRegression
+import com.londogard.nlp.meachinelearning.predictors.classifiers.LogisticRegression
 import com.londogard.nlp.meachinelearning.inputs.Percent
 import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
 import com.londogard.nlp.meachinelearning.vectorizer.TfIdfVectorizer
@@ -28,11 +28,7 @@ class LogisticRegressionTest {
     }
 
     @DataSchema
-    interface Imdb {
-        val review: String
-        val sentiment: String
-        val label: Int
-    }
+    data class Imdb(val review: String, val sentiment: String, val label: Int)
 
     fun <T> DataFrame<T>.trainTestSplit(train: PercentOrCount = Percent(0.7), shuffle: Boolean = false): Pair<DataFrame<T>, DataFrame<T>> {
         val df = if (shuffle) shuffled() else this

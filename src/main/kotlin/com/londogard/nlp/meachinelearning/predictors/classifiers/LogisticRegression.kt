@@ -1,4 +1,4 @@
-package com.londogard.nlp.meachinelearning.classifiers
+package com.londogard.nlp.meachinelearning.predictors.classifiers
 
 import com.londogard.nlp.meachinelearning.dot
 import com.londogard.nlp.meachinelearning.inplaceOp

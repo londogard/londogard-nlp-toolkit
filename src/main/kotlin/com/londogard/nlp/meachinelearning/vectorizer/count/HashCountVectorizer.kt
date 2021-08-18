@@ -1,5 +1,6 @@
-package com.londogard.nlp.meachinelearning.vectorizer
+package com.londogard.nlp.meachinelearning.vectorizer.count
 
+import com.londogard.nlp.meachinelearning.vectorizer.Vectorizer
 import com.londogard.nlp.utils.IterableExtensions.ngrams
 import org.jetbrains.kotlinx.multik.api.d2array
 import org.jetbrains.kotlinx.multik.api.mk

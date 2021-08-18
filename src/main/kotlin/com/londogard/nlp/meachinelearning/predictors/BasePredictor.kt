@@ -1,4 +1,4 @@
-package com.londogard.nlp.meachinelearning
+package com.londogard.nlp.meachinelearning.predictors
 
 import org.jetbrains.kotlinx.multik.ndarray.data.D2
 import org.jetbrains.kotlinx.multik.ndarray.data.D2Array

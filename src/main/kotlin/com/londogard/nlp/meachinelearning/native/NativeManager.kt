@@ -6,7 +6,5 @@ import java.io.Closeable
 object NativeManager: Closeable {
     val ndManager: NDManager by lazy { NDManager.newBaseManager() }
 
-    override fun close() {
-        ndManager.close()
-    }
+    override fun close() { ndManager.close() }
 }

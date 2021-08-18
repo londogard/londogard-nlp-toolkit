@@ -1,7 +1,5 @@
 package com.londogard.nlp.utils
 
-import kotlin.math.roundToInt
-
 object IterableExtensions {
     fun <K> List<K>.identityCount(): Map<K, Int> = groupingBy { it }.eachCount()
 
@@ -21,12 +19,6 @@ object IterableExtensions {
 
             if (acc.isEmpty()) ngrams else acc.zip(ngrams) { lhs, rhs -> lhs + rhs }
         }
-
-    fun Map<String, Float>.toVocab(): Map<String, Int> {
-        val min = this.values.minOrNull() ?: 1f
-        val scale = (1 / min).roundToInt()
-        return this.mapValues { (_, value) -> (value * scale).roundToInt() }
-    }
 
     fun <K, V> List<Map<K, V>>.mergeReduce(reduce: (V, V) -> V): Map<K, V> =
         if (isEmpty()) emptyMap() else first().mergeReduce(subList(1, size), reduce)

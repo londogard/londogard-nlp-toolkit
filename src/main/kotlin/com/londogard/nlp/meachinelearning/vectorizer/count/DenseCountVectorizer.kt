@@ -1,9 +1,10 @@
-package com.londogard.nlp.meachinelearning.vectorizer
+package com.londogard.nlp.meachinelearning.vectorizer.count
 
 import com.londogard.nlp.meachinelearning.NotFitException
 import com.londogard.nlp.meachinelearning.inputs.Coordinate
 import com.londogard.nlp.meachinelearning.inputs.Percent
 import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
+import com.londogard.nlp.meachinelearning.vectorizer.Vectorizer
 import com.londogard.nlp.utils.IterableExtensions.getNgramCountsPerDoc
 import com.londogard.nlp.utils.IterableExtensions.identityCount
 import com.londogard.nlp.utils.IterableExtensions.ngrams
@@ -12,12 +13,10 @@ import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
 import org.jetbrains.kotlinx.multik.ndarray.data.set
 
-// Pipeline Object
-// Document Object
-// HashingBagOfWords (collisions)
-
-// TODO add actual T support
-/** This CountVectorizer uses dense data meaning that it might be faster if the data is actually dense (probably isn't). */
+/** DenseCountVectorizer uses dense data.
+ * Dense data is faster at operating, but because the data is usually so sparse a sparse structure ends up faster.
+ * Only use this if you're sure your data is very dense!
+ */
 class DenseCountVectorizer<T : Number>(
     val minDf: PercentOrCount = Percent(0.0),
     val maxDf: PercentOrCount = Percent(1.0),
@@ -39,7 +38,7 @@ class DenseCountVectorizer<T : Number>(
             throw NotFitException("CountVectorizer must be 'fit' before calling 'transform'!")
         }
         if (input.size.toLong() * vectorization.size > Int.MAX_VALUE) {
-            throw UnsupportedOperationException("Data is too large (${input.size.toLong() * vectorization.size }). Requires Hashing or Sparse.")
+            throw UnsupportedOperationException("Data is too large (${input.size.toLong() * vectorization.size}). Requires Hashing or Sparse.")
         }
 
         val nonZeroElements = input
@@ -78,7 +77,7 @@ class DenseCountVectorizer<T : Number>(
                 if (minDf.isLesserThan(count, totalCount) && maxDf.isGreatherThan(count, totalCount)) Unit
                 else dfArray[index] = -1
             }
-           dfArray
+            dfArray
         }
 
         val (vec, remap) = vocab
@@ -93,7 +92,7 @@ class DenseCountVectorizer<T : Number>(
         }
 
         val remapMap = remap.toMap()
-        val remappingArray = IntArray(vocab.size){ i -> remapMap.getOrDefault(i, -1) }
+        val remappingArray = IntArray(vocab.size) { i -> remapMap.getOrDefault(i, -1) }
 
         val countMapFiltered = vectorized
             .flatMapIndexed { row, docCount ->

@@ -6,6 +6,25 @@ import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.jvm.JvmLinAlg
 import org.jetbrains.kotlinx.multik.ndarray.data.*
 
+fun MultiArray<Float, D2>.mapNonZero(op: (Float) -> Float): MultiArray<Float, D2> {
+    return clone().apply {
+        val array = data.getFloatArray()
+        for (i in indices) {
+            array[i] = op(array[i])
+        }
+    }
+}
+
+fun D2SparseArray.mapIndexedNonZero(op: (Float, Int, Int) -> Float): D2SparseArray {
+    return clone().apply {
+        (0 until colIndices.size - 1).forEach { col ->
+            (colIndices[col] until colIndices[col + 1]).forEach { i ->
+                data[i] = op(data[i], rowIndices[i], col)
+            }
+        }
+    }
+}
+
 fun <D : Dimension> MultiArray<Float, D>.inplaceOp(op: (Float) -> Float): MultiArray<Float, D> = apply {
     val internalData = data.getFloatArray()
     for (i in internalData.indices) {
@@ -13,13 +32,25 @@ fun <D : Dimension> MultiArray<Float, D>.inplaceOp(op: (Float) -> Float): MultiA
     }
 }
 
-fun D2Array<Float>.sigmoid() = inplaceOp(::sigmoidFast)
-
 infix fun MultiArray<Float, D2>.dot(other: MultiArray<Float, D2>): MultiArray<Float, D2> = when {
     this is D2SparseArray && other is D2SparseArray -> this dotSparse other
     this is D2SparseArray -> this dotDense other
-    other is D2SparseArray -> this dot other.toDense()
+    other is D2SparseArray -> this dotDense other
     else -> JvmLinAlg.dot(this, other)
+}
+
+infix fun MultiArray<Float, D2>.dotDense(other: D2SparseArray): D2Array<Float> {
+    val result = mk.ndarray(FloatArray(shape[0] * other.shape[1]), shape[0], other.shape[1])
+    other.indexMap
+        .forEach { (rowCol, index) ->
+            val (otherRow, otherCol) = rowCol
+
+
+            (0 until shape[0]).forEach { thisRow ->
+                result[thisRow, otherCol] += (other.data[index] * this[thisRow, otherRow])
+            }
+        }
+    return result
 }
 
 infix fun D2SparseArray.dotDense(other: MultiArray<Float, D2>): MultiArray<Float, D2> {
@@ -31,18 +62,12 @@ infix fun D2SparseArray.dotDense(other: MultiArray<Float, D2>): MultiArray<Float
             (0 until other.shape[1]).forEach { otherCol -> // multiply [_, col] by [col, _]
                 result[row, otherCol] += (data[index] * other[col, otherCol])
             }
-
-            // TODO("")
         }
     return result
 }
 
+// TODO validate if faster is possible
 infix fun D2SparseArray.dotSparse(other: D2SparseArray): D2SparseArray {
-    // val colIndices = IntArray(other.shape[1] + 1)
-    // val rowIndices = IntArray(other.data.size + data.size)
-    // val nzValues = FloatArray(other.data.size + data.size)
-    // var nzLength = 0
-
     val data = other.colIndices
         .zip(other.colIndices.drop(1))
         .flatMapIndexed { otherCol, (otherFrom, otherTo) ->

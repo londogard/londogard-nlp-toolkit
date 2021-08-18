@@ -90,10 +90,7 @@ class WordEmbeddings(
             ?: emptyList()
 
     companion object {
-        /** Pretty print the list of words and their associated scores.
-         * @param words List of (word, score) pairs to be printed.
-         */
-        @JvmStatic fun pprint(words: List<Pair<String, Double>>) {
+        @JvmStatic fun pprint(words: List<Pair<String, Float>>) {
             println("\n%50s${" ".repeat(7)}Cosine distance\n${"-".repeat(72)}".format("Word"))
             println(words.joinToString("\n") { (word, dist) -> "%50s${" ".repeat(7)}%15f".format(word, dist) })
         }

@@ -1,17 +1,14 @@
-package com.londogard.nlp.meachinelearning.vectorizer
+package com.londogard.nlp.meachinelearning.vectorizer.count
 
 import com.londogard.nlp.meachinelearning.D2SparseArray
 import com.londogard.nlp.meachinelearning.NotFitException
 import com.londogard.nlp.meachinelearning.inputs.Coordinate
 import com.londogard.nlp.meachinelearning.inputs.Percent
 import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
+import com.londogard.nlp.meachinelearning.vectorizer.Vectorizer
 import com.londogard.nlp.utils.IterableExtensions.getNgramCountsPerDoc
 import com.londogard.nlp.utils.IterableExtensions.identityCount
 import com.londogard.nlp.utils.IterableExtensions.ngrams
-
-// Pipeline Object
-// Document Object
-// HashingBagOfWords (collisions)
 
 // TODO add actual T support
 class CountVectorizer<T : Number>(
@@ -19,7 +16,7 @@ class CountVectorizer<T : Number>(
     val maxDf: PercentOrCount = Percent(1.0),
     val ngramRange: IntRange = 1..1
 ) : Vectorizer<T, Float> {
-    private lateinit var vectorization: Map<String, Int>
+    lateinit var vectorization: Map<String, Int>
 
     init {
         if (ngramRange.first <= 0) throw IllegalArgumentException("ngramRange must be larger than 0")

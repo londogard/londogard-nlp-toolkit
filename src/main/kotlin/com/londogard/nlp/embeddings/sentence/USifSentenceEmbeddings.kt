@@ -41,7 +41,8 @@ class USifSentenceEmbeddings(
         else {
 
             val svd = SimpleMatrix(vectors.map { it.data.getFloatArray() }.toTypedArray()).svd(true)
-
+            // TODO remove Simple API in favour of only Float
+            // svd = DecompositionFactory_FDRM.svd(m.numRows, m.numCols, true, true, compact);
             val singularValueSum = svd.singularValues.sumOf { it * it }
 
             (0 until numCommonDiscourseVector)

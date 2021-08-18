@@ -8,6 +8,7 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import kotlin.math.abs
 
+// TODO optimizer can figure out the yPredicted to save one iteration of predicts!
 class GradientDescent(
     val maxIterations: Int,
     val stepSize: Float,
@@ -19,7 +20,6 @@ class GradientDescent(
         X: MultiArray<Float, D2>,
         y: D2Array<Float>
     ): Pair<D2Array<Float>, List<Float>> {
-        // TODO optimizer can figure out the yPredicted to save one iteration of predicts!
         tailrec fun opt(prevWeight: D2Array<Float>, losses: List<Float>): Pair<D2Array<Float>, List<Float>> {
             val weights = prevWeight - (loss.gradient(prevWeight, X, y) * stepSize)
             val currentLoss = loss.loss(weights, X, y)

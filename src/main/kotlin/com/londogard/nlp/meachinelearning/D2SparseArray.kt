@@ -1,7 +1,6 @@
 package com.londogard.nlp.meachinelearning
 
 import com.londogard.nlp.meachinelearning.inputs.Coordinate
-import org.jetbrains.kotlinx.multik.api.d2array
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.*
@@ -25,28 +24,8 @@ fun MultiArray<Float, D2>.toSparse(): D2SparseArray {
 
 fun MultiArray<Float, D2>.toDense(): D2Array<Float> {
     return if (this is D2SparseArray) {
-        val data = this.asSequence().toList()
-        mk.d2array(shape[0], shape[1]) { data[it] } // TODO IMPROVE
+        mk.ndarray(this.asSequence().toList(), shape[0], shape[1])
     } else this as D2Array<Float>
-}
-
-fun MultiArray<Float, D2>.mapNonZero(op: (Float) -> Float): MultiArray<Float, D2> {
-    return clone().apply {
-        val array = data.getFloatArray()
-        for (i in indices) {
-            array[i] = op(array[i])
-        }
-    }
-}
-
-fun D2SparseArray.mapIndexedNonZero(op: (Float, Int, Int) -> Float): D2SparseArray {
-    return clone().apply {
-        (0 until colIndices.size - 1).forEach { col ->
-            (colIndices[col] until colIndices[col + 1]).forEach { i ->
-                data[i] = op(data[i], rowIndices[i], col)
-            }
-        }
-    }
 }
 
 /** Compressed Column (CC) Sparse Matrix File Format */

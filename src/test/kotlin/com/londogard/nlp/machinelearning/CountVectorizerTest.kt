@@ -1,6 +1,6 @@
 package com.londogard.nlp.machinelearning
 
-import com.londogard.nlp.meachinelearning.vectorizer.CountVectorizer
+import com.londogard.nlp.meachinelearning.vectorizer.count.CountVectorizer
 import org.amshove.kluent.shouldBeEqualTo
 import kotlin.test.Test
 

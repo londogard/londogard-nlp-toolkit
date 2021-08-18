@@ -18,9 +18,11 @@ class MathTest {
         val res = A dot B
         val resSparse = A.toSparse() dot B.toSparse()
         val respSparseDense = A.toSparse() dot B
+        val respDenseSparse = A dot B.toSparse()
 
         res shouldBeEqualTo resSparse.toDense()
         respSparseDense shouldBeEqualTo res
+        respDenseSparse shouldBeEqualTo res
     }
 
     @Test

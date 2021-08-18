@@ -74,5 +74,5 @@ All implement `BaseTool`
 ----
 
 TODO
-- https://github.com/Kotlin/dataframe vs https://github.com/holgerbrandl/krangl
-- EJML vs DJL vs ND4j vs Native
+- DJL vs Multik
+- DecisionTrees -- https://becominghuman.ai/designing-decision-trees-from-scratch-on-android-68bf7ee0d01a
