@@ -12,7 +12,6 @@ class CountVectorizerTest {
         countMatrix[0,0] shouldBeEqualTo 1f
         countMatrix[0,1] shouldBeEqualTo 1f
 
-        // TODO Currently not sparse
         countMatrix[2,0] shouldBeEqualTo 0f          // validate that sparse matrix still return 0:s
 
         countMatrix.data.size shouldBeEqualTo 7 // validate it's sparse

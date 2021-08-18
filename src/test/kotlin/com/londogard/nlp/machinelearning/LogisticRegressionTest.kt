@@ -1,8 +1,8 @@
 package com.londogard.nlp.machinelearning
 
-import com.londogard.nlp.meachinelearning.predictors.classifiers.LogisticRegression
 import com.londogard.nlp.meachinelearning.inputs.Percent
 import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
+import com.londogard.nlp.meachinelearning.predictors.classifiers.LogisticRegression
 import com.londogard.nlp.meachinelearning.vectorizer.TfIdfVectorizer
 import com.londogard.nlp.tokenizer.SimpleTokenizer
 import org.amshove.kluent.shouldBeEqualTo
@@ -36,24 +36,4 @@ class LogisticRegressionTest {
 
         return df[0 until numTrain] to df[numTrain..nrow()]
     }
-
-    /**
-    @Test
-    fun testLarger() {
-        val tok = SimpleTokenizer() // SentencePieceTokenizer.fromLanguageSupportOrNull(LanguageSupport.en)!!
-        val df = DataFrame
-            .readCSV(javaClass.getResource("/imdb.csv")!!)
-            .add("label") { if (it["sentiment"] == "positive") 1 else 0 }
-            .head(100)
-            .typed<Imdb>()
-            .update { it.col(Imdb::review) }
-            .with { tok.split(it) }
-
-        measureNanoTime {
-            val vec = CountVectorizer<Float>(ngramRange = 1..2, minDf = Count(10))
-            val tfidf = TfIdfTransformer()
-            val a = vec.fitTransform(df["review"].toList() as List<List<String>>)
-            tfidf.fitTransform(a)
-        }.also { println(it / 1e9) }
-    }*/
 }

@@ -19,7 +19,7 @@ class NaiveBayes: Classifier {
     override fun fit(X: MultiArray<Float, D2>, y: D2Array<Int>) { // actually Y can be a D1 array.. or what if dual class?!
         // build frequencies
         val distinctY = y.distinct()
-        require(distinctY.size == 2) { "Naïve Bayes only support binary prediction" }
+        require(distinctY.size == 2) { "Naïve Bayes currently only support binary prediction" }
         require(distinctY.contains(1) && distinctY.contains(0)) { "Naïve Bayes requires y = 0 && y = 1."}
 
         val zero = mk.empty<Float, D1>(X.shape[1])

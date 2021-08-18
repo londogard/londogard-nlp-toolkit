@@ -158,4 +158,3 @@ fun MultiArray<Float, D2>.sum(byRow: Boolean): D1Array<Float> {
         else -> mk.math.sum(this, if (byRow) 0 else 1)
     }
 }
-

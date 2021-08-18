@@ -1,3 +1,4 @@
+[![Maven Central](https://img.shields.io/maven-central/v/com.londogard/nlp.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.londogard%22%20AND%20a:%22nlp%22)
 [![](https://jitpack.io/v/com.londogard/londogard-nlp-toolkit.svg)](https://jitpack.io/#com.londogard/londogard-nlp-toolkit)
 
 # londogard-nlp-toolkit
@@ -6,33 +7,29 @@ This toolkit will be used throughout Londogard libraries/products such as our Su
 
 First of, `LanguageSupport.<ISO_COUNTRY_CODE>`helps figuring out what is and isn't supported for certain languages. Utilities that makes sense to provide your own data, like Word Embeddings & Tokenizers, are available for any language if you provide your own models.
 
-- ✔️Word Embeddings including basic Word Embeddings, 'Light Word Embeddings' & BytePairEmbeddings
-    - The Embeddings include automated downloads of languages to simplify your life, unless a path is specified.
-    - WordEmbeddings include 157 languages via `fastText`-embeddings ([fastText.cc](https://fasttext.cc/docs/en/crawl-vectors.html))
-    - BPE-Embeddings include 275 languages via `BPEmb`-embeddings ([nlp.h-its.org](https://nlp.h-its.org/bpemb/))
-    - All embeddings support ∞ languages through your own self-trained embeddings if a file-path is supplied!
-- ✔️Sentence Embeddings including `AvgSentenceEmbeddings` & `USifEmbeddings`
-- ✔️Tokenizers including Word, Char & Subword (SentencePiece) tokenizers (simple to add custom logic)
-    - SentencePiece include 275 languages via `BPEmb`-embeddings ([nlp.h-its.org](https://nlp.h-its.org/bpemb/)) with 8 vocab-sizes (1000, 3000, 10_000, 25_000, 50_000, 100_000, 200_000).
-        - Of course possible to supply your own tokenizer if you've a path to a trained one!
-- ✔️Stopwords based on NLTKs list
-    - Supporting: ar, az, da, de, el, en, es, fi, fr, hu, id, it, kk, ne, nl, no, pt, ro, ru, sl, sv, tg & tr
-- ✔️Word Frequencies based on `wordfreq.py` by [LuminosoInsight](https://github.com/LuminosoInsight/wordfreq/).
-    - Supporting: ar, cs, de, en, es, fi, fr, it, ja, nl, pl, uk, pt, ru, zh, bg, bn, ca, da, el, fa, he, hi, hu, id, ko, lv, mk, ms, nb, ro, sh, sv & tr. Some of these support "Large Word Frequency", call `LanguageSupport.<LANG_CODE>.largestWordFrequency()` to see if `large` variant is available.
-- ✔️Stemmer based on [Snowball Stemmer](https://snowballstem.org/)
-    - Supporting: sv, nl, en, fi, fr, de, hu, it, no, pt, ro, ru, es & tr
-- ✔️Trie - Just a basic utility that is to be used for a custom SubwordTokenizer in the future.
-- 🚧✔️Vectorizer/Transformer
-    - ✔️CountVectorizer (Bag of Words), TF-IDF & BM-25
-    - Documentation will be added soon.
-- 🚧Keyword Extraction
-- [Future] Classifiers
-- [Future] Neural Networks (99% it'll only be for inference via PyTorch / ONNX)
-- [Future] ???
-
+| Feature                     | Implementations (if multiple)                                             | Languages                                                                                                                                 | Based On                                                                                                                                                | Notes                                                                                                                                                                                                                                                                                      |
+|-----------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Word Embeddings**         | - `WordEmbeddings`<br>- `LightWordEmbeddings`<br>- `BPEEmbeddings`        | - ∞ languages if self-provided<br>- 275 through `BPEEmb`-embeddings<br>- 157 through `fastText`-embeddings                                | - `fastText` embeddings downloaded from [fastText.cc](https://fasttext.cc)<br>- `bpe-emb` embeddings downloaded from [bpeemb](https://bpemb.h-its.org/) | - `LightWordEmbeddings`is great for memory (e.g. running on Raspberry Pi) as it only loads the most common embeddings and cache ad-hoc<br>- `BPEEmbeddings` are also great for memory but requires subword tokenization (built-in so you don't have to think about it unless you optimize) |
+| **Sentence Embeddings**     | - `AverageSentenceEmbeddings`<br>- `USifSentenceEmbeddings`               |                                                                                                                                           | USif is based on [Unsupervised Random Walk Sentence Embeddings: A Strong but Simple Baseline](https://aclanthology.org/W18-3012/)                       |                                                                                                                                                                                                                                                                                            |
+| **Tokenizers**              | - Word<br>- Char<br>- Subword (SentencePiece)                             | - Subword support 275 languages through `bpemb`                                                                                           | - SentencePiece is using the google implementation via [DJL](https://github.com/deepjavalibrary/djl)                                                    |                                                                                                                                                                                                                                                                                            |
+| **Stopwords**               |                                                                           | `ar, az, da, de, el, en, es, fi, fr, hu, id, it, kk, ne, nl, no, pt, ro, ru, sl, sv, tg & tr`                                             | NLTK stopword lists                                                                                                                                     |                                                                                                                                                                                                                                                                                            |
+| **Word Frequencies**        |                                                                           | `ar, cs, de, en, es, fi, fr, it, ja, nl, pl, uk, pt, ru, zh, bg, bn, ca, da, el, fa, he, hi, hu, id, ko, lv, mk, ms, nb, ro, sh, sv & tr` | `wordfreq.py` by [LuminosoInsight](https://github.com/LuminosoInsight/wordfreq/)                                                                        | Some of these has "Large Word Frequency" which is much larger, find it through `LanguageSupport.<LANG_CODE>.largestWordFrequency()`                                                                                                                                                        |
+| **Stemming**                |                                                                           | `sv, nl, en, fi, fr, de, hu, it, no, pt, ro, ru, es & tr`                                                                                 | [Snowball Stemmer](https://snowballstem.org/)                                                                                                           |                                                                                                                                                                                                                                                                                            |
+| **Vectorization**           | - BagOfWords (`CountVectorizer` & `HashVectorizer`)<br>- TF-IDF<br>- BM25 |                                                                                                                                           |                                                                                                                                                         |                                                                                                                                                                                                                                                                                            |
+| **Classifiers**             | - LogisticRegression (using Gradient Descent)<br>- NaïveBayes             |                                                                                                                                           |                                                                                                                                                         |                                                                                                                                                                                                                                                                                            |
+| **Regression**              | - LinearRegression                                                        |                                                                                                                                           |                                                                                                                                                         |                                                                                                                                                                                                                                                                                            |
+| **Sequence Classification** | - HiddenMarkovModel                                                       |                                                                                                                                           |                                                                                                                                                         |                                                                                                                                                                                                                                                                                            |
+| 🚧 Keyword Extraction        |                                                                           |                                                                                                                                           |                                                                                                                                                         |                                                                                                                                                                                                                                                                                            |
+| 🚧 Neural Network            |                                                                           |                                                                                                                                           |                                                                                                                                                         |                                                                                                                                                                                                                                                                                            |
+| 🚧 spaCy-like API            |                                                                           |                                                                                                                                           |                                                                                                                                                         |                                                                                                                                                                                                                                                                                            |
 
 ## Installation
-**Jitpack (the easiest)**
+**MavenCentral**
+```kotlin
+implementation("com.londogard:nlp:1.0.0")
+```
+
+**Jitpack**
 
 Add the following to your build.gradle. `$version` should be equal to the version supplied by tag above.
 ```bash
@@ -53,26 +50,4 @@ Please see the Kotlin Notebook [README.ipynb](https://github.com/londogard/londo
 ----
 
 # Machine Learning with Londogard NLP Toolkit
-API like scikit-learn / spark-ml.
-
-**Preprocessors**
-See the rest of Londogard NLP Toolkit (tokenizer etc)
-
-**Vectorization**
-Vectorizer = Fit, FitTransform, Transform
-Transformer = Fit, FitTransform, Transform
-
-**Models**
-Regression = Fit, FitTransform, Transform
-Classifier = Fit, FitTransform, Transform
-
-**Distances**
-Cosine / Euclidean / ...
-
-All implement `BaseTool`
-
-----
-
-TODO
-- DJL vs Multik
-- DecisionTrees -- https://becominghuman.ai/designing-decision-trees-from-scratch-on-android-68bf7ee0d01a
+API like scikit-learn, spark-ml & spaCy. WIP

@@ -24,8 +24,9 @@ class LogisticLoss: Loss {
 
     //grad = 1/m*sum((sigmoid(X*theta)-y).*X,1)';
     override fun gradient(weights: D2Array<Float>, X: MultiArray<Float, D2>, y: D2Array<Float>): D2Array<Float> {
-        val res = (X dot weights.transpose()).inplaceOp(::sigmoidFast).apply { (this as D2Array<Float>).minusAssign(y) }
-        // aT*b = bT * a
+        val res = (X dot weights.transpose()).inplaceOp(::sigmoidFast) as D2Array<Float>
+        res -= y
+
         val main = (X.transpose() dot res).transpose() as D2Array<Float>
         main /= X.shape[0].toFloat()
 
