@@ -1,9 +1,9 @@
 package com.londogard.nlp.meachinelearning.vectorizer.count
 
 import com.londogard.nlp.meachinelearning.NotFitException
-import com.londogard.nlp.meachinelearning.inputs.Coordinate
-import com.londogard.nlp.meachinelearning.inputs.Percent
-import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
+import com.londogard.nlp.meachinelearning.datatypes.Coordinate
+import com.londogard.nlp.meachinelearning.datatypes.Percent
+import com.londogard.nlp.meachinelearning.datatypes.PercentOrCount
 import com.londogard.nlp.meachinelearning.vectorizer.Vectorizer
 import com.londogard.nlp.utils.IterableExtensions.getNgramCountsPerDoc
 import com.londogard.nlp.utils.IterableExtensions.identityCount

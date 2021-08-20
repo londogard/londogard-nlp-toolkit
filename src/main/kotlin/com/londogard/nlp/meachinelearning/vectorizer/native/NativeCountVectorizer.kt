@@ -3,9 +3,9 @@ package com.londogard.nlp.meachinelearning.vectorizer.native
 import ai.djl.ndarray.types.Shape
 import com.londogard.nlp.meachinelearning.native.NativeManager
 import com.londogard.nlp.meachinelearning.native.NativeNDArray
-import com.londogard.nlp.meachinelearning.inputs.Coordinate
-import com.londogard.nlp.meachinelearning.inputs.Percent
-import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
+import com.londogard.nlp.meachinelearning.datatypes.Coordinate
+import com.londogard.nlp.meachinelearning.datatypes.Percent
+import com.londogard.nlp.meachinelearning.datatypes.PercentOrCount
 import com.londogard.nlp.utils.IterableExtensions.identityCount
 import com.londogard.nlp.utils.IterableExtensions.ngrams
 import java.nio.FloatBuffer

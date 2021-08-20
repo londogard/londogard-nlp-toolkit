@@ -1,7 +1,7 @@
 package com.londogard.nlp.meachinelearning.vectorizer
 
-import com.londogard.nlp.meachinelearning.inputs.Percent
-import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
+import com.londogard.nlp.meachinelearning.datatypes.Percent
+import com.londogard.nlp.meachinelearning.datatypes.PercentOrCount
 import com.londogard.nlp.meachinelearning.transformers.TfIdfTransformer
 import com.londogard.nlp.meachinelearning.vectorizer.count.CountVectorizer
 import org.jetbrains.kotlinx.multik.ndarray.data.D2

@@ -1,6 +1,6 @@
 package com.londogard.nlp.meachinelearning
 
-import com.londogard.nlp.meachinelearning.inputs.Coordinate
+import com.londogard.nlp.meachinelearning.datatypes.Coordinate
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.jvm.JvmLinAlg

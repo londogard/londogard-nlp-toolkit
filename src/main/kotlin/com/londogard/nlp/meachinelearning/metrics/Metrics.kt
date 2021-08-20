@@ -12,27 +12,40 @@ object Metrics {
     fun confusionMatrix() {
         TODO("")
     }
+
     fun f1() {
         TODO("")
     }
 
-    fun rSquared(testData: D2Array<Float>, predictedData: D2Array<Float>): Float {
-        val sst = (testData - testData.average().toFloat()).inplaceOp { it.pow(2) }.sum()
-        val ssr = (testData - predictedData).inplaceOp { it.pow(2) }.sum()
+    // precision = TP / (TP + FP)
+    // Precision = Sum c in C TruePositives_c / Sum c in C (TruePositives_c + FalsePositives_c)
+    fun <T: Number> precision(test: D2Array<T>, predicted: D2Array<T>) {
+        TODO("")
+    }
+
+    // recall = TP / (TP + FN)
+    fun <T: Number> recall(test: D2Array<T>, predicted: D2Array<T>) {
+        TODO("")
+    }
+
+    fun rSquared(test: D2Array<Float>, predicted: D2Array<Float>): Float {
+        val sst = (test - test.average().toFloat()).inplaceOp { it.pow(2) }.sum()
+        val ssr = (test - predicted).inplaceOp { it.pow(2) }.sum()
 
         return (sst - ssr) / sst // R²
     }
 
 
-    fun <T : Number> accuracy(testData: D2Array<T>, predictedData: D2Array<T>): Double {
-        require(testData.shape.toList() == predictedData.shape.toList()) {
+    // accuracy = TP + FP / (TP + FP + FN + TN)
+    fun <T : Number> accuracy(test: D2Array<T>, predicted: D2Array<T>): Double {
+        require(test.shape.toList() == predicted.shape.toList()) {
             "The size of testWords list doesn't match the size of the testTags list"
         }
         var correct = 0
-        for (row in 0 until testData.shape[0]) {
-            if(testData.view(row) == predictedData.view(row)) { correct += 1 }
+        for (row in 0 until test.shape[0]) {
+            if(test.view(row) == predicted.view(row)) { correct += 1 }
         }
 
-        return correct.toDouble() / testData.shape[0]
+        return correct.toDouble() / test.shape[0]
     }
 }

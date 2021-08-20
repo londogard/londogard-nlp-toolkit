@@ -1,7 +1,7 @@
 package com.londogard.nlp.machinelearning
 
-import com.londogard.nlp.meachinelearning.inputs.Percent
-import com.londogard.nlp.meachinelearning.inputs.PercentOrCount
+import com.londogard.nlp.meachinelearning.datatypes.Percent
+import com.londogard.nlp.meachinelearning.datatypes.PercentOrCount
 import com.londogard.nlp.meachinelearning.predictors.classifiers.LogisticRegression
 import com.londogard.nlp.meachinelearning.vectorizer.TfIdfVectorizer
 import com.londogard.nlp.tokenizer.SimpleTokenizer

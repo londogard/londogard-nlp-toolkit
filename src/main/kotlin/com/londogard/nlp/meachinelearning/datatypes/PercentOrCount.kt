@@ -1,4 +1,4 @@
-package com.londogard.nlp.meachinelearning.inputs
+package com.londogard.nlp.meachinelearning.datatypes
 
 sealed class PercentOrCount {
     abstract fun <T: Number> isGreatherThan(other: T, totalCount: Int): Boolean
@@ -6,6 +6,7 @@ sealed class PercentOrCount {
     abstract fun isEq(other: Int): Boolean
     abstract fun toCount(totalCount: Int): Int
 }
+
 data class Percent(val percent: Double) : PercentOrCount() {
     override fun <T : Number> isGreatherThan(other: T, totalCount: Int) = percent > other.toDouble() / totalCount
     override fun <T : Number> isLesserThan(other: T, totalCount: Int) = percent < other.toDouble() / totalCount
