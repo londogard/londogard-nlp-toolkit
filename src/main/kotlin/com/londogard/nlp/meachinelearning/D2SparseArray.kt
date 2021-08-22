@@ -136,10 +136,9 @@ class D2SparseArray(
             val colIndices = IntArray(shape[1] + 1)
             val cols = sortedInitData.map(Coordinate<Float>::col)
             for (col in 1 until colIndices.size - 1) {
-                colIndices[col] = (colIndices[col - 1] until cols.size).first { i -> cols[i] == col }
+                colIndices[col] = (colIndices[col - 1] until cols.size).firstOrNull { i -> cols[i] == col } ?: sortedInitData.size
             }
             colIndices[colIndices.size - 1] = sortedInitData.size
-
             val data = MemoryViewFloatArray(FloatArray(sortedInitData.size) { i -> sortedInitData[i].count })
             return D2SparseArray(rowIndices, colIndices, data, shape)
         }

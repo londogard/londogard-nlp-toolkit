@@ -5,12 +5,13 @@ import com.londogard.nlp.meachinelearning.inplaceOp
 import com.londogard.nlp.meachinelearning.loss.LogisticLoss
 import com.londogard.nlp.meachinelearning.optimizer.GradientDescent
 import com.londogard.nlp.meachinelearning.sigmoidFast
+import com.londogard.nlp.meachinelearning.toDense
+import org.jetbrains.kotlinx.multik.api.d2array
 import org.jetbrains.kotlinx.multik.api.empty
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.ndarray.data.D2
 import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
-import org.jetbrains.kotlinx.multik.ndarray.operations.map
 
 class LogisticRegression: Classifier {
     private lateinit var weights: D2Array<Float>
@@ -26,8 +27,11 @@ class LogisticRegression: Classifier {
         losses = lossesOut
     }
 
-    override fun predict(X: MultiArray<Float, D2>): D2Array<Int> =
-        predictProba(X).map { if (it > 0.5f) 1 else 0 }
+    override fun predict(X: MultiArray<Float, D2>): D2Array<Int> {
+        val proba = predictProba(X.toDense())
+
+        return mk.d2array(X.shape[0], 1) { i -> if (proba.data[i] < 0.5f) 0 else 1 }
+    }
 
     fun predictProba(X: MultiArray<Float, D2>): MultiArray<Float, D2> =
         (X dot weights.transpose()).inplaceOp(::sigmoidFast)
