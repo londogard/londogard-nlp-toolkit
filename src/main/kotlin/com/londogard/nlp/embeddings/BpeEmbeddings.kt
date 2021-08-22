@@ -5,7 +5,7 @@ import com.londogard.nlp.tokenizer.Tokenizer
 import com.londogard.nlp.tokenizer.toVocabSize
 import com.londogard.nlp.utils.LanguageSupport
 import com.londogard.nlp.utils.avgNorm
-import org.ejml.simple.SimpleMatrix
+import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 import java.nio.file.Path
 
 class BpeEmbeddings(
@@ -14,12 +14,12 @@ class BpeEmbeddings(
     override val delimiter: Char = ' ',
     private val tokenizer: Tokenizer = toTokenizer(filePath)
 ) : Embeddings {
-    override val embeddings: Map<String, SimpleMatrix> by lazy { EmbeddingLoader.fromFile(filePath, delimiter) }
+    override val embeddings: Map<String, D1Array<Float>> by lazy { EmbeddingLoader.fromFile(filePath, delimiter) }
     override val vocabulary: Set<String> by lazy { embeddings.keys }
 
-    override fun vector(word: String): SimpleMatrix? {
+    override fun vector(word: String): D1Array<Float>? {
         return tokenizer.split(word).mapNotNull { subword -> super.vector(subword) }
-            .takeIf(List<SimpleMatrix>::isNotEmpty)
+            .takeIf(List<*>::isNotEmpty)
             ?.avgNorm()
     }
 
@@ -27,15 +27,17 @@ class BpeEmbeddings(
         return tokenizer.split(word).all(embeddings::contains)
     }
 
-    fun subwordVector(subword: String): SimpleMatrix? = embeddings[subword]
+    fun subwordVector(subword: String): D1Array<Float>? = embeddings[subword]
 
     companion object {
-        @JvmStatic fun toTokenizer(filePath: Path): Tokenizer {
+        @JvmStatic
+        fun toTokenizer(filePath: Path): Tokenizer {
             val rawNameTokens = filePath.fileName.toString().split('.')
 
             val languageSupport = LanguageSupport.valueOf(rawNameTokens.first())
-            val vocabSize = rawNameTokens.find { token -> token.startsWith("vs") }?.removePrefix("vs")?.toInt()?.toVocabSize()
-                ?: throw IllegalArgumentException("BpeEmbeddings must use standard vocab-size or supply tokenizer argument manually!")
+            val vocabSize =
+                rawNameTokens.find { token -> token.startsWith("vs") }?.removePrefix("vs")?.toInt()?.toVocabSize()
+                    ?: throw IllegalArgumentException("BpeEmbeddings must use standard vocab-size or supply tokenizer argument manually!")
 
             return SentencePieceTokenizer.fromLanguageSupportAndSizeOrNull(languageSupport, vocabSize)
                 ?: throw IllegalArgumentException("BpeEmbeddings must have standard SentencePieceTokenizer or supply tokenizer argument manually!")

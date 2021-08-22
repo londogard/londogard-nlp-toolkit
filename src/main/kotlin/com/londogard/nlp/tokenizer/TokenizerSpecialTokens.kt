@@ -7,7 +7,7 @@ object TokenizerSpecialTokens {
 
     const val Number: Char = '\u000E'            // SHIFT_IN
     const val NumberStr: String = Number.toString()
-    private val NumberPattern = "\\d".toRegex()
+    val NumberPattern = "\\d".toRegex()
 
     const val Upper: Char = '\u001b'             // ESCAPE
     const val BOS: Char = '\u0002'               // START_OF_TEXT
@@ -21,7 +21,4 @@ object TokenizerSpecialTokens {
     // Repetition used if 3 or more repeated
     const val WordRepetition: Char = '\u0011'    // DEVICE_CONTROL_ONE
     const val CharRepetition: Char = '\u0012'    // DEVICE_CONTROL_TWO
-
-    fun replaceNumber(text: String): String = NumberPattern.replace(text, NumberStr)
-    fun replaceAllCaps(text: String): String = TODO("")
 }

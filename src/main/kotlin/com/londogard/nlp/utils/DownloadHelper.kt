@@ -2,10 +2,13 @@ package com.londogard.nlp.utils
 
 import com.londogard.nlp.embeddings.EmbeddingLoader.BpeDefaultEmbeddingDimension
 import com.londogard.nlp.wordfreq.WordFrequencySize
+import mu.KotlinLogging
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
+
+private val logger = KotlinLogging.logger {}
 
 @PublishedApi
 internal object DownloadHelper {
@@ -25,11 +28,12 @@ internal object DownloadHelper {
 
     private fun downloadFileIfMissing(fileInfo: FileInfo) {
         if (!Files.exists(fileInfo.path)) {
-            println("Downloading ${fileInfo.description} for ${fileInfo.language} as files don't exist locally.")
+            logger.info { "Downloading ${fileInfo.description} for ${fileInfo.language} as files don't exist locally." }
 
             fileInfo.toUrl().saveTo(fileInfo.path)
 
-            println("Download completed! ${fileInfo.language} ${fileInfo.description} located at ${fileInfo.path.toAbsolutePath()}")
+
+            logger.info { "Download completed! ${fileInfo.language} ${fileInfo.description} located at ${fileInfo.path.toAbsolutePath()}" }
         }
     }
 

@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.londogard"
-version = "1.0.1"
+version = "1.1.0-BETA"
 
 repositories {
     mavenCentral()
@@ -20,18 +20,38 @@ repositories {
 val kluentVersion: String by project
 
 dependencies {
+    implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
+    implementation("org.apache.commons:commons-compress:1.21")
+    implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-299-0.10.0.201")
+
+    // EJML
     implementation("org.ejml:ejml-simple:0.41")
     implementation("org.ejml:ejml-kotlin:0.41")
 
+    // Multik
+    implementation("org.jetbrains.kotlinx:multik-api:0.0.1")
+    implementation("org.jetbrains.kotlinx:multik-default:0.0.1")
+    implementation("org.jetbrains.kotlinx:multik-jvm:0.0.1")
+
+    // DJL
+    implementation("ai.djl:api:0.12.0")
+    implementation("ai.djl.pytorch:pytorch-engine:0.12.0")
+    implementation("ai.djl.pytorch:pytorch-native-auto:1.8.1")
     implementation("ai.djl.sentencepiece:sentencepiece:0.12.0")
-    implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
 
-    implementation("org.apache.commons:commons-compress:1.21")
 
+    // Logging
+    implementation("org.slf4j:slf4j-simple:1.7.29")
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.10")
+
+    // Standard Libary
+    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
+
+    // Testing
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.21")
     testImplementation(kotlin("test-junit"))
-    implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks.test {
@@ -41,6 +61,10 @@ tasks.test {
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
     jvmTarget = "1.8"
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs = listOf("-Xmx2g")
 }
 
 java {

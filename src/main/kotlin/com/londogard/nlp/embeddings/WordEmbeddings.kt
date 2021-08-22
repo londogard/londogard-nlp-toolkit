@@ -1,8 +1,13 @@
 package com.londogard.nlp.embeddings
 
 import com.londogard.nlp.embeddings.EmbeddingLoader.FastTextDefaultEmbeddingDimension
-import com.londogard.nlp.utils.*
-import org.ejml.simple.SimpleMatrix
+import com.londogard.nlp.utils.cosineDistance
+import com.londogard.nlp.utils.norm2
+import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
+import org.jetbrains.kotlinx.multik.ndarray.operations.divAssign
+import org.jetbrains.kotlinx.multik.ndarray.operations.minusAssign
+import org.jetbrains.kotlinx.multik.ndarray.operations.plus
+import org.jetbrains.kotlinx.multik.ndarray.operations.plusAssign
 import java.nio.file.Path
 
 class WordEmbeddings(
@@ -11,7 +16,7 @@ class WordEmbeddings(
     override val delimiter: Char = ' '
 ) : Embeddings {
     /** Vocabulary, word to embedded space */
-    override val embeddings: Map<String, SimpleMatrix> by lazy { EmbeddingLoader.fromFile(filePath, delimiter) }
+    override val embeddings: Map<String, D1Array<Float>> by lazy { EmbeddingLoader.fromFile(filePath, delimiter) }
     override val vocabulary: Set<String> by lazy { embeddings.keys }
 
     /** Find N closest terms in the vocab to the given vector, using only words from the in-set (if defined)
@@ -24,9 +29,9 @@ class WordEmbeddings(
      * @return The N closest terms in the vocab to the given vector and their associated cosine similarity scores.
      */
     fun nearestNeighbours(
-        vector: SimpleMatrix, inSet: Set<String>? = null,
+        vector: D1Array<Float>, inSet: Set<String>? = null,
         outSet: Set<String> = setOf(), N: Int = 40
-    ): List<Pair<String, Double>> {
+    ): List<Pair<String, Float>> {
         val inputWords = (inSet ?: embeddings.keys) - outSet
 
         // TODO improve by smarter functions
@@ -42,10 +47,9 @@ class WordEmbeddings(
      * @param N The maximum number of terms to return (default to 40).
      * @return The N closest terms in the vocab to the input word(s) and their associated cosine similarity scores.
      */
-    fun distance(input: List<String>, N: Int = 40): List<Pair<String, Double>> {
-        val vectors = traverseVectors(input).reduce { acc, simpleMatrix -> acc + simpleMatrix }
-        vectors /= (vectors.fastNormF())
-        vectors.normF()
+    fun distance(input: List<String>, N: Int = 40): List<Pair<String, Float>> {
+        val vectors = traverseVectors(input).reduce { acc, array -> acc + array }
+        vectors /= (vectors.norm2())
 
         return nearestNeighbours(vectors, outSet = input.toSet(), N = N)
     }
@@ -64,13 +68,13 @@ class WordEmbeddings(
      *
      * @return The N closest terms in the vocab to the analogy and their associated cosine similarity scores.
      */
-    fun analogy(w1: String, w2: String, w3: String, N: Int = 40): List<Pair<String, Double>>? =
+    fun analogy(w1: String, w2: String, w3: String, N: Int = 40): List<Pair<String, Float>>? =
         traverseVectorsOrNull(listOf(w1, w2, w3))
             ?.let { vec ->
-                val vector = vec[1]
+                val vector = vec[1].clone()
                 vector -= vec[0]
-                vector += vec[2]
-                vector /= (vector.fastNormF())
+                vector.plusAssign(vec[2])
+                vector /= (vector.norm2())
 
                 nearestNeighbours(vector, outSet = setOf(w1, w2, w3), N = N)
             }
@@ -80,16 +84,13 @@ class WordEmbeddings(
      * @param set Set of words to rank.
      * @return Ordered list of words and their associated scores.
      */
-    fun rank(word: String, set: Set<String>): List<Pair<String, Double>> =
+    fun rank(word: String, set: Set<String>): List<Pair<String, Float>> =
         vector(word)
             ?.let { vec -> nearestNeighbours(vec, inSet = set, N = set.size) }
             ?: emptyList()
 
     companion object {
-        /** Pretty print the list of words and their associated scores.
-         * @param words List of (word, score) pairs to be printed.
-         */
-        @JvmStatic fun pprint(words: List<Pair<String, Double>>) {
+        @JvmStatic fun pprint(words: List<Pair<String, Float>>) {
             println("\n%50s${" ".repeat(7)}Cosine distance\n${"-".repeat(72)}".format("Word"))
             println(words.joinToString("\n") { (word, dist) -> "%50s${" ".repeat(7)}%15f".format(word, dist) })
         }
