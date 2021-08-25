@@ -1,5 +1,6 @@
 package com.londogard.nlp.meachinelearning.predictors.sequence
 
+import com.londogard.nlp.meachinelearning.datasets.prepare.PennTreeBankPreparer
 import org.jetbrains.kotlinx.multik.api.empty
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
@@ -130,5 +131,26 @@ class HiddenMarkovModel(
                 mk.ndarray(z)
             }
 
+    }
+
+    companion object {
+        /**
+         * Simplifies the toolchain
+         */
+        fun fromPennTreebank(
+            alpha: Float = 0.001f,
+            BegginingOfSentence: Int,
+            pennTreeBankDataset: PennTreeBankPreparer.PennTreeBankDataset
+        ): HiddenMarkovModel {
+            val hmm = HiddenMarkovModel(
+                pennTreeBankDataset.reverseTagIndexing,
+                pennTreeBankDataset.reverseTokenIndexing,
+                alpha,
+                BegginingOfSentence
+            )
+            hmm.fit(pennTreeBankDataset.trainDataset.first, pennTreeBankDataset.trainDataset.second)
+
+            return hmm
+        }
     }
 }
