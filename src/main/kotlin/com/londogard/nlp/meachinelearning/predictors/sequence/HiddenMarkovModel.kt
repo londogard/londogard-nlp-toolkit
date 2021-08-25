@@ -138,9 +138,9 @@ class HiddenMarkovModel(
          * Simplifies the toolchain
          */
         fun fromPennTreebank(
+            pennTreeBankDataset: PennTreeBankPreparer.PennTreeBankDataset,
             alpha: Float = 0.001f,
-            BegginingOfSentence: Int,
-            pennTreeBankDataset: PennTreeBankPreparer.PennTreeBankDataset
+            BegginingOfSentence: Int = pennTreeBankDataset.tagIndexing.getOrDefault("BOS", 0)
         ): HiddenMarkovModel {
             val hmm = HiddenMarkovModel(
                 pennTreeBankDataset.reverseTagIndexing,
