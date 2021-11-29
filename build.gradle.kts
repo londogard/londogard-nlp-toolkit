@@ -29,7 +29,7 @@ dependencies {
     implementation("org.ejml:ejml-kotlin:0.41")
 
     // Multik
-    implementation("org.jetbrains.kotlinx:multik-api:0.0.1")
+    implementation("org.jetbrains.kotlinx:multik-api:0.1.1")
     implementation("org.jetbrains.kotlinx:multik-default:0.0.1")
     implementation("org.jetbrains.kotlinx:multik-jvm:0.0.1")
 
