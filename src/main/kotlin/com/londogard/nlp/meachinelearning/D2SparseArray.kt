@@ -33,7 +33,8 @@ class D2SparseArray(
     val rowIndices: IntArray,
     val colIndices: IntArray,
     override val data: MemoryView<Float>,
-    override val shape: IntArray
+    override val shape: IntArray,
+    override val base: MultiArray<Float, out Dimension>? = null
 ) : MultiArray<Float, D2> {
     override val consistent: Boolean = false
     override val dim: D2 = D2
@@ -81,12 +82,13 @@ class D2SparseArray(
         return 0f
     }
 
-    override fun clone(): D2SparseArray =
+    override fun copy(): D2SparseArray =
         D2SparseArray(
             rowIndices.clone(),
             colIndices.clone(),
             MemoryViewFloatArray(data.getFloatArray().clone()),
-            shape.clone()
+            shape.clone(),
+            base?.copy()
         )
 
     // 1,2 becomes 2,1 ... etc
@@ -98,9 +100,6 @@ class D2SparseArray(
         return D2SparseArray
             .simpleInit(indexMap.map { entry -> Coordinate(entry.key.second, entry.key.first, data[entry.value]) }.sortedBy { it.col }, shape.reversedArray())
     }
-
-    override fun cat(other: MultiArray<Float, D2>, axis: Int): MutableMultiArray<Float, DN> =
-        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
 
     override fun deepCopy(): MutableMultiArray<Float, D2> =
         throw UnsupportedOperationException("Not Supported by Sparse Matrix")
@@ -129,7 +128,16 @@ class D2SparseArray(
     override fun unsqueeze(vararg axes: Int): MutableMultiArray<Float, DN> =
         throw UnsupportedOperationException("Not Supported by Sparse Matrix")
 
-    companion object {
+    override fun cat(other: List<MultiArray<Float, D2>>, axis: Int): NDArray<Float, D2> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun cat(other: MultiArray<Float, D2>): NDArray<Float, D2> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+    override fun cat(other: MultiArray<Float, D2>, axis: Int): NDArray<Float, D2> =
+        throw UnsupportedOperationException("Not Supported by Sparse Matrix")
+
+        companion object {
         /** Requires initData to be sorted by column */
         fun simpleInit(sortedInitData: List<Coordinate<Float>>, shape: IntArray): D2SparseArray {
             val rowIndices = IntArray(sortedInitData.size) { i -> sortedInitData[i].row }

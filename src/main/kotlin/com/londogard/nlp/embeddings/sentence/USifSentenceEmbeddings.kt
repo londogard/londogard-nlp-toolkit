@@ -6,6 +6,7 @@ import com.londogard.nlp.utils.getRow
 import com.londogard.nlp.utils.norm2
 import org.ejml.simple.SimpleMatrix
 import org.jetbrains.kotlinx.multik.api.d1array
+import org.jetbrains.kotlinx.multik.api.linalg.dot
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 import org.jetbrains.kotlinx.multik.ndarray.operations.*
@@ -54,7 +55,7 @@ class USifSentenceEmbeddings(
 
                     // TODO simplify by projection extraction (timesAssign at end is not project)
                     acc
-                        .map { vector -> vector - (pcD1 * (mk.linalg.dot(vector, pcTransposed))).apply { timesAssign(lambdaI) } }
+                        .map { vector -> vector - (pcD1 * (vector.dot(pcTransposed))).apply { timesAssign(lambdaI) } }
                 }
         }
     }

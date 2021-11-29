@@ -71,7 +71,7 @@ class WordEmbeddings(
     fun analogy(w1: String, w2: String, w3: String, N: Int = 40): List<Pair<String, Float>>? =
         traverseVectorsOrNull(listOf(w1, w2, w3))
             ?.let { vec ->
-                val vector = vec[1].clone()
+                val vector = vec[1].copy()
                 vector -= vec[0]
                 vector.plusAssign(vec[2])
                 vector /= (vector.norm2())

@@ -13,7 +13,7 @@ class MetricTest {
         val simpleArray = mk.ndarray(intArrayOf(1,1,0,0),4,1)
         val simpleMediumArray = mk.ndarray(intArrayOf(1,0,1,0), 4, 1)
 
-        Metrics.accuracy(simpleArray, simpleArray.clone()) shouldBeEqualTo 1.0
+        Metrics.accuracy(simpleArray, simpleArray.copy()) shouldBeEqualTo 1.0
         Metrics.accuracy(simpleArray, simpleArray.reversed()) shouldBeEqualTo 0.0
         Metrics.accuracy(simpleArray, simpleMediumArray) shouldBeEqualTo 0.5
     }

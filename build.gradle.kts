@@ -29,13 +29,13 @@ dependencies {
     implementation("org.ejml:ejml-kotlin:0.41")
 
     // Multik
-    implementation("org.jetbrains.kotlinx:multik-api:0.0.1")
-    implementation("org.jetbrains.kotlinx:multik-default:0.0.1")
-    implementation("org.jetbrains.kotlinx:multik-jvm:0.0.1")
+    implementation("org.jetbrains.kotlinx:multik-api:0.1.1")
+    implementation("org.jetbrains.kotlinx:multik-default:0.1.1")
+    implementation("org.jetbrains.kotlinx:multik-jvm:0.1.1")
 
     // DJL
-    implementation("ai.djl:api:0.12.0")
-    implementation("ai.djl.pytorch:pytorch-engine:0.12.0")
+    implementation("ai.djl:api:0.14.0")
+    implementation("ai.djl.pytorch:pytorch-engine:0.14.0")
     implementation("ai.djl.pytorch:pytorch-native-auto:1.9.1")
     implementation("ai.djl.sentencepiece:sentencepiece:0.14.0")
 

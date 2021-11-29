@@ -1,13 +1,13 @@
 package com.londogard.nlp.meachinelearning
 
 import com.londogard.nlp.meachinelearning.datatypes.Coordinate
+import org.jetbrains.kotlinx.multik.api.linalg.dot
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
-import org.jetbrains.kotlinx.multik.jvm.JvmLinAlg
 import org.jetbrains.kotlinx.multik.ndarray.data.*
 
 fun MultiArray<Float, D2>.mapNonZero(op: (Float) -> Float): MultiArray<Float, D2> {
-    return clone().apply {
+    return copy().apply {
         val array = data.getFloatArray()
         for (i in indices) {
             array[i] = op(array[i])
@@ -16,7 +16,7 @@ fun MultiArray<Float, D2>.mapNonZero(op: (Float) -> Float): MultiArray<Float, D2
 }
 
 fun D2SparseArray.mapIndexedNonZero(op: (Float, Int, Int) -> Float): D2SparseArray {
-    return clone().apply {
+    return copy().apply {
         (0 until colIndices.size - 1).forEach { col ->
             (colIndices[col] until colIndices[col + 1]).forEach { i ->
                 data[i] = op(data[i], rowIndices[i], col)
@@ -36,7 +36,7 @@ infix fun MultiArray<Float, D2>.dot(other: MultiArray<Float, D2>): MultiArray<Fl
     this is D2SparseArray && other is D2SparseArray -> this dotSparse other
     this is D2SparseArray -> this dotDense other
     other is D2SparseArray -> this dotDense other
-    else -> JvmLinAlg.dot(this, other)
+    else -> this.dot(b=other)
 }
 
 infix fun MultiArray<Float, D2>.dotDense(other: D2SparseArray): D2Array<Float> {

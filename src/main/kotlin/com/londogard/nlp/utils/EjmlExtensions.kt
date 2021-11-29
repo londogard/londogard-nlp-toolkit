@@ -10,6 +10,7 @@ import org.ejml.kotlin.*
 import org.ejml.simple.SimpleMatrix
 import org.ejml.sparse.csc.CommonOps_DSCC
 import org.ejml.sparse.csc.CommonOps_FSCC
+import org.jetbrains.kotlinx.multik.api.linalg.dot
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
@@ -72,7 +73,7 @@ fun D1Array<Float>.norm2(): Float {
 }
 
 fun D1Array<Float>.cosineDistance(other: D1Array<Float>): Float {
-    return mk.linalg.dot(this, other) / (this.norm2() * other.norm2())
+    return this.dot(other) / (this.norm2() * other.norm2())
 }
 
 fun D2Array<Float>.euclideanDistance(other: D2Array<Float>) = mk.linalg.norm(this - other)
@@ -102,7 +103,7 @@ fun List<SimpleMatrix>.avgNorm(): SimpleMatrix {
 }
 
 fun List<D1Array<Float>>.avgNorm(): D1Array<Float> {
-    val avgNormalized = this[0].clone()
+    val avgNormalized = this[0].copy()
 
     for (row in 1 until this.size) {
         avgNormalized.plusAssign(this[row])

@@ -11,8 +11,8 @@ interface Loss {
     fun numericGradient(weights: D2Array<Float>, X: MultiArray<Float, D2>, y: D2Array<Float>, eps: Float = 1e-6f): D2Array<Float> =
         (0 until weights.shape[1])
             .map { i ->
-                val oldWeights = weights.clone()
-                val newWeights = weights.clone()
+                val oldWeights = weights.copy()
+                val newWeights = weights.copy()
                 oldWeights[0,i] -= eps
                 newWeights[0,i] += eps
 
