@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
     signing
     kotlin("jvm") version "1.6.0"
-    kotlin("plugin.serialization") version "1.5.21"
+    kotlin("plugin.serialization") version "1.6.0"
     id("org.jetbrains.dokka") version "1.5.0"
 }
 
@@ -34,10 +34,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:multik-jvm:0.0.1")
 
     // DJL
-    implementation("ai.djl:api:0.12.0")
+    implementation("ai.djl:api:0.14.0")
     implementation("ai.djl.pytorch:pytorch-engine:0.12.0")
     implementation("ai.djl.pytorch:pytorch-native-auto:1.9.1")
-    implementation("ai.djl.sentencepiece:sentencepiece:0.12.0")
+    implementation("ai.djl.sentencepiece:sentencepiece:0.14.0")
 
 
     // Logging
@@ -50,7 +50,7 @@ dependencies {
 
     // Testing
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.21")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.6.0")
     testImplementation(kotlin("test-junit"))
 }
 
