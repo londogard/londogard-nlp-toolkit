@@ -1,6 +1,7 @@
 package com.londogard.nlp.keywords.cooccurrence
 
 import com.londogard.nlp.stemmer.Stemmer
+import com.londogard.nlp.stopwords.Stopwords
 import com.londogard.nlp.tokenizer.SimpleTokenizer
 import com.londogard.nlp.tokenizer.Tokenizer
 import com.londogard.nlp.tokenizer.sentence.SimpleSentenceTokenizer
@@ -11,7 +12,13 @@ import java.util.*
 
 
 object CoocurrenceKeywords {
-    fun keywords(text: String, top: Int = 10, languageSupport: LanguageSupport = LanguageSupport.en): Set<List<String>> {
+    private val punctuations = Regex("\\p{Punct}")
+
+    fun keywords(
+        text: String,
+        top: Int = 10,
+        languageSupport: LanguageSupport = LanguageSupport.en
+    ): Set<List<String>> {
         val tokenizer = SimpleTokenizer()
         val stemmer = Stemmer(languageSupport)
 
@@ -26,23 +33,11 @@ object CoocurrenceKeywords {
         val numSentences = sentences.size
 
         //  Extract phrases by Apriori-like algorithm.
-        val maxNGramSize = 4
-        sentences
-            .asSequence()
-            .map { sentence ->
-                sentence.runningFold()
-            }
+        val allNgrams = toNgramSortedByFreq(sentences.flatten())
 
-        val allNgrams = toNgram(sentences.flatten()).
-
-//        val terms: ArrayList<NGram> = ArrayList<NGram>()
-//        for (ngrams in NGram.of(sentences, maxNGramSize, 4)) {
-//            Collections.addAll(terms, ngrams)
-//        }
-//        Collections.sort(terms)
-//
 //        // Select upto 30% most frequent terms.
-//        val n = 3 * terms.size / 10
+        val n = 3 * allNgrams.size / 10
+        val freqTerms = allNgrams.take(n)
 //        val freqTerms: Array<NGram> = arrayOfNulls<NGram>(n)
 //        {
 //            var i = 0
@@ -197,14 +192,27 @@ object CoocurrenceKeywords {
 //        return keywords.toArray(arrayOfNulls<NGram>(0))
         TODO()
     }
-    fun toNgram(tokens: List<String>, ngram: Int = 4, minFreq: Int = 4): List<List<String>> {
-        return (1..4)
+
+    fun toNgramSortedByFreq(tokens: List<String>, n: Int = 4, minFreq: Int = 4): List<List<String>> {
+        val stopwords = Stopwords.stopwords(LanguageSupport.en)
+        return (1..n)
             .fold(emptyMap<List<String>, Int>()) { acc, ngram ->
-                val ngrams = when(ngram) {
-                    1 -> tokens.map { listOf(it) }
+                val ngrams = when (ngram) {
+                    1 -> tokens.filterNot(punctuations::matches).map { listOf(it) }
                     else -> tokens.windowed(ngram)
                 }
                 acc + ngrams.groupingBy { it }.eachCount().filterValues { count -> count > minFreq }
-            }.keys.asList()
+            }
+            .entries
+            .sortedByDescending { (_, count) -> count }
+            .map { (key, _) -> key }
+            .filter { ngram ->
+                when (ngram.size) {
+                    1, 2 -> ngram.none(stopwords::contains)
+                    else -> !stopwords.contains(ngram.first()) && !stopwords.contains(ngram.last()) &&
+                            ngram.any { !stopwords.contains(it) }
+                }
+            }
+            .asList()
     }
 }
