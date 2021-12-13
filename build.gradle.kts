@@ -42,7 +42,7 @@ dependencies {
 
     // Logging
     implementation("org.slf4j:slf4j-simple:1.7.32")
-    implementation("io.github.microutils:kotlin-logging-jvm:2.1.0")
+    implementation("io.github.microutils:kotlin-logging-jvm:2.1.16")
 
     // Standard Libary
     implementation(kotlin("stdlib-jdk8"))
