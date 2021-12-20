@@ -4,16 +4,13 @@ import com.londogard.nlp.tokenizer.Tokenizer
 
 class SimpleSentenceTokenizer: Tokenizer {
     override fun split(text: String): List<String> {
-        return (text
-            .replace(forgottenSpaces, "$1$2 $3") + "\n")
-            .replace(multiSpaces, " ")
+        return text
             .split(sentence)
+            .map { it.replace(multiSpaces, " ") }
     }
 
     companion object {
-        val newLines: Regex = Regex("[\\n\\r]+")
         val multiSpaces: Regex = Regex("\\s+")
-        val forgottenSpaces: Regex = Regex("(.)([\\.!?])([\\D&&\\S&&[^\\.\"'`\\)\\}\\]]])")
-        val sentence: Regex = Regex("(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?)\\s")
+        val sentence: Regex = Regex("(\\.\\s|[\n\r]+)")
     }
 }
