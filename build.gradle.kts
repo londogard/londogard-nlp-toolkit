@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `maven-publish`
     signing
-    kotlin("jvm") version "1.6.0"
+    kotlin("jvm") version "1.6.10"
     kotlin("plugin.serialization") version "1.6.0"
     id("org.jetbrains.dokka") version "1.5.0"
 }
