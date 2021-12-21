@@ -11,6 +11,6 @@ class SimpleSentenceTokenizer: Tokenizer {
 
     companion object {
         val multiSpaces: Regex = Regex("\\s+")
-        val sentence: Regex = Regex("(\\.\\s|[\n\r]+)")
+        val sentence: Regex = Regex("([.!?]\\s|[\n\r]+)")
     }
 }

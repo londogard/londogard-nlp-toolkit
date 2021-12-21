@@ -1,4 +1,4 @@
-package com.londogard.nlp.keywords.cooccurrence
+package com.londogard.nlp.keywords
 
 import com.londogard.nlp.stemmer.Stemmer
 import com.londogard.nlp.stopwords.Stopwords
@@ -12,16 +12,17 @@ import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.ndarray.data.get
 import org.jetbrains.kotlinx.multik.ndarray.data.set
 import org.jetbrains.kotlinx.multik.ndarray.operations.divAssign
+import kotlin.math.min
 import kotlin.math.pow
 
 
-object CoocurrenceKeywords {
+object CooccurrenceKeywords: Keywords<Int> {
     private val punctuations = Regex("\\p{Punct}+")
 
-    fun keywords(
+    override fun keywords(
         text: String,
-        top: Int = 10,
-        languageSupport: LanguageSupport = LanguageSupport.en
+        top: Int,
+        languageSupport: LanguageSupport
     ): List<Pair<List<String>, Int>> {
         val tokenizer = SimpleTokenizer()
         val stemmer = Stemmer(languageSupport)
@@ -33,7 +34,7 @@ object CoocurrenceKeywords {
                 val tokens = tokenizer
                     .split(sentence)
                     .map(String::lowercase)
-                    .map(stemmer::stem)
+                    .map(stemmer::stem) // full stem compared to
                     .filterNot(String::isBlank)
 
                 acc.plusElement(tokens)
@@ -44,10 +45,10 @@ object CoocurrenceKeywords {
 
         //  Extract n-grams
         val maxNgramSize = 4
-        val allNgrams = toNgramSortedByFreq(sentences.flatten(), n = maxNgramSize, minFreq = 4)
+        val allNgrams = toNgramSortedByFreq(sentences.flatten(), n = maxNgramSize, minFreq = min(4, sentences.size / 3))
 
         // Select 30% most frequent terms
-        val n = 3 * allNgrams.size / 10
+        val n = (3 * allNgrams.size / 10).coerceAtLeast(1)
         val freqTerms = allNgrams.take(n).asReversed()
 
         // Trie for phrase matching.
@@ -147,7 +148,7 @@ object CoocurrenceKeywords {
         return keywords.toList()
     }
 
-    fun toNgramSortedByFreq(tokens: List<String>, n: Int = 4, minFreq: Int = 4): List<Pair<List<String>, Int>> {
+    private fun toNgramSortedByFreq(tokens: List<String>, n: Int = 4, minFreq: Int = 4): List<Pair<List<String>, Int>> {
         val stopwords = Stopwords.stopwords(LanguageSupport.en)
 
         return (1..n)
@@ -170,6 +171,5 @@ object CoocurrenceKeywords {
                 }
             }
             .map { it.toPair() }
-            .toList()
     }
 }
