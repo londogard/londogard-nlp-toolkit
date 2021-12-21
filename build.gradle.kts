@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `maven-publish`
     signing
-    kotlin("jvm") version "1.6.0"
+    kotlin("jvm") version "1.6.10"
     kotlin("plugin.serialization") version "1.6.0"
-    id("org.jetbrains.dokka") version "1.5.0"
+    id("org.jetbrains.dokka") version "1.6.0"
 }
 
 group = "com.londogard"
@@ -22,7 +22,7 @@ val kluentVersion: String by project
 dependencies {
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
     implementation("org.apache.commons:commons-compress:1.21")
-    implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-299-0.10.0.201")
+    implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-816-0.11.0.40")
 
     // EJML
     implementation("org.ejml:ejml-simple:0.41")
@@ -39,10 +39,9 @@ dependencies {
     implementation("ai.djl.pytorch:pytorch-native-auto:1.9.1")
     implementation("ai.djl.sentencepiece:sentencepiece:0.14.0")
 
-
     // Logging
     implementation("org.slf4j:slf4j-simple:1.7.32")
-    implementation("io.github.microutils:kotlin-logging-jvm:2.1.16")
+    implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
 
     // Standard Libary
     implementation(kotlin("stdlib-jdk8"))
@@ -50,7 +49,7 @@ dependencies {
 
     // Testing
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.6.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.6.10")
     testImplementation(kotlin("test-junit"))
 }
 
