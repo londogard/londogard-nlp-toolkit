@@ -8,13 +8,13 @@ import org.jetbrains.kotlinx.multik.ndarray.data.D2
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 
 // Based on SkLearns TfIdf variant. Missing norm option & smoothing
-class TfIdfVectorizer<T: Number>(
+class TfIdfVectorizer<T : Number>(
     minDf: PercentOrCount = Percent(0.0),
     maxDf: PercentOrCount = Percent(1.0),
     ngramRange: IntRange = 1..1,
     //val smoothing: Double = 0.4,
     //val vocab: Set<String>? = null
-): Vectorizer<T, Float> {
+) : Vectorizer<T, Float> {
     private val countVectorizer = CountVectorizer<T>(minDf, maxDf, ngramRange)
     private val tfIdfTransformer = TfIdfTransformer()
 
