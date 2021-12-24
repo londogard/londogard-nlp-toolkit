@@ -1,6 +1,7 @@
 package com.londogard.nlp.embeddings
 
 import com.londogard.nlp.embeddings.EmbeddingLoader.FastTextDefaultEmbeddingDimension
+import com.londogard.nlp.utils.caches.Cache
 import com.londogard.nlp.utils.cosineDistance
 import com.londogard.nlp.utils.norm2
 import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
@@ -16,7 +17,7 @@ class WordEmbeddings(
     override val delimiter: Char = ' '
 ) : Embeddings {
     /** Vocabulary, word to embedded space */
-    override val embeddings: Map<String, D1Array<Float>> by lazy { EmbeddingLoader.fromFile(filePath, delimiter) }
+    override val embeddings: Cache<String, D1Array<Float>> by lazy { EmbeddingLoader.fromFile(filePath, delimiter) }
     override val vocabulary: Set<String> by lazy { embeddings.keys }
 
     /** Find N closest terms in the vocab to the given vector, using only words from the in-set (if defined)

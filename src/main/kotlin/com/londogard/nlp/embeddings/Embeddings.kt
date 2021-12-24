@@ -1,5 +1,6 @@
 package com.londogard.nlp.embeddings
 
+import com.londogard.nlp.utils.caches.Cache
 import com.londogard.nlp.utils.cosineDistance
 import com.londogard.nlp.utils.euclideanDistance
 import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
@@ -10,7 +11,7 @@ interface Embeddings {
     val delimiter: Char
     val filePath: Path
 
-    val embeddings: Map<String, D1Array<Float>>
+    val embeddings: Cache<String, D1Array<Float>>
     val vocabulary: Set<String>
 
     /** Check if the word has a embedding. */

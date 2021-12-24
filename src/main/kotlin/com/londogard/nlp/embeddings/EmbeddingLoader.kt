@@ -2,6 +2,8 @@ package com.londogard.nlp.embeddings
 
 import com.londogard.nlp.utils.DownloadHelper
 import com.londogard.nlp.utils.LanguageSupport
+import com.londogard.nlp.utils.caches.Cache
+import com.londogard.nlp.utils.caches.PerpetualCache
 import com.londogard.nlp.utils.useLines
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
@@ -36,7 +38,7 @@ object EmbeddingLoader {
     internal fun fromFile(path: Path,
                           delimiter: Char,
                           inFilter: Set<String> = emptySet(),
-                          maxWordCount: Int = Int.MAX_VALUE): Map<String, D1Array<Float>> =
+                          maxWordCount: Int = Int.MAX_VALUE): Cache<String, D1Array<Float>> =
         path
             .useLines { lines ->
                 val iterator = lines.iterator()
@@ -52,6 +54,7 @@ object EmbeddingLoader {
                         val floatArray = FloatArray(dimensions) { i -> points[i + 1].toFloat() }
                         points.first() to mk.ndarray(floatArray)
                     }
-                    .toMap(LinkedHashMap(numLinesToUse)) // optimization by creating the full map directly
+                    .toMap(LinkedHashMap(numLinesToUse))
+                    .let { map -> PerpetualCache(map) } // optimization by creating the full map directly
             }
 }
