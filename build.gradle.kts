@@ -39,6 +39,8 @@ dependencies {
     implementation("ai.djl.pytorch:pytorch-native-auto:1.9.1")
     implementation("ai.djl.sentencepiece:sentencepiece:0.14.0")
 
+    implementation("com.github.ben-manes.caffeine:caffeine:3.0.5")
+
     // Logging
     implementation("org.slf4j:slf4j-simple:1.7.32")
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
