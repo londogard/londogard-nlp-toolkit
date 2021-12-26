@@ -1,5 +1,6 @@
 package com.londogard.nlp
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.londogard.nlp.embeddings.BpeEmbeddings
 import com.londogard.nlp.embeddings.EmbeddingLoader
 import com.londogard.nlp.embeddings.LightWordEmbeddings
@@ -28,6 +29,7 @@ class EmbeddingTest {
         embeddings.embeddings.size shouldBe 1
         embeddings.contains("hej") shouldBe true
         embeddings.addWords(setOf("då"))
+        embeddings.cache.cleanUp()
         embeddings.embeddings.size shouldBe 1
         embeddings.contains("då") shouldBe true
         embeddings.contains("hej") shouldBe false
