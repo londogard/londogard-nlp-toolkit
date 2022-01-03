@@ -108,11 +108,7 @@ $dokka.location:com.londogard.nlp.meachinelearning.loss/Loss/numericGradient/#or
 $dokka.location:com.londogard.nlp.meachinelearning.metrics////PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.metrics/index.html
 $dokka.location:com.londogard.nlp.meachinelearning.metrics/Metrics///PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.metrics/-metrics/index.html
 $dokka.location:com.londogard.nlp.meachinelearning.metrics/Metrics/accuracy/#org.jetbrains.kotlinx.multik.ndarray.data.NDArray[TypeParam(bounds=[kotlin.Number]),org.jetbrains.kotlinx.multik.ndarray.data.D2]#org.jetbrains.kotlinx.multik.ndarray.data.NDArray[TypeParam(bounds=[kotlin.Number]),org.jetbrains.kotlinx.multik.ndarray.data.D2]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.metrics/-metrics/accuracy.html
-$dokka.location:com.londogard.nlp.meachinelearning.metrics/Metrics/confusionMatrix/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.metrics/-metrics/confusion-matrix.html
-$dokka.location:com.londogard.nlp.meachinelearning.metrics/Metrics/f1/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.metrics/-metrics/f1.html
-$dokka.location:com.londogard.nlp.meachinelearning.metrics/Metrics/precision/#org.jetbrains.kotlinx.multik.ndarray.data.NDArray[TypeParam(bounds=[kotlin.Number]),org.jetbrains.kotlinx.multik.ndarray.data.D2]#org.jetbrains.kotlinx.multik.ndarray.data.NDArray[TypeParam(bounds=[kotlin.Number]),org.jetbrains.kotlinx.multik.ndarray.data.D2]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.metrics/-metrics/precision.html
 $dokka.location:com.londogard.nlp.meachinelearning.metrics/Metrics/rSquared/#org.jetbrains.kotlinx.multik.ndarray.data.NDArray[kotlin.Float,org.jetbrains.kotlinx.multik.ndarray.data.D2]#org.jetbrains.kotlinx.multik.ndarray.data.NDArray[kotlin.Float,org.jetbrains.kotlinx.multik.ndarray.data.D2]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.metrics/-metrics/r-squared.html
-$dokka.location:com.londogard.nlp.meachinelearning.metrics/Metrics/recall/#org.jetbrains.kotlinx.multik.ndarray.data.NDArray[TypeParam(bounds=[kotlin.Number]),org.jetbrains.kotlinx.multik.ndarray.data.D2]#org.jetbrains.kotlinx.multik.ndarray.data.NDArray[TypeParam(bounds=[kotlin.Number]),org.jetbrains.kotlinx.multik.ndarray.data.D2]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.metrics/-metrics/recall.html
 $dokka.location:com.londogard.nlp.meachinelearning.native////PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.native/index.html
 $dokka.location:com.londogard.nlp.meachinelearning.native/NativeManager///PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.native/-native-manager/index.html
 $dokka.location:com.londogard.nlp.meachinelearning.native/NativeManager/close/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.native/-native-manager/close.html
@@ -179,16 +175,6 @@ $dokka.location:com.londogard.nlp.meachinelearning.regularization/L2///PointingT
 $dokka.location:com.londogard.nlp.meachinelearning.regularization/L2/L2/#kotlin.Float/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.regularization/-l2/-l2.html
 $dokka.location:com.londogard.nlp.meachinelearning.regularization/L2/lambda/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.regularization/-l2/lambda.html
 $dokka.location:com.londogard.nlp.meachinelearning.regularization/L2/regularize/#org.ejml.simple.SimpleMatrix#kotlin.Int/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.regularization/-l2/regularize.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native////PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/index.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native/NativeTfIdfTransformer///PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/-native-tf-idf-transformer/index.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native/NativeTfIdfTransformer/NativeTfIdfTransformer/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/-native-tf-idf-transformer/-native-tf-idf-transformer.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native/NativeTfIdfTransformer/fit/#ai.djl.ndarray.NDArray/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/-native-tf-idf-transformer/fit.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native/NativeTfIdfTransformer/idf/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/-native-tf-idf-transformer/idf.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native/NativeTfIdfTransformer/transform/#ai.djl.ndarray.NDArray/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/-native-tf-idf-transformer/transform.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native/NativeTransformer///PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/-native-transformer/index.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native/NativeTransformer/fit/#ai.djl.ndarray.NDArray/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/-native-transformer/fit.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native/NativeTransformer/fitTransform/#ai.djl.ndarray.NDArray/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/-native-transformer/fit-transform.html
-$dokka.location:com.londogard.nlp.meachinelearning.transformers.native/NativeTransformer/transform/#ai.djl.ndarray.NDArray/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers.native/-native-transformer/transform.html
 $dokka.location:com.londogard.nlp.meachinelearning.transformers////PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers/index.html
 $dokka.location:com.londogard.nlp.meachinelearning.transformers/Bm25Transformer///PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers/-bm25-transformer/index.html
 $dokka.location:com.londogard.nlp.meachinelearning.transformers/Bm25Transformer/Bm25Transformer/#kotlin.Int#kotlin.Float/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.transformers/-bm25-transformer/-bm25-transformer.html
@@ -231,19 +217,6 @@ $dokka.location:com.londogard.nlp.meachinelearning.vectorizer.count/HashCountVec
 $dokka.location:com.londogard.nlp.meachinelearning.vectorizer.count/HashCountVectorizer/nFeatures/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.count/-hash-count-vectorizer/n-features.html
 $dokka.location:com.londogard.nlp.meachinelearning.vectorizer.count/HashCountVectorizer/ngramRange/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.count/-hash-count-vectorizer/ngram-range.html
 $dokka.location:com.londogard.nlp.meachinelearning.vectorizer.count/HashCountVectorizer/transform/#kotlin.collections.List[kotlin.collections.List[kotlin.String]]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.count/-hash-count-vectorizer/transform.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native////PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/index.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeCountVectorizer///PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-count-vectorizer/index.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeCountVectorizer/NativeCountVectorizer/#com.londogard.nlp.meachinelearning.datatypes.PercentOrCount#com.londogard.nlp.meachinelearning.datatypes.PercentOrCount#kotlin.ranges.IntRange/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-count-vectorizer/-native-count-vectorizer.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeCountVectorizer/fit/#kotlin.collections.List[kotlin.collections.List[kotlin.String]]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-count-vectorizer/fit.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeCountVectorizer/fitTransform/#kotlin.collections.List[kotlin.collections.List[kotlin.String]]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-count-vectorizer/fit-transform.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeCountVectorizer/maxDf/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-count-vectorizer/max-df.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeCountVectorizer/minDf/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-count-vectorizer/min-df.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeCountVectorizer/ngramRange/#/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-count-vectorizer/ngram-range.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeCountVectorizer/transform/#kotlin.collections.List[kotlin.collections.List[kotlin.String]]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-count-vectorizer/transform.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeVectorizer///PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-vectorizer/index.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeVectorizer/fit/#kotlin.collections.List[kotlin.collections.List[kotlin.String]]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-vectorizer/fit.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeVectorizer/fitTransform/#kotlin.collections.List[kotlin.collections.List[kotlin.String]]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-vectorizer/fit-transform.html
-$dokka.location:com.londogard.nlp.meachinelearning.vectorizer.native/NativeVectorizer/transform/#kotlin.collections.List[kotlin.collections.List[kotlin.String]]/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer.native/-native-vectorizer/transform.html
 $dokka.location:com.londogard.nlp.meachinelearning.vectorizer////PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer/index.html
 $dokka.location:com.londogard.nlp.meachinelearning.vectorizer/Bm25Vectorizer///PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer/-bm25-vectorizer/index.html
 $dokka.location:com.londogard.nlp.meachinelearning.vectorizer/Bm25Vectorizer/Bm25Vectorizer/#com.londogard.nlp.meachinelearning.datatypes.PercentOrCount#com.londogard.nlp.meachinelearning.datatypes.PercentOrCount#kotlin.ranges.IntRange#kotlin.Int#kotlin.Float/PointingToDeclaration/nlp/com.londogard.nlp.meachinelearning.vectorizer/-bm25-vectorizer/-bm25-vectorizer.html
@@ -327,7 +300,6 @@ $dokka.location:com.londogard.nlp.preprocessing/Preprocessor/removeRTs/kotlin.St
 $dokka.location:com.londogard.nlp.preprocessing/Preprocessor/removeTickers/kotlin.String#/PointingToDeclaration/nlp/com.londogard.nlp.preprocessing/-preprocessor/remove-tickers.html
 $dokka.location:com.londogard.nlp.preprocessing/Preprocessor/removeURLs/kotlin.String#/PointingToDeclaration/nlp/com.londogard.nlp.preprocessing/-preprocessor/remove-u-r-ls.html
 $dokka.location:com.londogard.nlp.preprocessing/Preprocessor/removeXMLEncodings/kotlin.String#/PointingToDeclaration/nlp/com.londogard.nlp.preprocessing/-preprocessor/remove-x-m-l-encodings.html
-$dokka.location:com.londogard.nlp.preprocessing/Preprocessor/replaceAllCaps/#kotlin.String/PointingToDeclaration/nlp/com.londogard.nlp.preprocessing/-preprocessor/replace-all-caps.html
 $dokka.location:com.londogard.nlp.preprocessing/Preprocessor/replaceNumber/#kotlin.String/PointingToDeclaration/nlp/com.londogard.nlp.preprocessing/-preprocessor/replace-number.html
 $dokka.location:com.londogard.nlp.stemmer////PointingToDeclaration/nlp/com.londogard.nlp.stemmer/index.html
 $dokka.location:com.londogard.nlp.stemmer/Stemmer.Companion///PointingToDeclaration/nlp/com.londogard.nlp.stemmer/-stemmer/-companion/index.html
@@ -352,8 +324,7 @@ $dokka.location:com.londogard.nlp.structures.trie/TrieNode/get/#kotlin.collectio
 $dokka.location:com.londogard.nlp.structures.trie/TrieNode/value/#/PointingToDeclaration/nlp/com.londogard.nlp.structures.trie/-trie-node/value.html
 $dokka.location:com.londogard.nlp.tokenizer.sentence////PointingToDeclaration/nlp/com.londogard.nlp.tokenizer.sentence/index.html
 $dokka.location:com.londogard.nlp.tokenizer.sentence/SimpleSentenceTokenizer.Companion///PointingToDeclaration/nlp/com.londogard.nlp.tokenizer.sentence/-simple-sentence-tokenizer/-companion/index.html
-$dokka.location:com.londogard.nlp.tokenizer.sentence/SimpleSentenceTokenizer.Companion/multiSpaces/#/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer.sentence/-simple-sentence-tokenizer/-companion/multi-spaces.html
-$dokka.location:com.londogard.nlp.tokenizer.sentence/SimpleSentenceTokenizer.Companion/sentence/#/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer.sentence/-simple-sentence-tokenizer/-companion/sentence.html
+$dokka.location:com.londogard.nlp.tokenizer.sentence/SimpleSentenceTokenizer.Companion/sentenceRegex/#/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer.sentence/-simple-sentence-tokenizer/-companion/sentence-regex.html
 $dokka.location:com.londogard.nlp.tokenizer.sentence/SimpleSentenceTokenizer///PointingToDeclaration/nlp/com.londogard.nlp.tokenizer.sentence/-simple-sentence-tokenizer/index.html
 $dokka.location:com.londogard.nlp.tokenizer.sentence/SimpleSentenceTokenizer/SimpleSentenceTokenizer/#/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer.sentence/-simple-sentence-tokenizer/-simple-sentence-tokenizer.html
 $dokka.location:com.londogard.nlp.tokenizer.sentence/SimpleSentenceTokenizer/split/#kotlin.String/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer.sentence/-simple-sentence-tokenizer/split.html
@@ -772,10 +743,8 @@ com.londogard.nlp.meachinelearning.predictors.regression
 com.londogard.nlp.meachinelearning.predictors.sequence
 com.londogard.nlp.meachinelearning.regularization
 com.londogard.nlp.meachinelearning.transformers
-com.londogard.nlp.meachinelearning.transformers.native
 com.londogard.nlp.meachinelearning.vectorizer
 com.londogard.nlp.meachinelearning.vectorizer.count
-com.londogard.nlp.meachinelearning.vectorizer.native
 com.londogard.nlp.preprocessing
 com.londogard.nlp.stemmer
 com.londogard.nlp.stopwords
