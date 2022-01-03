@@ -9,8 +9,6 @@ import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 import org.jetbrains.kotlinx.multik.ndarray.operations.*
 import kotlin.math.ln
 
-// TODO add L2/L1 regularization
-// TODO add potential Intercept
 class LogisticLoss: Loss {
     //J = 1/m*sum(dot(-y,log(sigmoid(X*theta)))-dot(1-y,log(1-sigmoid(X*theta))));
     override fun loss(weights: D2Array<Float>, X: MultiArray<Float, D2>, y: D2Array<Float>): Float {

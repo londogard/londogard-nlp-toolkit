@@ -14,6 +14,7 @@ version = "1.1.0-BETA"
 repositories {
     mavenCentral()
     jcenter()
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://jitpack.io")
 }
 
@@ -34,10 +35,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:multik-jvm:0.1.1")
 
     // DJL
-    implementation("ai.djl:api:0.14.0")
-    implementation("ai.djl.pytorch:pytorch-engine:0.14.0")
-    implementation("ai.djl.pytorch:pytorch-native-auto:1.9.1")
-    implementation("ai.djl.sentencepiece:sentencepiece:0.14.0")
+    implementation("ai.djl.sentencepiece:sentencepiece:0.15.0-SNAPSHOT")
 
     implementation("com.github.ben-manes.caffeine:caffeine:3.0.5")
 

@@ -6,6 +6,7 @@ import com.londogard.nlp.utils.FileInfo
 import com.londogard.nlp.utils.LanguageSupport
 import com.londogard.nlp.utils.UrlProvider
 import com.londogard.nlp.wordfreq.WordFrequencySize
+import mu.KotlinLogging
 import org.amshove.kluent.shouldBe
 import java.net.HttpURLConnection
 import kotlin.test.Test
@@ -48,7 +49,6 @@ class UrlProviderTest {
 
     private fun checkUrlWorks(fileInfo: FileInfo): Boolean {
         val url = fileInfo.toUrl()
-        println(fileInfo.url)
         val connection: HttpURLConnection = (url.openConnection() as HttpURLConnection).apply { requestMethod = "HEAD" }
 
         return connection.responseCode == 200

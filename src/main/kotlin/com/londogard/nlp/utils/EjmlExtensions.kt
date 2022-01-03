@@ -224,12 +224,6 @@ operator fun SimpleMatrix.plusAssign(other: SimpleMatrix) = when (type to other.
     else -> throw IllegalArgumentException("Cannot plusAssign other types")
 }
 
-
-// def similarities_vectorized2(vector_data):
-//    norms = np.linalg.norm(vector_data, axis=1)
-//    combs = np.fromiter(combinations(range(vector_data.shape[0]),2), dtype='i,i')
-//    similarities = (vector_data[combs['f0']]*vector_data[combs['f1']]).sum(axis=1)/norms[combs['f0']]/norms[combs['f1']]
-//    return combs, similarities
 // x·y / (||x|| × ||y||) = (x / ||x||) · (y / ||y||)
 fun FMatrixRMaj.cosineDistanceOneToMany(other: FMatrixRMaj): FMatrixRMaj {
     val norms = this.normF()

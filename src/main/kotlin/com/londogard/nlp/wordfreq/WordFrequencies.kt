@@ -1,5 +1,7 @@
 package com.londogard.nlp.wordfreq
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.londogard.nlp.utils.CompressionUtil
 import com.londogard.nlp.utils.DownloadHelper
 import com.londogard.nlp.utils.LanguageSupport
@@ -14,7 +16,9 @@ import kotlin.math.pow
  *  WordFrequencies.wordFrequency("hej", sv)
  */
 object WordFrequencies {
-    private var cache: Pair<Path, Map<String, Float>>? = null
+    private val cache: Cache<Path, Map<String, Float>> =  Caffeine.newBuilder()
+        .maximumSize(2L)
+        .build()
 
     fun getAllWordFrequenciesOrNull(
         language: LanguageSupport,
@@ -76,7 +80,6 @@ object WordFrequencies {
 
     private fun frequencyToZipf(frequency: Float): Float = log10(frequency) + 9
 
-    // TODO exchange for cache pattern in stopwords/stemmer
     private fun unpackFile(path: Path): Map<String, Float> {
         val unpackedFile by lazy {
             CompressionUtil
@@ -93,10 +96,6 @@ object WordFrequencies {
                 }
         }
 
-        return if (cache?.first == path) cache?.second ?: unpackedFile
-        else {
-            cache = path to unpackedFile
-            unpackedFile
-        }
+        return cache.get(path) { unpackedFile }
     }
 }
