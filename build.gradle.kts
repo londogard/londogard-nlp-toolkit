@@ -21,9 +21,15 @@ repositories {
 val kluentVersion: String by project
 
 dependencies {
+    // API for large libraries
+    api("com.github.ben-manes.caffeine:caffeine:3.0.5")
+
+    // Include libraries that are small by default
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
     implementation("org.apache.commons:commons-compress:1.21")
     implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-816-0.11.0.40")
+    implementation("com.github.pemistahl:lingua:1.1.1")
+
 
     // EJML
     implementation("org.ejml:ejml-simple:0.41")
@@ -37,7 +43,6 @@ dependencies {
     // DJL
     implementation("ai.djl.sentencepiece:sentencepiece:0.15.0-SNAPSHOT")
 
-    implementation("com.github.ben-manes.caffeine:caffeine:3.0.5")
 
     // Logging
     implementation("org.slf4j:slf4j-simple:1.7.32")
