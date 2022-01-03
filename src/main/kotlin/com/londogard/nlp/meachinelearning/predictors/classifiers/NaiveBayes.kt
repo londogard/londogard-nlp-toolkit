@@ -10,7 +10,6 @@ import org.jetbrains.kotlinx.multik.ndarray.data.*
 import org.jetbrains.kotlinx.multik.ndarray.operations.*
 import kotlin.math.ln
 
-// TODO add multi-class Naive Bayes
 // https://en.wikipedia.org/wiki/Naive_Bayes_classifier
 // This variant uses Laplacian Smoothing
 class NaiveBayes: Classifier {

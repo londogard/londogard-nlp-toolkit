@@ -8,7 +8,6 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import kotlin.math.abs
 
-// TODO optimizer can figure out the yPredicted to save one iteration of predicts!
 class GradientDescent(
     val maxIterations: Int,
     val stepSize: Float,
