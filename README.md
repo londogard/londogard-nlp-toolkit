@@ -26,7 +26,7 @@ First of, `LanguageSupport.<ISO_COUNTRY_CODE>`helps figuring out what is and isn
 ## Installation
 **MavenCentral**
 ```kotlin
-implementation("com.londogard:nlp:1.0.0")
+implementation("com.londogard:nlp:$version")
 ```
 
 **Jitpack**
