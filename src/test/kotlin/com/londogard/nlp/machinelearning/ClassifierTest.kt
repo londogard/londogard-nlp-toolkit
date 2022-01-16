@@ -13,7 +13,7 @@ import org.junit.Test
 
 class ClassifierTest {
     val simpleTok = SimpleTokenizer()
-    val simpleTexts = listOf("hejsan jag älskar sverige", "hej vad bra det är i sverige", "jag älskar sverige", "jag hatar norge", "norge hatar", "norge hatar", "norge hatar")
+    val simpleTexts = listOf("hejsan jag älskar sverige", "hej vad bra det är i sverige", "jag älskar sverige", "norge är ett land i norden", "norge norden", "norge norden", "norge norden")
         .map(simpleTok::split)
     val y = mk.ndarray(intArrayOf(1,1,1,0,0, 0, 0), 7, 1)
 
