@@ -40,7 +40,7 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine:3.0.5")
 
     // Logging
-    implementation("org.slf4j:slf4j-simple:1.7.32")
+    implementation("org.slf4j:slf4j-simple:1.7.35")
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
 
     // Standard Libary
