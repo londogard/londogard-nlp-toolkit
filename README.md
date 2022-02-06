@@ -1,4 +1,5 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.londogard/nlp.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.londogard%22%20AND%20a:%22nlp%22)
+<a href="https://www.buymeacoffee.com/hlondogard" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-green.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 # londogard-nlp-toolkit
 Londogard Natural Language Processing Toolkit written in Kotlin for the JVM.  
