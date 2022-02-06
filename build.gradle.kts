@@ -9,12 +9,11 @@ plugins {
 }
 
 group = "com.londogard"
-version = "1.1.0"
+version = "1.1.1"
 
 repositories {
     mavenCentral()
     jcenter()
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://jitpack.io")
 }
 
@@ -35,7 +34,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:multik-jvm:0.1.1")
 
     // DJL
-    implementation("ai.djl.sentencepiece:sentencepiece:0.15.0-SNAPSHOT")
+    implementation("ai.djl.sentencepiece:sentencepiece:0.15.0")
 
     implementation("com.github.ben-manes.caffeine:caffeine:3.0.5")
 
