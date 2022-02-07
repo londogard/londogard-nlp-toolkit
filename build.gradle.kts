@@ -22,7 +22,7 @@ val kluentVersion: String by project
 dependencies {
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
     implementation("org.apache.commons:commons-compress:1.21")
-    implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-816-0.11.0.40")
+    implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-904-0.11.0.56")
 
     // EJML
     implementation("org.ejml:ejml-simple:0.41")
