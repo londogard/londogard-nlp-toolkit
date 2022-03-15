@@ -333,6 +333,11 @@ $dokka.location:com.londogard.nlp.tokenizer//toVocabSize/kotlin.Int#/PointingToD
 $dokka.location:com.londogard.nlp.tokenizer/CharTokenizer///PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-char-tokenizer/index.html
 $dokka.location:com.londogard.nlp.tokenizer/CharTokenizer/CharTokenizer/#/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-char-tokenizer/-char-tokenizer.html
 $dokka.location:com.londogard.nlp.tokenizer/CharTokenizer/split/#kotlin.String/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-char-tokenizer/split.html
+$dokka.location:com.londogard.nlp.tokenizer/HuggingFaceTokenizerWrapper///PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-hugging-face-tokenizer-wrapper/index.html
+$dokka.location:com.londogard.nlp.tokenizer/HuggingFaceTokenizerWrapper/HuggingFaceTokenizerWrapper/#ai.djl.huggingface.tokenizers.HuggingFaceTokenizer/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-hugging-face-tokenizer-wrapper/-hugging-face-tokenizer-wrapper.html
+$dokka.location:com.londogard.nlp.tokenizer/HuggingFaceTokenizerWrapper/batchSplit/#kotlin.collections.List[kotlin.String]/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-hugging-face-tokenizer-wrapper/batch-split.html
+$dokka.location:com.londogard.nlp.tokenizer/HuggingFaceTokenizerWrapper/split/#kotlin.String/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-hugging-face-tokenizer-wrapper/split.html
+$dokka.location:com.londogard.nlp.tokenizer/HuggingFaceTokenizerWrapper/tokenizer/#/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-hugging-face-tokenizer-wrapper/tokenizer.html
 $dokka.location:com.londogard.nlp.tokenizer/SentencePieceTokenizer.Companion///PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-sentence-piece-tokenizer/-companion/index.html
 $dokka.location:com.londogard.nlp.tokenizer/SentencePieceTokenizer.Companion/beginningOfWord/#/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-sentence-piece-tokenizer/-companion/beginning-of-word.html
 $dokka.location:com.londogard.nlp.tokenizer/SentencePieceTokenizer.Companion/fromLanguageSupportAndSizeOrNull/#com.londogard.nlp.utils.LanguageSupport#com.londogard.nlp.tokenizer.VocabSize/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-sentence-piece-tokenizer/-companion/from-language-support-and-size-or-null.html
@@ -346,6 +351,7 @@ $dokka.location:com.londogard.nlp.tokenizer/SimpleTokenizer///PointingToDeclarat
 $dokka.location:com.londogard.nlp.tokenizer/SimpleTokenizer/SimpleTokenizer/#kotlin.Boolean#kotlin.String/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-simple-tokenizer/-simple-tokenizer.html
 $dokka.location:com.londogard.nlp.tokenizer/SimpleTokenizer/split/#kotlin.String/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-simple-tokenizer/split.html
 $dokka.location:com.londogard.nlp.tokenizer/Tokenizer///PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-tokenizer/index.html
+$dokka.location:com.londogard.nlp.tokenizer/Tokenizer/batchSplit/#kotlin.collections.List[kotlin.String]/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-tokenizer/batch-split.html
 $dokka.location:com.londogard.nlp.tokenizer/Tokenizer/split/#kotlin.String/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-tokenizer/split.html
 $dokka.location:com.londogard.nlp.tokenizer/TokenizerSpecialTokens///PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-tokenizer-special-tokens/index.html
 $dokka.location:com.londogard.nlp.tokenizer/TokenizerSpecialTokens/AllCaps/#/PointingToDeclaration/nlp/com.londogard.nlp.tokenizer/-tokenizer-special-tokens/-all-caps.html
