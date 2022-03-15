@@ -43,7 +43,8 @@ NLP supports 4 types of tokenizations, namely:
 3. Subword (SentencePiece)
     - Subword support 275 languages through `bpemb` 
     - SentencePiece is using the google implementation via [DJL](https://github.com/deepjavalibrary/djl)
-4. Sentence
+4. [HuggingFaceTokenizer](https://huggingface.co/docs/tokenizers/python/latest/) through the Rust API. Provided by DJL.
+5. Sentence
 
 </details>
 

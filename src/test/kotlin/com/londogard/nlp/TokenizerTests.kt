@@ -1,9 +1,7 @@
 package com.londogard.nlp
 
-import com.londogard.nlp.tokenizer.CharTokenizer
-import com.londogard.nlp.tokenizer.SentencePieceTokenizer
-import com.londogard.nlp.tokenizer.SimpleTokenizer
-import com.londogard.nlp.tokenizer.VocabSize
+import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer
+import com.londogard.nlp.tokenizer.*
 import com.londogard.nlp.utils.LanguageSupport
 import org.amshove.kluent.shouldBeEqualTo
 import kotlin.test.Test
@@ -31,5 +29,12 @@ class TokenizerTests {
         val tokenizer = SentencePieceTokenizer.fromLanguageSupportAndSizeOrNull(LanguageSupport.sv, VocabSize.v1000)
 
         tokenizer?.split("hej där borta?") shouldBeEqualTo listOf("▁h", "e", "j", "▁där", "▁b", "or", "ta", "?")
+    }
+
+    @Test
+    fun testHuggingFaceTokenizer() {
+        val tokenizer = HuggingFaceTokenizerWrapper(HuggingFaceTokenizer.newInstance("bert-base-uncased"))
+
+        tokenizer.split("Hello over there!") shouldBeEqualTo listOf("[CLS]", "hello", "over", "there", "!", "[SEP]")
     }
 }
