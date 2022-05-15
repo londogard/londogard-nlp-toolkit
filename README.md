@@ -146,3 +146,23 @@ Please see the Kotlin Notebook [README.ipynb](https://github.com/londogard/londo
 
 # Machine Learning with Londogard NLP Toolkit
 API like scikit-learn, spark-ml & spaCy. WIP
+
+
+spaCy-pipeline:
+
+1. Set Tokenizer
+2. Set Processors (e.g. classification, NER, etc)
+
+- Automatic Batching
+- Document will use a "by" implementation that adds the typed data
+
+Requirements:
+
+- [ ] Add Interfaces for Pipeline Plugins
+- [ ] Add Transformer Clf+NER
+- [ ] Add Simple NER
+- [ ] Add PoS (Part of Speech)
+- [ ] Dependency Parser
+- [ ] Add Different Default modes (small, medium, large)
+
+// https://spacy.io/usage/processing-pipelines
