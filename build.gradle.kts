@@ -35,7 +35,7 @@ dependencies {
 
     // DJL
     implementation("ai.djl.sentencepiece:sentencepiece:0.15.0")
-    implementation("ai.djl.huggingface:tokenizers:0.15.0")
+    implementation("ai.djl.huggingface:tokenizers:0.17.0")
 
     implementation("com.github.ben-manes.caffeine:caffeine:3.0.6")
 
