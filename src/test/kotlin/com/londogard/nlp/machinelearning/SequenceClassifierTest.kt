@@ -1,9 +1,8 @@
 package com.londogard.nlp.machinelearning
 
+import com.londogard.nlp.meachinelearning.datasets.prepare.PennTreeBankPreparer
 import com.londogard.nlp.meachinelearning.predictors.sequence.HiddenMarkovModel
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.kotlinx.multik.api.mk
-import org.jetbrains.kotlinx.multik.api.ndarray
 import kotlin.test.Test
 
 class SequenceClassifierTest {
@@ -34,26 +33,10 @@ Stage	NN
 in	IN
 Windy	NNP
 City	NNP"""
-        val (tokensText, tagsText) = text
-            .split('\n')
-            .map {
-                val (a, b) = it.split('\t')
-                a to b
-            }.unzip()
-        val tokenMap = (tokensText).toSet().withIndex().associate { elem -> elem.value to elem.index }
-        val tagMap = (tagsText + "BOS").toSet().withIndex().associate { elem -> elem.value to elem.index }
-        val reversetagMap = tagMap.asIterable().associate { (key, value) -> value to key }
-        val hmm = HiddenMarkovModel(
-            tagMap.asIterable().associate { (key, value) -> value to key },
-            tokenMap.asIterable().associate { (key, value) -> value to key },
-            BegginingOfSentence = tokenMap.getOrDefault("BOS", 0)
-        )
+        val pennTreeBankDataset = PennTreeBankPreparer.prepare(text)
+        val hmm = HiddenMarkovModel.fromPennTreebank(pennTreeBankDataset = pennTreeBankDataset)
 
-        val x = listOf(mk.ndarray(tokensText.mapNotNull(tokenMap::get).toIntArray()))
-        val y = listOf(mk.ndarray(tagsText.mapNotNull(tagMap::get).toIntArray()))
-
-        hmm.fit(x, y)
-        // predict.map { t -> t.data.map { reversetagMap[it] } } to get the real labels!
-        hmm.predict(x) shouldBeEqualTo y
+        // use the reverse map to get the true labels (string) rather than int
+        hmm.predict(pennTreeBankDataset.trainDataset.first) shouldBeEqualTo pennTreeBankDataset.trainDataset.second
     }
 }
