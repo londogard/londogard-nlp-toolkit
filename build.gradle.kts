@@ -49,7 +49,7 @@ dependencies {
 
     // Testing
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.6.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.7.0")
     testImplementation(kotlin("test-junit"))
 }
 
