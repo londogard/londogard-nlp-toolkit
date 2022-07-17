@@ -37,7 +37,7 @@ dependencies {
     implementation("ai.djl.sentencepiece:sentencepiece:0.18.0")
     implementation("ai.djl.huggingface:tokenizers:0.18.0")
 
-    implementation("com.github.ben-manes.caffeine:caffeine:3.0.6")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.1.1")
 
     // Logging
     implementation("org.slf4j:slf4j-simple:1.7.36")
