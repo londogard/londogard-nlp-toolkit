@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `maven-publish`
     signing
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
-    id("org.jetbrains.dokka") version "1.6.10"
+    kotlin("jvm") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.10"
+    id("org.jetbrains.dokka") version "1.7.10"
 }
 
 group = "com.londogard"
@@ -34,8 +34,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:multik-jvm:0.1.1")
 
     // DJL
-    implementation("ai.djl.sentencepiece:sentencepiece:0.15.0")
-    implementation("ai.djl.huggingface:tokenizers:0.15.0")
+    implementation("ai.djl.sentencepiece:sentencepiece:0.18.0")
+    implementation("ai.djl.huggingface:tokenizers:0.17.0")
 
     implementation("com.github.ben-manes.caffeine:caffeine:3.0.6")
 
@@ -49,7 +49,7 @@ dependencies {
 
     // Testing
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.6.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.7.10")
     testImplementation(kotlin("test-junit"))
 }
 
