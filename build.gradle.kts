@@ -22,7 +22,7 @@ val kluentVersion: String by project
 dependencies {
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
     implementation("org.apache.commons:commons-compress:1.21")
-    implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-932")
+    implementation("org.jetbrains.kotlinx:dataframe:0.9.0-dev-1063")
 
     // EJML
     implementation("org.ejml:ejml-simple:0.41")
@@ -34,8 +34,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:multik-jvm:0.1.1")
 
     // DJL
-    implementation("ai.djl.sentencepiece:sentencepiece:0.17.0")
-    implementation("ai.djl.huggingface:tokenizers:0.17.0")
+    implementation("ai.djl.sentencepiece:sentencepiece:0.18.0")
+    implementation("ai.djl.huggingface:tokenizers:0.18.0")
 
     implementation("com.github.ben-manes.caffeine:caffeine:3.0.6")
 
