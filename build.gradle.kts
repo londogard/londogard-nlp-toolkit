@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `maven-publish`
     signing
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
-    id("org.jetbrains.dokka") version "1.6.10"
+    kotlin("jvm") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.10"
+    id("org.jetbrains.dokka") version "1.7.10"
 }
 
 group = "com.londogard"
@@ -22,7 +22,7 @@ val kluentVersion: String by project
 dependencies {
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
     implementation("org.apache.commons:commons-compress:1.21")
-    implementation("org.jetbrains.kotlinx:dataframe:0.8.0-dev-929-0.11.0.63")
+    implementation("org.jetbrains.kotlinx:dataframe:0.9.0-dev-1077")
 
     // EJML
     implementation("org.ejml:ejml-simple:0.41")
@@ -30,20 +30,20 @@ dependencies {
 
     // Multik
     implementation("org.jetbrains.kotlinx:multik-api:0.1.1")
-    implementation("org.jetbrains.kotlinx:multik-default:0.1.1")
+    implementation("org.jetbrains.kotlinx:multik-default:0.2.0")
     implementation("org.jetbrains.kotlinx:multik-jvm:0.1.1")
 
     // DJL
-    implementation("ai.djl.sentencepiece:sentencepiece:0.16.0")
-    implementation("ai.djl.pytorch:pytorch-engine:0.16.0")
-    implementation("ai.djl.onnxruntime:onnxruntime-engine:0.16.0")
-    implementation("ai.djl.huggingface:tokenizers:0.16.0")
+    implementation("ai.djl.sentencepiece:sentencepiece:0.18.0")
+    implementation("ai.djl.pytorch:pytorch-engine:0.18.0")
+    implementation("ai.djl.onnxruntime:onnxruntime-engine:0.18.0")
+    implementation("ai.djl.huggingface:tokenizers:0.18.0")
 
-    implementation("com.github.ben-manes.caffeine:caffeine:3.0.5")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.1.1")
 
     // Logging
     implementation("org.slf4j:slf4j-simple:1.7.36")
-    implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
+    implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
 
     // Standard Libary
     implementation(kotlin("stdlib-jdk8"))
@@ -51,7 +51,7 @@ dependencies {
 
     // Testing
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.6.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.7.10")
     testImplementation(kotlin("test-junit"))
 }
 
