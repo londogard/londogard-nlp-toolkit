@@ -26,7 +26,7 @@ internal object DownloadHelper {
         return fileInfo.path
     }
 
-    private fun downloadFileIfMissing(fileInfo: FileInfo) {
+    fun downloadFileIfMissing(fileInfo: FileInfo) {
         if (!Files.exists(fileInfo.path)) {
             logger.info { "Downloading ${fileInfo.description} for ${fileInfo.language} as files don't exist locally." }
 

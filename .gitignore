@@ -29,3 +29,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 .ipynb_checkpoints/
 out/
+
+**/*.bin
+**/*.pt
+**/*.h5
