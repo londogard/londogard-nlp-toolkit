@@ -4,6 +4,8 @@ import ai.djl.huggingface.tokenizers.Encoding
 import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer
 
 class HuggingFaceTokenizerWrapper(val tokenizer: HuggingFaceTokenizer): Tokenizer {
+    constructor(modelName: String): this(HuggingFaceTokenizer.newInstance(modelName))
+
     override fun split(text: String): List<String> {
         return tokenizer.encode(text).tokens.asList()
     }

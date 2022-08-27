@@ -28,12 +28,12 @@ internal object DownloadHelper {
 
     fun downloadFileIfMissing(fileInfo: FileInfo) {
         if (!Files.exists(fileInfo.path)) {
-            logger.info { "Downloading ${fileInfo.description} for ${fileInfo.language} as files don't exist locally." }
+            logger.info { "Downloading ${fileInfo.description} as files don't exist locally." }
 
             fileInfo.toUrl().saveTo(fileInfo.path)
-
-
-            logger.info { "Download completed! ${fileInfo.language} ${fileInfo.description} located at ${fileInfo.path.toAbsolutePath()}" }
+            logger.info { "Download completed! ${fileInfo.description} located at ${fileInfo.path.toAbsolutePath()}" }
+        } else {
+            logger.info { "Model ${fileInfo.description} exists, re-using from ${fileInfo.path.toAbsolutePath()}" }
         }
     }
 

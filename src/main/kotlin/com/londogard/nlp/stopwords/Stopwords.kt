@@ -2,7 +2,7 @@ package com.londogard.nlp.stopwords
 
 import com.londogard.nlp.utils.DownloadHelper
 import com.londogard.nlp.utils.LanguageSupport
-import com.londogard.nlp.utils.readLines
+import kotlin.io.path.readLines
 
 /**
  * Returns stopwords for a country (LanguageSupport).

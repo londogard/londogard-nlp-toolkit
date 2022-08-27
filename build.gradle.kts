@@ -22,16 +22,16 @@ val kluentVersion: String by project
 dependencies {
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
     implementation("org.apache.commons:commons-compress:1.21")
-    implementation("org.jetbrains.kotlinx:dataframe:0.9.0-dev-1077")
+    implementation("org.jetbrains.kotlinx:dataframe:0.9.0-dev-1096")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
 
     // EJML
     implementation("org.ejml:ejml-simple:0.41")
     implementation("org.ejml:ejml-kotlin:0.41")
 
     // Multik
-    implementation("org.jetbrains.kotlinx:multik-api:0.1.1")
+    implementation("org.jetbrains.kotlinx:multik-core:0.2.0")
     implementation("org.jetbrains.kotlinx:multik-default:0.2.0")
-    implementation("org.jetbrains.kotlinx:multik-jvm:0.1.1")
 
     // DJL
     implementation("ai.djl.sentencepiece:sentencepiece:0.18.0")
@@ -42,10 +42,10 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.1")
 
     // Logging
-    implementation("org.slf4j:slf4j-simple:1.7.36")
+    implementation("org.slf4j:slf4j-simple:2.0.0")
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
 
-    // Standard Libary
+    // Standard Library
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
 

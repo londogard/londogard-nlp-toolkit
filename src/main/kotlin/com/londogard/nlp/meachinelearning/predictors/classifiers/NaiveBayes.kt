@@ -6,6 +6,7 @@ import com.londogard.nlp.meachinelearning.toDense
 import org.jetbrains.kotlinx.multik.api.d2array
 import org.jetbrains.kotlinx.multik.api.empty
 import org.jetbrains.kotlinx.multik.api.mk
+import org.jetbrains.kotlinx.multik.api.zeros
 import org.jetbrains.kotlinx.multik.ndarray.data.*
 import org.jetbrains.kotlinx.multik.ndarray.operations.*
 import kotlin.math.ln
@@ -24,8 +25,8 @@ class NaiveBayes: Classifier {
         require(distinctY.size == 2) { "Naïve Bayes currently only support binary prediction" }
         require(distinctY.contains(1) && distinctY.contains(0)) { "Naïve Bayes requires y = 0 && y = 1."}
 
-        val zero = mk.empty<Float, D1>(denseX.shape[1])
-        val one = mk.empty<Float, D1>(denseX.shape[1])
+        val zero = mk.zeros<Float>(denseX.shape[1])
+        val one = mk.zeros<Float>(denseX.shape[1])
 
         for (row in 0 until denseX.shape[0]) {
             if (y[row, 0] == 1) one += denseX[row]
