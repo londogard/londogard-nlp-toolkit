@@ -11,28 +11,20 @@ import kotlin.io.path.readText
 
 
 enum class Engine {
-    ONNX, PYTORCH, TENSORFLOW;
+    ONNX, PYTORCH; // TODO: Add , TENSORFLOW > "tf_model.h5" > "TensorFlow";
 
     fun modelName(): String {
         return when (this) {
             ONNX -> "model.onnx"
             PYTORCH -> "pytorch_model.bin"
-            TENSORFLOW -> "tf_model.h5"
         }
     }
 
     fun djlEngineName(): String {
         return when (this) {
             ONNX -> "OnnxRuntime"
+            // Requires a JIT TorchScript-model
             PYTORCH -> "PyTorch"
-            /**
-             * Requires to have JIT Scripted Torch Model
-             */
-            TENSORFLOW -> "TensorFlow"
-            /**
-             * Requires:
-             * loaded_model = keras.models.load_model("resnet.h5"); tf.saved_model.save(loaded_model, "resnet/1/")
-             */
         }
     }
 }
