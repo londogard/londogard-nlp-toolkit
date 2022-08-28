@@ -33,3 +33,4 @@ out/
 **/*.bin
 **/*.pt
 **/*.h5
+!src/test/resources/traced_sgugger/tiny-distilbert-classification.pt
