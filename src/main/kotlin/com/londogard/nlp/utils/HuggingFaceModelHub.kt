@@ -1,7 +1,5 @@
 package com.londogard.nlp.utils
 
-import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer
-import com.londogard.nlp.tokenizer.HuggingFaceTokenizerWrapper
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -11,7 +9,9 @@ import kotlin.io.path.readText
 
 
 enum class Engine {
-    ONNX, PYTORCH; // TODO: Add , TENSORFLOW > "tf_model.h5" > "TensorFlow";
+    ONNX, // Requires implementation("ai.djl.onnxruntime:onnxruntime-engine:{djlVersion}")
+    PYTORCH; // Requires implementation("ai.djl.pytorch:pytorch-engine:{djlVersion}")
+    // TODO: Add , TENSORFLOW > "tf_model.h5" > "TensorFlow";
 
     fun modelName(): String {
         return when (this) {
@@ -40,15 +40,15 @@ object HuggingFaceModelHub {
             .jsonObject["id2label"]
             ?.jsonObject
             ?.entries
-            ?.associateBy({ it.key.toInt() }, { it.value.jsonPrimitive.toString() })
+            ?.associateBy({ it.key.toInt() }, { it.value.jsonPrimitive.content })
             ?: mapOf<Int, String>().withDefault { i -> i.toString() }
     }
 
     fun downloadModel(name: String, engine: Engine = Engine.ONNX, revision: String = "main"): FileInfo {
-        // wget https://huggingface.co/distilbert-base-uncased/resolve/main/pytorch_model.bin
+        // equal to wget https://huggingface.co/distilbert-base-uncased/resolve/main/pytorch_model.bin
         assert(engine == Engine.ONNX) {
             when (engine) {
-                Engine.PYTORCH -> logger.warn { "PyTorch models must be JIT Scripted Torch Model (DJL requirement). Do this by following https://huggingface.co/docs/transformers/main/en/serialization#torchscript" }
+                Engine.PYTORCH -> logger.warn { "PyTorch models must be JIT TorchScript-model (DJL requirement). Do this by following https://huggingface.co/docs/transformers/main/en/serialization#torchscript" }
                 else -> logger.warn { "TensorFlow models must be in SavedModel-format (DJL requirement). Do this by following https://docs.djl.ai/docs/tensorflow/how_to_import_tensorflow_models_in_DJL.html" }
             }
         }

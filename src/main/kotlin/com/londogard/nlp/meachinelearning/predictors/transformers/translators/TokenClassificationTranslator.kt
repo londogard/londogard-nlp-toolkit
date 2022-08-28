@@ -12,6 +12,7 @@ class TokenClassificationTranslator(val tokenizer: HuggingFaceTokenizerWrapper, 
         val ids = ctx.ndManager.create(inputEncoding.ids)
         val attention = ctx.ndManager.create(inputEncoding.attentionMask)
         val tokenTypeIds = ctx.ndManager.create(inputEncoding.typeIds)
+
         return NDList(ids, attention, tokenTypeIds)
     }
 

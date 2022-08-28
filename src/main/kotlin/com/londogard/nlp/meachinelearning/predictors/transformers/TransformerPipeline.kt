@@ -9,7 +9,7 @@ import ai.djl.translate.Translator
 import com.londogard.nlp.utils.Engine
 import java.nio.file.Path
 
-abstract class  TransformerPipeline<I, O>(model: Criteria<I, O>) : AutoCloseable {
+abstract class TransformerPipeline<I, O>(model: Criteria<I, O>) : AutoCloseable {
     private val loadedModel: ZooModel<I, O> = model.loadModel()
     private val predictor: Predictor<I, O> = loadedModel.newPredictor()
 
@@ -23,18 +23,18 @@ abstract class  TransformerPipeline<I, O>(model: Criteria<I, O>) : AutoCloseable
     }
 
     companion object {
-        inline fun  <reified I, reified O> baseCriteria(
+        inline fun <reified I, reified O> baseCriteria(
             translator: Translator<I, O>,
             modelPath: Path,
             engine: Engine,
             device: Device
-        ): Criteria<I, O> =  Criteria.builder()
-        .optEngine(engine.djlEngineName())
-        .optDevice(device)
-        .optProgress(ProgressBar())
-        .setTypes(I::class.java, O::class.java)
-        .optModelPath(modelPath)
-        .optTranslator(translator)
-        .build()
+        ): Criteria<I, O> = Criteria.builder()
+            .optEngine(engine.djlEngineName())
+            .optDevice(device)
+            .optProgress(ProgressBar())
+            .setTypes(I::class.java, O::class.java)
+            .optModelPath(modelPath)
+            .optTranslator(translator)
+            .build()
     }
 }

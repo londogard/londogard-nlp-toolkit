@@ -8,7 +8,6 @@ import com.londogard.nlp.tokenizer.Tokenizer
 import com.londogard.nlp.utils.Engine
 import com.londogard.nlp.utils.HuggingFaceModelHub
 import java.nio.file.Path
-import kotlin.io.path.Path
 
 class ClassifierPipeline(model: Criteria<String, String>) : TransformerPipeline<String, String>(model) {
     companion object {
@@ -40,16 +39,6 @@ class ClassifierPipeline(model: Criteria<String, String>) : TransformerPipeline<
             val criteria = baseCriteria(translator, model.localPath, engine, device)
 
             return ClassifierPipeline(criteria)
-        }
-
-        @JvmStatic
-        fun main(args: Array<String>) {
-            // fromPath(
-            //     Path ("/home/londogard/git/londogard-nlp-toolkit/scripts/convert_huggingface/traced_Alireza1044/albert-base-v2-sst2.pt"),
-            //     mapOf(),
-            //     HuggingFaceTokenizerWrapper("Alireza1044/albert-base-v2-sst2"),
-            //     engine = Engine.PYTORCH
-            // ).use { pipeline -> pipeline.predict("Im sandy, I love this market! Its awesome").also(::println) }
         }
     }
 }

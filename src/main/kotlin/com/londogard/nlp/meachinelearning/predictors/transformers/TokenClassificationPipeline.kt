@@ -2,7 +2,6 @@ package com.londogard.nlp.meachinelearning.predictors.transformers
 
 import ai.djl.Device
 import ai.djl.repository.zoo.Criteria
-import com.londogard.nlp.meachinelearning.predictors.transformers.translators.ClassifierTranslator
 import com.londogard.nlp.meachinelearning.predictors.transformers.translators.TokenClassificationTranslator
 import com.londogard.nlp.tokenizer.HuggingFaceTokenizerWrapper
 import com.londogard.nlp.tokenizer.Tokenizer

@@ -1,7 +1,6 @@
 package com.londogard.nlp.meachinelearning.predictors.transformers.translators
 
 import ai.djl.ndarray.NDList
-import ai.djl.ndarray.types.DataType
 import ai.djl.translate.Translator
 import ai.djl.translate.TranslatorContext
 import com.londogard.nlp.tokenizer.HuggingFaceTokenizerWrapper
