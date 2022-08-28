@@ -1,8 +1,8 @@
 package com.londogard.nlp.meachinelearning.predictors.sequence
 
-import org.jetbrains.kotlinx.multik.api.empty
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
+import org.jetbrains.kotlinx.multik.api.zeros
 import org.jetbrains.kotlinx.multik.ndarray.data.*
 import kotlin.math.ln
 
@@ -41,7 +41,7 @@ class HiddenMarkovModel(
 
         // === buildTransitionMatrix ===
         NUMBER_OF_TAGS = tagCounts.keys.size + 1
-        transitionMatrix = mk.empty(NUMBER_OF_TAGS, NUMBER_OF_TAGS)
+        transitionMatrix = mk.zeros(NUMBER_OF_TAGS, NUMBER_OF_TAGS)
 
 //      Go through each row and column of the transition matrix
         for (i in 0 until NUMBER_OF_TAGS)   // TODO probably simpler to create this matrix from get-go then scale it
@@ -61,7 +61,7 @@ class HiddenMarkovModel(
 
         // === Create emissionmatrix ===
         val NUMBER_OF_TOKENS = emissionCounts.keys.map { (_, token) -> token }.toSet().size // BOS
-        emissionMatrix = mk.empty(NUMBER_OF_TAGS, NUMBER_OF_TOKENS)
+        emissionMatrix = mk.zeros(NUMBER_OF_TAGS, NUMBER_OF_TOKENS)
 
         for (tag in 0 until NUMBER_OF_TAGS)
             for (token in 0 until NUMBER_OF_TOKENS) {
@@ -78,8 +78,8 @@ class HiddenMarkovModel(
         return X
             .map { xSample ->
                 // Initialize Viterbi Matrix
-                val bestProbs = mk.empty<Float, D2>(NUMBER_OF_TAGS, xSample.size)
-                val bestPaths = mk.empty<Int, D2>(NUMBER_OF_TAGS, xSample.size)
+                val bestProbs = mk.zeros<Float>(NUMBER_OF_TAGS, xSample.size)
+                val bestPaths = mk.zeros<Int>(NUMBER_OF_TAGS, xSample.size)
 
                 val startIdx = BegginingOfSentence // TODO validate this please!
 

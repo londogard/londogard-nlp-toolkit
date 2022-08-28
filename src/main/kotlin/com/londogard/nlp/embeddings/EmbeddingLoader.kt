@@ -2,11 +2,11 @@ package com.londogard.nlp.embeddings
 
 import com.londogard.nlp.utils.DownloadHelper
 import com.londogard.nlp.utils.LanguageSupport
-import com.londogard.nlp.utils.useLines
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 import java.nio.file.Path
+import kotlin.io.path.useLines
 import kotlin.math.min
 
 object EmbeddingLoader {

@@ -3,8 +3,8 @@ package com.londogard.nlp.tokenizer
 import ai.djl.sentencepiece.SpTokenizer
 import com.londogard.nlp.utils.DownloadHelper
 import com.londogard.nlp.utils.LanguageSupport
-import com.londogard.nlp.utils.readLines
 import java.nio.file.Path
+import kotlin.io.path.readLines
 
 class SentencePieceTokenizer(modelPath: Path, vocabPath: Path? = null): Tokenizer {
     private val sentencePieceTokenizer = SpTokenizer(modelPath)

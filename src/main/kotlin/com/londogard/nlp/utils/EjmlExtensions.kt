@@ -11,9 +11,9 @@ import org.ejml.simple.SimpleMatrix
 import org.ejml.sparse.csc.CommonOps_DSCC
 import org.ejml.sparse.csc.CommonOps_FSCC
 import org.jetbrains.kotlinx.multik.api.linalg.dot
+import org.jetbrains.kotlinx.multik.api.linalg.norm
 import org.jetbrains.kotlinx.multik.api.mk
-import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
-import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
+import org.jetbrains.kotlinx.multik.ndarray.data.*
 import org.jetbrains.kotlinx.multik.ndarray.operations.divAssign
 import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.plusAssign
@@ -52,7 +52,7 @@ fun SimpleMatrix.cosineDistance(other: SimpleMatrix): Double = this.dot(other) /
 
 fun D2Array<Float>.cosineDistance(other: D2Array<Float>): D2Array<Float> {
     val dotProduct: D2Array<Float> = (this dot other) as D2Array<Float>
-    dotProduct /= (mk.linalg.norm(this) * mk.linalg.norm(other)).toFloat()
+    dotProduct /= (mk.linalg.norm(this) * mk.linalg.norm(other))
 
     return dotProduct
 }
@@ -77,19 +77,10 @@ fun D1Array<Float>.cosineDistance(other: D1Array<Float>): Float {
 }
 
 fun D2Array<Float>.euclideanDistance(other: D2Array<Float>) = mk.linalg.norm(this - other)
+
+@JvmName("euclideanDistanceD1")
 fun D1Array<Float>.euclideanDistance(other: D1Array<Float>) = (this - other)
     .norm2()
-
-// var total = 0f
-//
-// var size: Int = a.getNumElements()
-//
-// for (i in 0 until size) {
-//     val `val`: Float = a.get(i)
-//     total += `val` * `val`
-// }
-//
-// return java.lang.Math.sqrt(total.toDouble()) as kotlin.Float
 
 /** Fast Normalizers: OBS prone to overflows/underflows */
 fun SimpleMatrix.fastNormF(): Float = NormOps_FDRM.fastNormF(fdrm)
@@ -226,7 +217,7 @@ operator fun SimpleMatrix.plusAssign(other: SimpleMatrix) = when (type to other.
 
 // x·y / (||x|| × ||y||) = (x / ||x||) · (y / ||y||)
 fun FMatrixRMaj.cosineDistanceOneToMany(other: FMatrixRMaj): FMatrixRMaj {
-    val norms = this.normF()
+    this.normF()
     CommonOps_FDRM.divide(this, normP2())
     CommonOps_FDRM.divide(other, other.normP2())
     return times(other)
