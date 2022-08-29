@@ -118,9 +118,10 @@ NLP has one implementation of unsupervised Keyword Extraction, namely:
 </details>
 
 <details>
-<summary>🚧 <b>Neural Networks</b> </summary>
+<summary>🚀 <b>Neural Networks</b> </summary>
 
-Work in progress
+`ClassifierPipeline` and `TokenClassifierPipeline` exists in `1.2.0-BETA`. These pipelines can run directly from HuggingFace Hub using ONNX models and from local filepath using PyTorch models that has been JIT TorchScript-exported (a two-liner).
+
 </details>
 
 <details>
