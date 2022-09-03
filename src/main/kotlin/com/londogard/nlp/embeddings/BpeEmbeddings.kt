@@ -8,6 +8,9 @@ import com.londogard.nlp.utils.avgNorm
 import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 import java.nio.file.Path
 
+/**
+ *
+ */
 class BpeEmbeddings(
     override val filePath: Path,
     override val dimensions: Int = EmbeddingLoader.BpeDefaultEmbeddingDimension,

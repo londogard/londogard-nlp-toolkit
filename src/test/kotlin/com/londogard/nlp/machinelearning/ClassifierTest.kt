@@ -7,16 +7,10 @@ import com.londogard.nlp.meachinelearning.toDense
 import com.londogard.nlp.meachinelearning.vectorizer.TfIdfVectorizer
 import com.londogard.nlp.tokenizer.SimpleTokenizer
 import org.amshove.kluent.shouldBeEqualTo
-import org.jetbrains.kotlinx.multik.api.d1array
 import org.jetbrains.kotlinx.multik.api.mk
 import org.jetbrains.kotlinx.multik.api.ndarray
-import org.jetbrains.kotlinx.multik.api.zeros
-import org.jetbrains.kotlinx.multik.ndarray.data.set
 import org.jetbrains.kotlinx.multik.ndarray.operations.first
-import org.jetbrains.kotlinx.multik.ndarray.operations.map
 import org.junit.Test
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
 class ClassifierTest {
     val simpleTok = SimpleTokenizer()
@@ -59,7 +53,8 @@ class ClassifierTest {
             9 to "Utilities & Bills",
             10 to "Withdrawal"
         )
-        val reversedLabelMap = labelsMap.asSequence().map { it.value to it.key }.toMap()
+
+        val reversedLabelMap = labelsMap.map { it.value to it.key }.toMap()
 
         val (data, categories) = listOf(
             "Vat amount charges" to "Bank Charges",
@@ -79,6 +74,7 @@ class ClassifierTest {
         val transformedData = tfidf.fitTransform(xData)
         lr.fit(transformedData, y)
 
+        lr.predictSimple(tfidf.transform(xData)) shouldBeEqualTo lr.predictSimple(transformedData)
         lr.predictSimple(transformedData) shouldBeEqualTo y
     }
 

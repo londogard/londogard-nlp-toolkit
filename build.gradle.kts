@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.dokka.gradle.DokkaTask
+
 
 plugins {
     `maven-publish`
@@ -53,6 +55,18 @@ dependencies {
     testImplementation("org.amshove.kluent:kluent:$kluentVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.7.10")
     testImplementation(kotlin("test-junit"))
+
+    // Docs
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.10")
+}
+
+tasks.withType<DokkaTask>().configureEach {
+    dokkaSourceSets {
+        named("main") {
+            includes.from("docs/docs.md", "docs/wordfreq.md")
+            samples.from("$projectDir/src/test/kotlin/samples/wordfreq.kt")
+        }
+    }
 }
 
 tasks.test {

@@ -10,6 +10,9 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.plus
 import org.jetbrains.kotlinx.multik.ndarray.operations.plusAssign
 import java.nio.file.Path
 
+/**
+ * Ordinary Word Embeddings.
+ */
 class WordEmbeddings(
     override val filePath: Path,
     override val dimensions: Int = FastTextDefaultEmbeddingDimension,

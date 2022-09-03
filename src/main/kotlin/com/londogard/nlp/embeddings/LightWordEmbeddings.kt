@@ -6,6 +6,10 @@ import com.londogard.nlp.embeddings.EmbeddingLoader.FastTextDefaultEmbeddingDime
 import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 import java.nio.file.Path
 
+/**
+ * Retrieves vectors from disc ad-hoc and caches the `maxWordCount` results in memory based on most active cache keys.
+ * Works very well in constrained environments like a Raspberry Pi.
+ */
 class LightWordEmbeddings(
     override val filePath: Path,
     override val dimensions: Int = FastTextDefaultEmbeddingDimension,
