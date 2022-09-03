@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.londogard"
-version = "1.2.0-BETA"
+version = "1.2.0-BETA2"
 
 repositories {
     mavenCentral()
