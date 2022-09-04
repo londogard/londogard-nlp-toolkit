@@ -9,7 +9,9 @@ import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 import java.nio.file.Path
 
 /**
- *
+ * BPEEmbeddings are subword embeddings that embeds SentencePiece tokenized data.
+ * Studies show that performance are on par with GloVe (+-5%) while only using few MB's of data rather than GB's.
+ * Supports 275 languages through [bpemb](https://bpemb.h-its.org/). 
  */
 class BpeEmbeddings(
     override val filePath: Path,

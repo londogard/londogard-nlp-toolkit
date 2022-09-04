@@ -3,6 +3,10 @@ package com.londogard.nlp.tokenizer
 import ai.djl.huggingface.tokenizers.Encoding
 import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer
 
+/**
+ * Wraps a HuggingFace tokenizer. These are subword tokenizers meaning they return subword tokens.
+ * Instantiated by calling the HuggingFace models name. 
+ */
 class HuggingFaceTokenizerWrapper(val tokenizer: HuggingFaceTokenizer): Tokenizer {
     constructor(modelName: String): this(HuggingFaceTokenizer.newInstance(modelName))
 

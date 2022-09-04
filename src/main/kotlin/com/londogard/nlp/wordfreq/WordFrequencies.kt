@@ -11,9 +11,8 @@ import kotlin.math.log10
 import kotlin.math.pow
 
 /**
- * Returns word frequencies for a country (LanguageSupport).
- * E.g. to retrieve Swedish word frequencies use
- *  WordFrequencies.wordFrequency("hej", sv)
+ * Returns word frequency based on a language.  
+ * This component builds upon the great work of `wordfreq.py` by [LuminosoInsight](https://github.com/LuminosoInsight/wordfreq/).
  */
 object WordFrequencies {
     private val cache: Cache<Path, Map<String, Float>> =  Caffeine.newBuilder()

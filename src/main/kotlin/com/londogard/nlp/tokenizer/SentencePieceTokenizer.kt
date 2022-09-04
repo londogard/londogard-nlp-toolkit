@@ -6,6 +6,10 @@ import com.londogard.nlp.utils.LanguageSupport
 import java.nio.file.Path
 import kotlin.io.path.readLines
 
+/**
+ * A [SentencePiece Tokenizer](https://github.com/google/sentencepiece).  
+ * This is a subword-tokenizer meaning that it return subword-tokens, e.g. "hey" might end up "h", "ey". 
+*/
 class SentencePieceTokenizer(modelPath: Path, vocabPath: Path? = null): Tokenizer {
     private val sentencePieceTokenizer = SpTokenizer(modelPath)
     val vocab: Set<String>? = vocabPath

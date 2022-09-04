@@ -5,9 +5,8 @@ import com.londogard.nlp.utils.LanguageSupport
 import kotlin.io.path.readLines
 
 /**
- * Returns stopwords for a country (LanguageSupport).
- * E.g. to retrieve Swedish stopwords use
- *  Stopwords.stopwords(sv)
+ * Stopwords are words that don't really mean anything. 
+ * This objec returns a list of stopwords for a language.
  */
 object Stopwords {
     var cache: Pair<LanguageSupport, Set<String>>? = null

@@ -1,5 +1,6 @@
 package com.londogard.nlp.tokenizer
 
+/** Special tokens that is usable to Machine Learning. */
 object TokenizerSpecialTokens {
     const val Pad: Char = '\u0001'               // START_OF_HEADING
 
