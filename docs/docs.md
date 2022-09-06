@@ -35,11 +35,19 @@ See samples in [wordfreq.ipynb](https://github.com/londogard/londogard-nlp-toolk
 > Embeddings is a term used for the representation of words for text analysis, typically in the form of a real-valued vector that encodes the meaning of the word such that the words that are closer in the vector space are expected to be similar in meaning, more on [wikipedia.org](https://en.wikipedia.org/wiki/Word_embedding).
 
 In `com.londogard:nlp` there's multiple embeddings supported:
-- Simple word embeddings (one word = one vector)
-  - [LightWordEmbeddings] which retrieves vectors from disc ad-hoc and caches the results in memory
-  - [WordEmbeddings]
-- Subword Embeddings 
-  - [BpeEmbeddings] (using SentencePiece tokenization)
-- Sentence Embeddings
-  - [AverageSentenceEmbedding]
-  - [USifSentenceEmbedding]
+
+| Embedding             | Languages Supported                                     | Details                                                                                        |
+|-----------------------|---------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| [LightWordEmbeddings] | 157 via [fastText](https://fasttext.cc)<br/>∞ from disk | Retrieves up to K vectors from disc ad-hoc, caching most used results in memory                |
+| [WordEmbeddings]      | 157 via [fastText](https://fasttext.cc)<br/>∞ from disk | Ordinary word embeddings                                                                       |
+| [BpeEmbeddings]       | 275 via [bpemb](https://bpemb.h-its.org/)               | Embeds SentencePiece tokenized data.<br/>Retains +-5% performance using MB's rather than GB's! |
+
+`nlp` also supports Sentence Embeddings, through Average or USif method.
+
+# Package com.londogard.nlp.embeddings.sentence
+NLP currently supports two types of sentence embeddings, namely:
+1. `AverageSentenceEmbeddings`
+2. `USifSentenceEmbeddings`
+    - Implementation of [Unsupervised Random Walk Sentence Embeddings: A Strong but Simple Baseline](https://aclanthology.org/W18-3012/)
+
+# 

@@ -15,7 +15,10 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.divAssign
 import kotlin.math.min
 import kotlin.math.pow
 
-
+/**
+ * Unsupervised Keyword Extraction
+ * Based on  algorithm proposed in [DOI:10.1142/S0218213004001466](https://www.researchgate.net/publication/2572200_Keyword_Extraction_from_a_Single_Document_using_Word_Co-occurrence_Statistical_Information)
+ */
 object CooccurrenceKeywords: Keywords<Int> {
     private val punctuations = Regex("\\p{Punct}+")
 

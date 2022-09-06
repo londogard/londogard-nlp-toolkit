@@ -3,6 +3,9 @@ package com.londogard.nlp.preprocessing
 import com.londogard.nlp.tokenizer.TokenizerSpecialTokens.NumberPattern
 import com.londogard.nlp.tokenizer.TokenizerSpecialTokens.NumberStr
 
+/**
+ * A simply pre-processor that is helpful when pre-processing text to later use in Machine Learning tasks.
+ */
 object Preprocessor {
     fun replaceNumber(text: String): String = NumberPattern.replace(text, NumberStr)
 

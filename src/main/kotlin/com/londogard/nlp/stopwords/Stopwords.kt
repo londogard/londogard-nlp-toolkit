@@ -5,8 +5,8 @@ import com.londogard.nlp.utils.LanguageSupport
 import kotlin.io.path.readLines
 
 /**
- * Stopwords are words that don't really mean anything. 
- * This objec returns a list of stopwords for a language.
+ * Stopwords are words that don't really mean anything, e.g. 'the'.
+ * This object returns a list of stopwords for a language.
  */
 object Stopwords {
     var cache: Pair<LanguageSupport, Set<String>>? = null

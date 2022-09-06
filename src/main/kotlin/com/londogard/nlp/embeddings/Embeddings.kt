@@ -13,7 +13,7 @@ interface Embeddings {
     val embeddings: Map<String, D1Array<Float>>
     val vocabulary: Set<String>
 
-    /** Check if the word has a embedding. */
+    /** Check if the word has an embedding. */
     fun contains(word: String): Boolean = embeddings.contains(word)
 
     fun vector(word: String): D1Array<Float>? = embeddings[word]
