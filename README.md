@@ -28,8 +28,6 @@ The `LanguageSupport` enum is used to determine what support different tools lik
 implementation("com.londogard:nlp:$version")
 ```
 
-**GitHub Packages** is also available, look into their docs on how to use this or see other libraries by _londogard_.
-
 ## Guides
 
 1. Add ML Classification
@@ -38,5 +36,6 @@ implementation("com.londogard:nlp:$version")
 4. Add NER via Transformer
 5. Add Preprocessing
 6. ...
+
 
 Please see the Kotlin Notebook [README.ipynb](https://github.com/londogard/londogard-nlp-toolkit/blob/main/README.ipynb) (rendered in browser via GitHub if you don't wanna play with it locally).

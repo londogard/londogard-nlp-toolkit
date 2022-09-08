@@ -16,6 +16,7 @@ interface Embeddings {
     /** Check if the word has an embedding. */
     fun contains(word: String): Boolean = embeddings.contains(word)
 
+    /** Fetches Embedding if it exists for word */
     fun vector(word: String): D1Array<Float>? = embeddings[word]
 
     // OBS: Will return all possible vectors, not necessarily ALL

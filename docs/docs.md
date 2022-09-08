@@ -28,7 +28,7 @@ object WordFrequencies {
 This object has an internal cache which saves the previously loaded language. Use `WordFrequencies.getAllWordFrequenciesOrNull` to simply retrieve the WordFrequencies and use them yourself as a `Map<String, Float>`.  
 Methods to recieve `zipfFrequencies` also exists.
 
-See samples in [wordfreq.ipynb](https://github.com/londogard/londogard-nlp-toolkit/docs/samples/wordfreq.ipynb)
+See samples in [wordfreq.ipynb](https://github.com/londogard/londogard-nlp-toolkit/docs/samples/components/wordfreq.ipynb)
 
 # Package com.londogard.nlp.embeddings
 
@@ -49,5 +49,3 @@ NLP currently supports two types of sentence embeddings, namely:
 1. `AverageSentenceEmbeddings`
 2. `USifSentenceEmbeddings`
     - Implementation of [Unsupervised Random Walk Sentence Embeddings: A Strong but Simple Baseline](https://aclanthology.org/W18-3012/)
-
-# 

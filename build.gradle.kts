@@ -108,45 +108,10 @@ publishing {
                 password = System.getenv("OSSRH_PASSWORD")
             }
         }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/londogard/londogard-nlp-toolkit")
-            credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
     }
 
     publications {
         val main by creating(MavenPublication::class) {
-            from(components["java"])
-
-            pom {
-                name.set("londogard-nlp-toolkit")
-                description.set("londogard-nlp-toolkit is a library that provides utilities when working with natural language processing such as word/subword/sentence embeddings, word-frequencies, stopwords, stemming, and much more.")
-                url.set("https://github.com/londogard/londogard-nlp-toolkit/")
-                licenses {
-                    license {
-                        name.set("GPL-3.0 License")
-                        url.set("https://github.com/londogard/londogard-nlp-toolkit/blob/main/LICENSE")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("londogard")
-                        name.set("Hampus Londögård")
-                        email.set("hampus.londogard@gmail.com")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git@github.com:londogard/londogard-nlp-toolkit.git")
-                    developerConnection.set("scm:git:git@github.com:londogard/londogard-nlp-toolkit.git")
-                    url.set("https://github.com/londogard/londogard-nlp-toolkit/")
-                }
-            }
-        }
-        register<MavenPublication>("gpr") {
             from(components["java"])
 
             pom {
