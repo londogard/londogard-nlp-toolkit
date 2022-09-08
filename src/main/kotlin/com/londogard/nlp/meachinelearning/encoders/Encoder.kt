@@ -2,11 +2,9 @@ package com.londogard.nlp.meachinelearning.encoders
 
 import org.jetbrains.kotlinx.multik.ndarray.data.*
 
-/**
- * [Encoder] is a way to encode something into numerical categories
- */
+/** [Encoder] is a way to encode something into numerical categories */
 interface Encoder<T> {
-    fun fit(input: List<T>): Unit
+    fun fit(input: List<T>)
     fun transform(input: List<T>): D2Array<Int>
     fun fitTransform(input: List<T>): D2Array<Int> {
         fit(input)

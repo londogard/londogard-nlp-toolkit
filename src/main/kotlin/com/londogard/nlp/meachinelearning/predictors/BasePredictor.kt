@@ -10,5 +10,5 @@ interface BasePredictor<T : Number> {
     fun predict(X: MultiArray<Float, D2>): D2Array<T>
 }
 
-fun <T : BasePredictor<Int>> T.asAutoOneHotClassifier(): AutoOneHotClassifier<T> =
+fun <T : BasePredictor<Int>, OUT> T.asAutoOneHotClassifier(): AutoOneHotClassifier<T, OUT> =
     AutoOneHotClassifier(this)

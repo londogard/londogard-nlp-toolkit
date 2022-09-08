@@ -11,8 +11,7 @@ import org.jetbrains.kotlinx.multik.ndarray.data.*
 import org.jetbrains.kotlinx.multik.ndarray.operations.*
 import kotlin.math.ln
 
-// https://en.wikipedia.org/wiki/Naive_Bayes_classifier
-// This variant uses Laplacian Smoothing
+/** A [Naïve Bayes Classifier](https://en.wikipedia.org/wiki/Naive_Bayes_classifier) that is using Laplacian Smoothing. */
 class NaiveBayes: Classifier {
     var logPrior: Float = 0f
     lateinit var logLambda: D2Array<Float> // A 7x1 matrix meaning pre-transposed!

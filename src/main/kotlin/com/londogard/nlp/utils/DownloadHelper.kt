@@ -10,6 +10,9 @@ import java.nio.file.StandardCopyOption
 
 private val logger = KotlinLogging.logger {}
 
+/**
+ * Internal util to download different types of source-data.
+ */
 @PublishedApi
 internal object DownloadHelper {
     fun getStopWords(language: LanguageSupport): Path {

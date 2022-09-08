@@ -56,7 +56,7 @@ class ClassifierTest {
 
         val reversedLabelMap = labelsMap.map { it.value to it.key }.toMap()
 
-        val (data, categories) = listOf(
+        val (x, y) = listOf(
             "Vat amount charges" to "Bank Charges",
             "Loan payment credit" to "Loan",
             "Salary for Aug" to "Salary",
@@ -64,12 +64,10 @@ class ClassifierTest {
             "Purchase from Shoprite" to "Food",
         ).unzip()
         val simpleTok = SimpleTokenizer()
-        val xData = data.map(simpleTok::split)
-        val yList = categories.map { category -> reversedLabelMap.getOrDefault(category, 0) }
-        val y = mk.ndarray(yList)
+        val xData = x.map(simpleTok::split)
 
         val tfidf = TfIdfVectorizer<Float>()
-        val lr = LogisticRegression().asAutoOneHotClassifier()
+        val lr = LogisticRegression().asAutoOneHotClassifier<LogisticRegression, String>()
 
         val transformedData = tfidf.fitTransform(xData)
         lr.fit(transformedData, y)

@@ -6,7 +6,7 @@ import ai.djl.repository.zoo.Criteria
 import ai.djl.repository.zoo.ZooModel
 import ai.djl.training.util.ProgressBar
 import ai.djl.translate.Translator
-import com.londogard.nlp.utils.Engine
+import com.londogard.nlp.utils.huggingface.Engine
 import java.nio.file.Path
 
 abstract class TransformerPipeline<I, O>(model: Criteria<I, O>) : AutoCloseable {

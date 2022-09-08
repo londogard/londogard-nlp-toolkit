@@ -1,5 +1,8 @@
-package com.londogard.nlp.utils
+package com.londogard.nlp.utils.huggingface
 
+import com.londogard.nlp.utils.DownloadHelper
+import com.londogard.nlp.utils.FileInfo
+import com.londogard.nlp.utils.UrlProvider
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -7,28 +10,9 @@ import mu.KotlinLogging
 import java.nio.file.Path
 import kotlin.io.path.readText
 
-
-enum class Engine {
-    ONNX, // Requires implementation("ai.djl.onnxruntime:onnxruntime-engine:{djlVersion}")
-    PYTORCH; // Requires implementation("ai.djl.pytorch:pytorch-engine:{djlVersion}")
-    // TODO: Add , TENSORFLOW > "tf_model.h5" > "TensorFlow";
-
-    fun modelName(): String {
-        return when (this) {
-            ONNX -> "model.onnx"
-            PYTORCH -> "pytorch_model.bin"
-        }
-    }
-
-    fun djlEngineName(): String {
-        return when (this) {
-            ONNX -> "OnnxRuntime"
-            // Requires a JIT TorchScript-model
-            PYTORCH -> "PyTorch"
-        }
-    }
-}
-
+/**
+ * Internal util to load HuggingFace models from the Hub
+ */
 object HuggingFaceModelHub {
     private val logger = KotlinLogging.logger {}
     private const val baseUrl = "https://huggingface.co"
@@ -84,5 +68,3 @@ object HuggingFaceModelHub {
         return HFModel(file.path)
     }
 }
-
-data class HFModel(val localPath: Path)

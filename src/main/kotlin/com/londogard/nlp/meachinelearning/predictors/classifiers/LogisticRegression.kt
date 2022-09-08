@@ -14,7 +14,7 @@ import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
 
 class LogisticRegression(
-    val optimizer: GradientDescent = GradientDescent(1000, 0.01f, 1e-6f)
+    private val optimizer: GradientDescent = GradientDescent(1000, 0.01f, 1e-6f)
 ) : Classifier {
     private lateinit var weights: D2Array<Float>
     private lateinit var losses: List<Float>

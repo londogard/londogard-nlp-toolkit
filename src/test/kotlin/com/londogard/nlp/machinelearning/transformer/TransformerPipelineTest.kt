@@ -1,14 +1,11 @@
 package com.londogard.nlp.machinelearning.transformer
 
-import com.londogard.nlp.meachinelearning.predictors.classifiers.LogisticRegression
 import com.londogard.nlp.meachinelearning.predictors.transformers.ClassifierPipeline
 import com.londogard.nlp.meachinelearning.predictors.transformers.TokenClassificationPipeline
 import com.londogard.nlp.tokenizer.HuggingFaceTokenizerWrapper
-import com.londogard.nlp.utils.Engine
-import org.amshove.kluent.shouldBe
+import com.londogard.nlp.utils.huggingface.Engine
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContainAll
-import org.jetbrains.kotlinx.multik.ndarray.operations.first
 import org.junit.Test
 import java.nio.file.Paths
 

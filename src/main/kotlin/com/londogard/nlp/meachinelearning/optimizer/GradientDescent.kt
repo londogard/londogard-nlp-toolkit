@@ -8,6 +8,7 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.times
 import kotlin.math.abs
 
+/** A simple implementation of Gradient Descent optimization */
 class GradientDescent(
     val maxIterations: Int,
     val stepSize: Float,

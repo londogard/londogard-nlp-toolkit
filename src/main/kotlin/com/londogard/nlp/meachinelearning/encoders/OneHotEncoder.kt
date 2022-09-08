@@ -5,9 +5,7 @@ import org.jetbrains.kotlinx.multik.api.zeros
 import org.jetbrains.kotlinx.multik.ndarray.data.*
 import kotlin.properties.Delegates
 
-/**
- * A simple OneHotEncoder which encodes a category of any type into a numeric value.
- */
+/** A simple OneHotEncoder which encodes a category of any type into a numeric value. */
 class OneHotEncoder<T>: Encoder<T> {
     private var mapping by Delegates.notNull<Map<T, Int>>()
     private var reverseMapping by Delegates.notNull<List<T>>()
