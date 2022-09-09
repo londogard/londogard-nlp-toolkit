@@ -12,6 +12,7 @@ class AutoOneHotClassifier<T : BasePredictor<Int>, OUT>(val predictor: T) : Base
     @JvmName("fitSimple")
     fun fit(X: MultiArray<Float, D2>, y: List<OUT>) {
         val yEncoded = oneHotEncoder.fitTransform(y)
+        println("yEncoded, fitting")
         predictor.fit(X, yEncoded)
     }
 
