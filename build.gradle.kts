@@ -72,7 +72,11 @@ tasks.withType<DokkaTask>().configureEach {
 tasks.test {
     useJUnit()
 }
-
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(11)) // "8"
+    }
+}
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
     jvmTarget = "11"
