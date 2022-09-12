@@ -25,6 +25,6 @@ class OneHotEncoder<T>: Encoder<T> {
     override fun invert(input: D2Array<Int>): List<T> {
         val categories = mk.math.argMaxD2(input, 1)
 
-        return List(categories.size) { i -> reverseMapping[i] }
+        return List(categories.size) { i -> reverseMapping[categories[i]] }
     }
 }

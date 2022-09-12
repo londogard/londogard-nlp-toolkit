@@ -30,12 +30,4 @@ implementation("com.londogard:nlp:$version")
 
 ## Guides
 
-1. Add ML Classification
-2. Add Transformer Classification
-3. Add NER via HMM
-4. Add NER via Transformer
-5. Add Preprocessing
-6. ...
-
-
-Please see the Kotlin Notebook [README.ipynb](https://github.com/londogard/londogard-nlp-toolkit/blob/main/README.ipynb) (rendered in browser via GitHub if you don't wanna play with it locally).
+Simple end-2-end guides available as notebooks via [docs/samples](https://github.com/londogard/londogard-nlp-toolkit/tree/main/docs/samples/e2e)

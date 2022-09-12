@@ -91,15 +91,15 @@ java {
     withSourcesJar()
 }
 
-signing {
-    val key = System.getenv("SIGNING_KEY")
-    val password = System.getenv("SIGNING_PASSWORD")
-    val publishing: PublishingExtension by project
+// signing {
+//     val key = System.getenv("SIGNING_KEY")
+//     val password = System.getenv("SIGNING_PASSWORD")
+//     val publishing: PublishingExtension by project
+//
+//     useInMemoryPgpKeys(key, password)
+//     sign(publishing.publications)
+// }
 
-    useInMemoryPgpKeys(key, password)
-    sign(publishing.publications)
-}
-/**
 publishing {
     repositories {
         maven {
@@ -112,6 +112,7 @@ publishing {
                 password = System.getenv("OSSRH_PASSWORD")
             }
         }
+        mavenLocal()
     }
 
     publications {
@@ -143,4 +144,4 @@ publishing {
             }
         }
     }
-}*/
+}
