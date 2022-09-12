@@ -1,29 +1,40 @@
 package com.londogard.nlp.meachinelearning.predictors.classifiers
 
+import ai.djl.modality.nlp.preprocess.SimpleTokenizer
 import com.londogard.nlp.meachinelearning.dot
 import com.londogard.nlp.meachinelearning.inplaceOp
 import com.londogard.nlp.meachinelearning.loss.LogisticLoss
 import com.londogard.nlp.meachinelearning.optimizer.GradientDescent
+import com.londogard.nlp.meachinelearning.predictors.asAutoOneHotClassifier
 import com.londogard.nlp.meachinelearning.sigmoidFast
 import com.londogard.nlp.meachinelearning.toDense
+import com.londogard.nlp.meachinelearning.vectorizer.count.CountVectorizer
+import org.jetbrains.kotlinx.dataframe.DataFrame
+import org.jetbrains.kotlinx.dataframe.api.*
+import org.jetbrains.kotlinx.dataframe.io.readCSV
 import org.jetbrains.kotlinx.multik.api.d2array
+import org.jetbrains.kotlinx.multik.api.math.log
 import org.jetbrains.kotlinx.multik.api.mk
+import org.jetbrains.kotlinx.multik.api.ndarray
 import org.jetbrains.kotlinx.multik.api.zeros
+import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 import org.jetbrains.kotlinx.multik.ndarray.data.D2
 import org.jetbrains.kotlinx.multik.ndarray.data.D2Array
 import org.jetbrains.kotlinx.multik.ndarray.data.MultiArray
+import kotlin.math.ln
+import kotlin.math.log
+import kotlin.system.exitProcess
+import kotlin.system.measureTimeMillis
 
 class LogisticRegression(
-    val optimizer: GradientDescent = GradientDescent(1000, 0.01f, 1e-6f)
+    private val optimizer: GradientDescent = GradientDescent(1000, 0.01f, 1e-6f)
 ) : Classifier {
     private lateinit var weights: D2Array<Float>
-    private lateinit var losses: List<Float>
+    private lateinit var losses: D1Array<Float>
 
     override fun fit(X: MultiArray<Float, D2>, y: D2Array<Int>) {
         weights = mk.zeros(y.shape[1], X.shape[1])
-
         val (weightOut, lossesOut) = optimizer.optimize(LogisticLoss(), weights, X, y.asType())
-
         weights = weightOut
         losses = lossesOut
     }

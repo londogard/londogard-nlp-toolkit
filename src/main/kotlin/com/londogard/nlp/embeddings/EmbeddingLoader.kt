@@ -9,6 +9,10 @@ import java.nio.file.Path
 import kotlin.io.path.useLines
 import kotlin.math.min
 
+/**
+ * Util to simplify loading embeddings.
+ * Simply call [fromLanguageOrNull] or [fromFile].
+ */
 object EmbeddingLoader {
     const val FastTextDefaultEmbeddingDimension = 300
     const val BpeDefaultEmbeddingDimension = 50

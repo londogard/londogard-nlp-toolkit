@@ -5,7 +5,11 @@ import com.londogard.nlp.utils.LanguageSupport.*
 import org.tartarus.snowball.SnowballStemmer
 import org.tartarus.snowball.ext.*
 
-// default to porterStemmer if unsupported Language
+/**
+ * The [Stemmer] uses Snowball Stemmer under the hood.
+ * It supports `sv, nl, en, fi, fr, de, hu, it, no, pt, ro, ru, es, tr` and `porter`-stemmers.
+ * Defaults to `porterStemmer` if language is unsupported.
+ */
 class Stemmer(language: LanguageSupport) {
     private val stemmer: SnowballStemmer = getStemmer(language)
 

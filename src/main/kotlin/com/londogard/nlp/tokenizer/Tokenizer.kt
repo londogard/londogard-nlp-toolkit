@@ -1,5 +1,6 @@
 package com.londogard.nlp.tokenizer
 
+/** Tokenize a string into multiple tokens */
 interface Tokenizer {
     fun split(text: String): List<String>
 

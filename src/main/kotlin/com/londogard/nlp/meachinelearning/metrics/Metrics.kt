@@ -9,6 +9,7 @@ import org.jetbrains.kotlinx.multik.ndarray.operations.minus
 import org.jetbrains.kotlinx.multik.ndarray.operations.sum
 import kotlin.math.pow
 
+/** [Metrics] is a utility object/namespace to provide metric functions */
 object Metrics {
     fun rSquared(test: D2Array<Float>, predicted: D2Array<Float>): Float {
         requireSameShape(test, predicted)

@@ -3,6 +3,10 @@ package com.londogard.nlp.wordfreq
 import com.londogard.nlp.utils.LanguageSupport
 import com.londogard.nlp.utils.LanguageSupport.*
 
+/**
+ * Some Languages can possibly use a larger word frequency list.
+ * This util automates that behaviour for you.
+ */
 enum class WordFrequencySize {
     Largest, Smallest;
 

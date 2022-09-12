@@ -5,8 +5,8 @@ import ai.djl.repository.zoo.Criteria
 import com.londogard.nlp.meachinelearning.predictors.transformers.translators.TokenClassificationTranslator
 import com.londogard.nlp.tokenizer.HuggingFaceTokenizerWrapper
 import com.londogard.nlp.tokenizer.Tokenizer
-import com.londogard.nlp.utils.Engine
-import com.londogard.nlp.utils.HuggingFaceModelHub
+import com.londogard.nlp.utils.huggingface.Engine
+import com.londogard.nlp.utils.huggingface.HuggingFaceModelHub
 import java.nio.file.Path
 
 class TokenClassificationPipeline(model: Criteria<String, List<String>>): TransformerPipeline<String, List<String>>(model) {

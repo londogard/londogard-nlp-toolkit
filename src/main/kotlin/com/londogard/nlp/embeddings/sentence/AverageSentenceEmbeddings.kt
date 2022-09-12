@@ -4,6 +4,9 @@ import com.londogard.nlp.embeddings.Embeddings
 import com.londogard.nlp.utils.avgNorm
 import org.jetbrains.kotlinx.multik.ndarray.data.D1Array
 
+/**
+ * Simply applies the average of vectors in sentence to build the sentence embedding.
+ */
 class AverageSentenceEmbeddings(override val tokenEmbeddings: Embeddings): SentenceEmbeddings {
     override fun getSentenceEmbeddings(listOfSentences: List<List<String>>): List<D1Array<Float>> =
         listOfSentences.map(this::getSentenceEmbedding)
