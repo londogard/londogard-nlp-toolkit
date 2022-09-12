@@ -34,7 +34,6 @@ class LogisticRegression(
 
     override fun fit(X: MultiArray<Float, D2>, y: D2Array<Int>) {
         weights = mk.zeros(y.shape[1], X.shape[1])
-        println("Optimizing")
         val (weightOut, lossesOut) = optimizer.optimize(LogisticLoss(), weights, X, y.asType())
         weights = weightOut
         losses = lossesOut
@@ -53,7 +52,7 @@ class LogisticRegression(
 object ImdbSimpleTest {
     @JvmStatic
     fun main(args: Array<String>) {
-        val df = DataFrame.readCSV("/Users/londogard/git/londogard-nlp-toolkit/docs/samples/e2e/imdb_small.csv")
+        val df = DataFrame.readCSV("docs/samples/e2e/imdb_small.csv")
         val tokenizer = SimpleTokenizer()
         val dfUpdated = df.add {
             "tokens" from "review"<String>().map { tokenizer.tokenize(it) }
@@ -61,11 +60,11 @@ object ImdbSimpleTest {
         val vectorizer = CountVectorizer<Int>()
         var x = dfUpdated["tokens"].toList() as List<List<String>>
         var y = dfUpdated["sentiment"].toList() as List<String>
-        x = x.take(500)
-        y = y.take(500)
+        x = x.take(50)
+        y = y.take(50)
 
-        var (xTrain, xValid) = x.take(400) to x.takeLast(100)
-        var (yTrain, yValid) = y.take(400) to y.takeLast(100)
+        var (xTrain, xValid) = x.take(40) to x.takeLast(10)
+        var (yTrain, yValid) = y.take(40) to y.takeLast(10)
         var xTrainV = vectorizer.fitTransform(xTrain)
         var xValidV = vectorizer.transform(xValid)
 

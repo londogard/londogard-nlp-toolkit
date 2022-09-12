@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.londogard"
-version = "1.2.0-BETA2"
+version = "1.2.0-BETA3"
 
 repositories {
     mavenCentral()
@@ -95,7 +95,7 @@ signing {
     useInMemoryPgpKeys(key, password)
     sign(publishing.publications)
 }
-
+/**
 publishing {
     repositories {
         maven {
@@ -139,4 +139,4 @@ publishing {
             }
         }
     }
-}
+}*/
