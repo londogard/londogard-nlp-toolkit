@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.londogard"
-version = "1.2.0-BETA3"
+version = "1.2.0"
 
 repositories {
     mavenCentral()
@@ -91,14 +91,14 @@ java {
     withSourcesJar()
 }
 
-// signing {
-//     val key = System.getenv("SIGNING_KEY")
-//     val password = System.getenv("SIGNING_PASSWORD")
-//     val publishing: PublishingExtension by project
-//
-//     useInMemoryPgpKeys(key, password)
-//     sign(publishing.publications)
-// }
+signing {
+    val key = System.getenv("SIGNING_KEY")
+    val password = System.getenv("SIGNING_PASSWORD")
+    val publishing: PublishingExtension by project
+
+    useInMemoryPgpKeys(key, password)
+    sign(publishing.publications)
+}
 
 publishing {
     repositories {
