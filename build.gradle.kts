@@ -63,8 +63,8 @@ dependencies {
 tasks.withType<DokkaTask>().configureEach {
     dokkaSourceSets {
         named("main") {
-            includes.from("docs/docs.md", "docs/wordfreq.md")
-            samples.from("$projectDir/src/test/kotlin/samples/wordfreq.kt")
+            includes.from("docs/docs.md")
+            // samples.from("<insert-path>")
         }
     }
 }
