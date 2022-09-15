@@ -31,7 +31,7 @@ if(savedDarkMode === true){
             </a>
     </div>
     <div>
-1.2.0-BETA2    </div>
+1.2.0    </div>
     <div class="pull-right d-flex">
         <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
         <div id="searchBar"></div>
@@ -46,6 +46,7 @@ if(savedDarkMode === true){
   <div class="breadcrumbs"><a href="../../index.html">nlp</a><span class="delimiter">/</span><a href="index.html">com.londogard.nlp.wordfreq</a></div>
   <div class="cover ">
     <h1 class="cover"><span><span>Package</span></span> <span>com.</span><wbr></wbr><span>londogard.</span><wbr></wbr><span>nlp.</span><wbr></wbr><span>wordfreq</span></h1>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><p class="paragraph">The Word Frequencies are taken from <code class="lang-kotlin">wordfreq.py</code> a library by <a href="https://github.com/LuminosoInsight/wordfreq/">LuminosoInsight</a> and are hosted directly on the GitHub. The object looks as follows:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">object WordFrequencies {<br>   fun getAllWordFrequenciesOrNull(language: LanguageSupport, size: WordFrequencySize = WordFrequencySize.Largest): Map&lt;String, Float&gt;?<br><br>   fun wordFrequency(word: String, language: LanguageSupport, minimum: Float = 0f, size: WordFrequencySize): Float // Throws if language does not support wordfreq<br>   fun wordFrequencyOrNull( word: String, language: LanguageSupport, minimum: Float = 0f, size: WordFrequencySize): Float?<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">This object has an internal cache which saves the previously loaded language. Use <code class="lang-kotlin">WordFrequencies.getAllWordFrequenciesOrNull</code> to simply retrieve the WordFrequencies and use them yourself as a <code class="lang-kotlin">Map&lt;String, Float&gt;</code>.<br>Methods to recieve <code class="lang-kotlin">zipfFrequencies</code> also exists.</p><p class="paragraph">See samples in <a href="https://github.com/londogard/londogard-nlp-toolkit/docs/samples/components/wordfreq.ipynb">wordfreq.ipynb</a></p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button></div>
@@ -61,7 +62,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-word-frequencies/index.html">WordFrequencies</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Returns word frequencies for a country (LanguageSupport). E.g. to retrieve Swedish word frequencies use WordFrequencies.wordFrequency(&quot;hej&quot;, sv)</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">class </span><a href="-word-frequencies/index.html">WordFrequencies</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Returns word frequency based on a language. This component builds upon the great work of <code class="lang-kotlin">wordfreq.py</code> by <a href="https://github.com/LuminosoInsight/wordfreq/">LuminosoInsight</a>.</p></div></div></div>
               </div>
             </div>
           </div>
@@ -76,7 +77,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-word-frequency-size/index.html">WordFrequencySize</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-word-frequency-size/index.html">WordFrequencySize</a><span class="token operator">&gt; </span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">enum </span><a href="-word-frequency-size/index.html">WordFrequencySize</a><span class="token keyword"> extends </span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html">Enum</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-word-frequency-size/index.html">WordFrequencySize</a><span class="token operator">&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Some Languages can possibly use a larger word frequency list. This util automates that behaviour for you.</p></div></div></div>
               </div>
             </div>
           </div>

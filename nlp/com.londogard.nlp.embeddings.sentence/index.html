@@ -31,7 +31,7 @@ if(savedDarkMode === true){
             </a>
     </div>
     <div>
-1.2.0-BETA2    </div>
+1.2.0    </div>
     <div class="pull-right d-flex">
         <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
         <div id="searchBar"></div>
@@ -46,6 +46,7 @@ if(savedDarkMode === true){
   <div class="breadcrumbs"><a href="../../index.html">nlp</a><span class="delimiter">/</span><a href="index.html">com.londogard.nlp.embeddings.sentence</a></div>
   <div class="cover ">
     <h1 class="cover"><span><span>Package</span></span> <span>com.</span><wbr></wbr><span>londogard.</span><wbr></wbr><span>nlp.</span><wbr></wbr><span>embeddings.</span><wbr></wbr><span>sentence</span></h1>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><p class="paragraph">NLP currently supports two types of sentence embeddings, namely:</p><ol><li><p class="paragraph"><code class="lang-kotlin">AverageSentenceEmbeddings</code></p></li><li><p class="paragraph"><code class="lang-kotlin">USifSentenceEmbeddings</code></p></li><ul><li><p class="paragraph">Implementation of <a href="https://aclanthology.org/W18-3012/">Unsupervised Random Walk Sentence Embeddings: A Strong but Simple Baseline</a></p></li></ul></ol></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button></div>
@@ -61,7 +62,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-average-sentence-embeddings/index.html">AverageSentenceEmbeddings</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>tokenEmbeddings<span class="token operator">: </span><a href="../com.londogard.nlp.embeddings/-embeddings/index.html">Embeddings</a></span></span><span class="token punctuation">)</span> : <a href="-sentence-embeddings/index.html">SentenceEmbeddings</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><span class="token keyword">class </span><a href="-average-sentence-embeddings/index.html">AverageSentenceEmbeddings</a><span class="token keyword"> implements </span><a href="-sentence-embeddings/index.html">SentenceEmbeddings</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Simply applies the average of vectors in sentence to build the sentence embedding.</p></div></div></div>
               </div>
             </div>
           </div>
@@ -76,7 +77,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-sentence-embeddings/index.html">SentenceEmbeddings</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">interface </span><a href="-sentence-embeddings/index.html">SentenceEmbeddings</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
               </div>
             </div>
           </div>
@@ -91,7 +92,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-u-sif-sentence-embeddings/index.html">USifSentenceEmbeddings</a><span class="token punctuation">(</span><span class="parameters wrapped"><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword">val </span>tokenEmbeddings<span class="token operator">: </span><a href="../com.londogard.nlp.embeddings/-embeddings/index.html">Embeddings</a><span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;wordProb<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html">Map</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;randomWalkLength<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">11</span><span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;numCommonDiscourseVector<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">5</span></span></span><span class="token punctuation">)</span> : <a href="-sentence-embeddings/index.html">SentenceEmbeddings</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">This implementation is based on the paper: <i>Unsupervised Random Walk Sentence Embeddings: A Strong but Simple Baseline</i> (https://www.aclweb.org/anthology/W18-3012/)</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><span class="token keyword">class </span><a href="-u-sif-sentence-embeddings/index.html">USifSentenceEmbeddings</a><span class="token keyword"> implements </span><a href="-sentence-embeddings/index.html">SentenceEmbeddings</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">This implementation is based on the paper: <i>Unsupervised Random Walk Sentence Embeddings: A Strong but Simple Baseline</i> (https://www.aclweb.org/anthology/W18-3012/)</p></div></div></div>
               </div>
             </div>
           </div>
