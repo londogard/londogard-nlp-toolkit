@@ -38,7 +38,7 @@ dependencies {
     // DJL
     implementation("ai.djl.sentencepiece:sentencepiece:0.18.0")
     api("ai.djl.pytorch:pytorch-engine:0.18.0")
-    api("ai.djl.onnxruntime:onnxruntime-engine:0.18.0")
+    api("ai.djl.onnxruntime:onnxruntime-engine:0.19.0")
     implementation("ai.djl.huggingface:tokenizers:0.18.0")
 
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.1")
