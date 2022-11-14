@@ -24,7 +24,7 @@ val kluentVersion: String by project
 dependencies {
     implementation("com.github.rholder:snowball-stemmer:1.3.0.581.1")
     implementation("org.apache.commons:commons-compress:1.21")
-    implementation("org.jetbrains.kotlinx:dataframe:0.9.0-dev-1096")
+    implementation("org.jetbrains.kotlinx:dataframe:0.9.0-dev-1186")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
 
     // EJML
